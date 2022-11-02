@@ -1,14 +1,14 @@
-import { Controller, Delete, Get, Post } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
+@ApiTags('Website')
 @Controller()
-@ApiTags('website')
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(private appService: AppService) {}
 
-  @Get()
-  getHello(): string {
+  @Get('/')
+  getWebsite() {
     return this.appService.getHello();
   }
 }
