@@ -5,6 +5,7 @@
 //  Created by Jan Honsbrok on 26.10.22.
 //
 
+import Combine
 import Foundation
 import SwiftUI
 
@@ -26,13 +27,27 @@ struct SearchStocksList: View {
   }
 }
 
+class StocksLoader: LoadableObject {
+  @Published private(set) var state = LoadingState<[Stock]>.idle
+
+  func load() {
+    state = .loading
+    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+      self.state = .loaded([Stock(name: "DemoStock")])
+    }
+  }
+}
+
 struct SearchView: View {
 
   @StateObject var searchState = SearchState()
+  var stocksLoader = StocksLoader()
 
   var body: some View {
     NavigationView {
-      SearchStocksList()
+      AsyncContentView(loadable: stocksLoader, loadingView: ProgressView()) { stocks in
+        SearchStocksList()
+      }
     }.searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
       searchState)
   }
