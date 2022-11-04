@@ -1,7 +1,7 @@
 describe('Portfolio', () => {
 
   it('displays portfolio page', () => {
-    cy.visit('http://localhost:3000/')
+    cy.visit('/')
      cy.get('h1').contains('Portfolio')
   })
 
