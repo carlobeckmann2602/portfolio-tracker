@@ -6,3 +6,5 @@ describe('Portfolio', () => {
   })
 
 })
+
+export {};
