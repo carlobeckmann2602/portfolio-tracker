@@ -43,7 +43,7 @@ export class UserService {
 
   async findOne(id: number) {
     //search in db with unique id
-    const user = await this.prisma.user.findFirst({
+    const user = await this.prisma.user.findUnique({
       where: {
         id: id,
       },
@@ -56,7 +56,7 @@ export class UserService {
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return `This action updates a #${id} user with the transmitted data ${updateUserDto}`;
   }
 
   remove(id: number) {

@@ -12,7 +12,7 @@ export class UserController {
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({ status: 200, description: 'Returns the unique user-ID (uid) of the created user' })
+  @ApiResponse({ status: 200, description: 'Returns userdata of the created user' })
   @ApiResponse({ status: 400, description: 'The given userdata has a wrong format. No user was created' })
   @ApiResponse({ status: 403, description: 'Credentials already taken' })
   create(@Body() createUserDto: CreateUserDto) {
@@ -43,26 +43,26 @@ export class UserController {
     return this.userService.remove(+id);
   }
   //CRUD Stocks
-  @Delete('/stocks/:id')
+  @Delete(':id/stocks/:sid')
   @ApiOperation({ summary: "Delete the stock with the given sid from the users' portfolio" })
   @ApiResponse({
     status: 404,
     description: "There was no stock with the given sid in the users' portfolio. The portfolio remains unchanged",
   })
   @ApiResponse({ status: 200 })
-  removeStock(@Param('id') id: string) {
-    return this.stockService.remove(+id);
+  removeStockFromUser(@Param('id') id: string, @Param('sid') sid: string) {
+    return this.stockService.removeStockFromUser(+id, +sid);
   }
 
-  @Post('stocks/:id')
+  @Post(':id/stocks/:sid')
   @ApiOperation({ summary: "Add a stock with the given sid to the users' portfolio" })
   @ApiResponse({ status: 200, description: 'Returns the updated portfolio' })
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
-  createStock(@Param('id') id: string) {
-    return this.stockService.create(+id);
+  addStockToUser(@Param('id') id: string, @Param('sid') sid: string) {
+    return this.stockService.addStockToUser(+id, +sid);
   }
 
-  @Get('/stocks')
+  @Get(':id/stocks')
   @ApiOperation({ summary: "Returns all stocks in the users' portfolio" })
   @ApiResponse({ status: 200, description: "Returns a json-objekt containing all stocks of the users' portfolio" })
   @ApiResponse({ status: 400, description: "There was a fatal error fetching the users' portfolio" })
