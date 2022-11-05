@@ -1,4 +1,4 @@
-import { Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
@@ -10,16 +10,17 @@ export class AuthController {
   @Post('/login')
   @ApiOperation({ summary: 'Log in user with given credentials (email + password)' })
   @ApiResponse({ status: 200, description: 'User login was successfull' })
-  @ApiResponse({ status: 401, description: 'There is no user with the given credentials; The login was unsuccessfull' })
-  login(dto: AuthDto) {
-    return 'User logged in';
+  @ApiResponse({ status: 400, description: 'User credentials are not in correct format' })
+  @ApiResponse({ status: 404, description: 'There is no user with the given credentials; The login was unsuccessfull' })
+  login(@Body() authDto: AuthDto) {
+    return this.authService.login(authDto);
   }
 
   @Get('/logout')
   @ApiOperation({ summary: 'Logout current user' })
   @ApiResponse({ status: 200, description: 'The logout was successfull' })
-  @ApiResponse({ status: 400, description: 'There was no active user-session which could be terminated' })
+  @ApiResponse({ status: 404, description: 'There was no active user-session which could be terminated' })
   logout() {
-    return 'User signed out';
+    return this.authService.logout();
   }
 }
