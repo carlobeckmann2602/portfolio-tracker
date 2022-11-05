@@ -1,0 +1,42 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") //takes the db URL from the .env file
+}
+
+//Instead of handling models in entity folders in the logic with Prisma you declare the models in this folder
+//Prisma Clients provides a TypeString Object accessable under import {User, Stock} from "@prisma/client"
+
+//DB Models here>>>
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  email String @unique
+  hash  String
+
+  firstName String? //maybe we dont need this...Depends on Frontend
+  lastName  String?
+
+  stocks Stock[]
+}
+
+model Stock {
+  id     Int   @id
+  owner  User? @relation(fields: [userId], references: [id]) //owner and userID fields define connections between models at the Prisma level and do not exist in the database. 
+  userId Int?
+
+  name   String @unique
+  amount Int? //Optional info about the amount of the stock which a owner owns
+
+  //>>>hier muessen noch die Daten von der externen StockAPI rein
+  //value Int?...
+}
