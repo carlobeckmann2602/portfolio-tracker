@@ -34,7 +34,16 @@ model Stock {
   owner  User? @relation(fields: [userId], references: [id]) //owner and userID fields define connections between models at the Prisma level and do not exist in the database. 
   userId Int?
 
-  name   String @unique
+  //Infos from Stock API > keine Ahnung welche Datentypen uebergeben werden > Konstantin muss korrigieren > Robin muss mit Design die benoetigten Felder klaeren
+  
+  //symbol String @unique
+  //name   String @unique
+  //open   String
+  //close  String
+  //high   String
+  //low    String
+  //description String?    
+
   amount Int? //Optional info about the amount of the stock which a owner owns
 
   //>>>hier muessen noch die Daten von der externen StockAPI rein
