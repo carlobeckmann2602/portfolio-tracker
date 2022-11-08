@@ -26,26 +26,36 @@ model User {
   firstName String? //maybe we dont need this...Depends on Frontend
   lastName  String?
 
-  stocks Stock[]
+  stocks StocksOnUsers[]
 }
 
 model Stock {
-  id     Int   @id
-  owner  User? @relation(fields: [userId], references: [id]) //owner and userID fields define connections between models at the Prisma level and do not exist in the database. 
-  userId Int?
+  id    Int             @id
+  users StocksOnUsers[]
 
   //Infos from Stock API > keine Ahnung welche Datentypen uebergeben werden > Konstantin muss korrigieren > Robin muss mit Design die benoetigten Felder klaeren
-  
-  //symbol String @unique
-  //name   String @unique
+  symbol String @unique
+  name   String @unique
   //open   String
   //close  String
   //high   String
   //low    String
   //description String?    
 
-  amount Int? //Optional info about the amount of the stock which a owner owns
-
   //>>>hier muessen noch die Daten von der externen StockAPI rein
   //value Int?...
+}
+
+//mapping table for n-to-m relation between stocks and users
+model StocksOnUsers {
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int // relation scalar field (used in the `@relation` attribute above)
+  stock   Stock @relation(fields: [stockId], references: [id])
+  stockId Int // relation scalar field (used in the `@relation` attribute above)
+  amount  Int // info about the amount of the stock which a owner owns
+
+  // assignedAt DateTime @default(now())
+  // assignedBy String
+
+  @@id([userId, stockId])
 }
