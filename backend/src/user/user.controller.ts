@@ -4,6 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StockService } from 'src/stock/stock.service';
+import { AddStockToUserDto } from './dto/add-stock-to-user';
 
 @ApiTags('users')
 @Controller('users')
@@ -16,6 +17,11 @@ export class UserController {
   @ApiResponse({ status: 400, description: 'The given userdata has a wrong format. No user was created' })
   @ApiResponse({ status: 403, description: 'Credentials already taken' })
   create(@Body() createUserDto: CreateUserDto) {
+    const user = {
+      id: 1,
+      email: 'mockUser@web.com',
+    };
+    //return user;
     return this.userService.create(createUserDto);
   }
 
@@ -24,6 +30,15 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'Returns the userdata for the user with the given uid' })
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   findOne(@Param('id') id: string) {
+    const user = {
+      id: +id,
+      createdAt: '2022-11-05T12:46:10.693Z',
+      updatedAt: '2022-11-05T12:46:10.693Z',
+      email: 'mockUser@web.com',
+      firstName: 'John',
+      lastName: 'Doe',
+    };
+    return user;
     return this.userService.findOne(+id);
   }
 
@@ -58,8 +73,8 @@ export class UserController {
   @ApiOperation({ summary: "Add a stock with the given sid to the users' portfolio" })
   @ApiResponse({ status: 200, description: 'Returns the updated portfolio' })
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
-  addStockToUser(@Param('id') id: string, @Param('sid') sid: string) {
-    return this.stockService.addStockToUser(+id, +sid);
+  addStockToUser(@Param('id') id: string, @Param('sid') sid: string, @Body() addStockToUserDto: AddStockToUserDto) {
+    return this.stockService.addStockToUser(+id, +sid, addStockToUserDto);
   }
 
   @Get(':id/stocks')

@@ -4,7 +4,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-
 @Injectable()
 export class UserService {
   //enables prisma client db operations like save in the db
@@ -52,6 +51,7 @@ export class UserService {
     if (user === null) {
       throw new NotFoundException();
     }
+    delete user.hash; //deletes hash field, because frontend dont need the pw
     return user;
   }
 
