@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { Stock } from '@prisma/client';
 @Injectable()
 export class UserService {
   //enables prisma client db operations like save in the db
@@ -61,5 +62,22 @@ export class UserService {
 
   remove(id: number) {
     return `This action removes a #${id} user`;
+  }
+
+  async findStocksOnUser(id: number) {
+    const stocksOnUser = await this.prisma.user.findUnique({
+      where: {
+        id: id,
+      },
+      select: {
+        stocks: {
+          select: {
+            stock: true,
+            amount: true,
+          },
+        },
+      },
+    });
+    return stocksOnUser;
   }
 }

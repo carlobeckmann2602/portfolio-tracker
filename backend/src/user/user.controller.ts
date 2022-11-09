@@ -57,6 +57,45 @@ export class UserController {
   removeUser(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
+
+  @Get(':id/stocks')
+  @ApiOperation({ summary: "Returns all stocks in the users' portfolio" })
+  @ApiResponse({ status: 200, description: "Returns a json-objekt containing all stocks of the users' portfolio" })
+  @ApiResponse({ status: 400, description: "There was a fatal error fetching the users' portfolio" })
+  getStocksFromUser(@Param('id') id: string) {
+    return {
+      stocks: [
+        {
+          stock: {
+            id: 1,
+            symbol: 'QNT',
+            name: 'Quant',
+            open: '100',
+            close: '120',
+            high: '160',
+            low: '80',
+            description: 'Quant is a coin',
+          },
+          amount: 20,
+        },
+        {
+          stock: {
+            id: 2,
+            symbol: 'ADA',
+            name: 'Cardano',
+            open: '129',
+            close: '120',
+            high: '140',
+            low: '12',
+            description: 'Ada is a coin',
+          },
+          amount: 10,
+        },
+      ],
+    };
+    return this.userService.findStocksOnUser(+id);
+  }
+
   //CRUD Stocks
   @Delete(':id/stocks/:sid')
   @ApiOperation({ summary: "Delete the stock with the given sid from the users' portfolio" })
@@ -75,13 +114,5 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   addStockToUser(@Param('id') id: string, @Param('sid') sid: string, @Body() addStockToUserDto: AddStockToUserDto) {
     return this.stockService.addStockToUser(+id, +sid, addStockToUserDto);
-  }
-
-  @Get(':id/stocks')
-  @ApiOperation({ summary: "Returns all stocks in the users' portfolio" })
-  @ApiResponse({ status: 200, description: "Returns a json-objekt containing all stocks of the users' portfolio" })
-  @ApiResponse({ status: 400, description: "There was a fatal error fetching the users' portfolio" })
-  getStocksFromUser() {
-    return this.stockService.findAll();
   }
 }
