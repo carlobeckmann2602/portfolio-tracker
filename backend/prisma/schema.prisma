@@ -34,13 +34,13 @@ model Stock {
   users StocksOnUsers[]
 
   //Infos from Stock API > keine Ahnung welche Datentypen uebergeben werden > Konstantin muss korrigieren > Robin muss mit Design die benoetigten Felder klaeren
-  symbol String @unique
-  name   String @unique
-  //open   String
-  //close  String
-  //high   String
-  //low    String
-  //description String?    
+  symbol      String  @unique
+  name        String  @unique
+  open        String
+  close       String
+  high        String
+  low         String
+  description String?
 
   //>>>hier muessen noch die Daten von der externen StockAPI rein
   //value Int?...
