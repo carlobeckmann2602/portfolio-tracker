@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { StockService } from 'src/stock/stock.service';
-import { AddStockToUserDto } from './dto/add-stock-to-user';
+import { StockOnUserDto } from './dto/stock-on-user.dto.';
 
 @ApiTags('users')
 @Controller('users')
@@ -52,8 +52,8 @@ export class UserController {
 
   @Delete(':id')
   @ApiOperation({ summary: 'Delete the user with the given uid' })
-  @ApiResponse({ status: 400, description: 'There was no user with the given uid. No user is deleted' })
-  @ApiResponse({ status: 200 })
+  @ApiResponse({ status: 404, description: 'There was no user with the given uid. No user is deleted' })
+  @ApiResponse({ status: 200, description: 'User deleted' })
   removeUser(@Param('id') id: string) {
     return this.userService.remove(+id);
   }
@@ -98,21 +98,18 @@ export class UserController {
 
   //CRUD Stocks
   @Delete(':id/stocks/:sid')
-  @ApiOperation({ summary: "Delete the stock with the given sid from the users' portfolio" })
-  @ApiResponse({
-    status: 404,
-    description: "There was no stock with the given sid in the users' portfolio. The portfolio remains unchanged",
-  })
-  @ApiResponse({ status: 200 })
-  removeStockFromUser(@Param('id') id: string, @Param('sid') sid: string) {
-    return this.stockService.removeStockFromUser(+id, +sid);
+  @ApiOperation({ summary: "Delete the stock with the given sid and amount from the users' portfolio" })
+  @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
+  @ApiResponse({ status: 200, description: 'Return success message' })
+  removeStockFromUser(@Param('id') id: string, @Param('sid') sid: string, @Body() StockOnUserDto: StockOnUserDto) {
+    return this.stockService.removeStockFromUser(+id, +sid, StockOnUserDto);
   }
 
   @Post(':id/stocks/:sid')
-  @ApiOperation({ summary: "Add a stock with the given sid to the users' portfolio" })
-  @ApiResponse({ status: 200, description: 'Returns the updated portfolio' })
+  @ApiOperation({ summary: "Add a stock with the given sid and amount to the users' portfolio" })
+  @ApiResponse({ status: 200, description: 'Return success message' })
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
-  addStockToUser(@Param('id') id: string, @Param('sid') sid: string, @Body() addStockToUserDto: AddStockToUserDto) {
-    return this.stockService.addStockToUser(+id, +sid, addStockToUserDto);
+  addStockToUser(@Param('id') id: string, @Param('sid') sid: string, @Body() StockOnUserDto: StockOnUserDto) {
+    return this.stockService.addStockToUser(+id, +sid, StockOnUserDto);
   }
 }

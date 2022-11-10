@@ -12,7 +12,7 @@ export class StockController {
   @ApiResponse({ status: 200, description: 'Returns all found stocks as a stream of json-objects' })
   @ApiResponse({ status: 400, description: 'There was a fatal error fetching the stocks' })
   findAll(@Query('search') stockname: string) {
-    return this.stockService.findAll();
+    //return this.stockService.search();
   }
 
   @Get(':id')

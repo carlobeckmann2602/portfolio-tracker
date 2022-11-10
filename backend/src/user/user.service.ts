@@ -4,7 +4,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
-import { Stock } from '@prisma/client';
 @Injectable()
 export class UserService {
   //enables prisma client db operations like save in the db
@@ -28,7 +27,6 @@ export class UserService {
           email: true,
         },
       });
-      //return saved user (only selected fields)
       return user;
     } catch (error) {
       //caching prismas unique duplicate error P2002
@@ -56,12 +54,51 @@ export class UserService {
     return user;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user with the transmitted data ${updateUserDto}`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const hash = await argon.hash(updateUserDto.password);
+    const user = await this.prisma.user.update({
+      where: {
+        id: id,
+      },
+      data: {
+        email: updateUserDto.email,
+        hash: hash,
+      },
+    });
+    delete user.hash;
+    return user;
   }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    try {
+      //disconnects the stocks in the mapper table
+      await this.prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          stocks: {
+            deleteMany: {}, //deletes the entries in the mapper table stocksOnUser
+          },
+        },
+        include: {
+          stocks: true,
+        },
+      });
+      //deletes user
+      await this.prisma.user.delete({
+        where: {
+          id: id,
+        },
+      });
+      return `This action removed a user with ID:${id}`;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('No User found');
+        }
+      }
+      throw error;
+    }
   }
 
   async findStocksOnUser(id: number) {
