@@ -33,7 +33,7 @@ class StocksLoader: LoadableObject {
   func load() {
     state = .loading
     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-      self.state = .loaded([Stock(name: "DemoStock")])
+        self.state = .loaded([Stock(id: 1, name: "DemoStock", value: 1)])
     }
   }
 }
