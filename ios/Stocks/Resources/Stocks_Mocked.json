@@ -1,0 +1,202 @@
+[
+    {
+        "name": "Adidas",
+        "id": 101,
+        "value": 120.4
+    },
+    {
+        "name": "Airbus",
+        "id": 102,
+        "value": 120.4
+    },
+    {
+        "name": "Allianz",
+        "id": 103,
+        "value": 120.4
+    },
+    {
+        "name": "BASF",
+        "id": 104,
+        "value": 40.21
+    },
+    {
+        "name": "Bayer",
+        "id": 105,
+        "value": 120.4
+    },
+    {
+        "name": "Beiersdorf",
+        "id": 106,
+        "value": 120.4
+    },
+    {
+        "name": "Brenntag",
+        "id": 107,
+        "value": 120.4
+    },
+    {
+        "name": "BMW",
+        "id": 108,
+        "value": 120.4
+    },
+    {
+        "name": "Continental",
+        "id": 109,
+        "value": 120.4
+    },
+    {
+        "name": "Covestro",
+        "id": 110,
+        "value": 120.4
+    },
+    {
+        "name": "Daimler Truck",
+        "id": 111,
+        "value": 120.4
+    },
+    {
+        "name": "Deutsche Bank",
+        "id": 112,
+        "value": 120.4
+    },
+    {
+        "name": "Deutsche Börse",
+        "id": 113,
+        "value": 120.4
+    },
+    {
+        "name": "Deutsche Post",
+        "id": 114,
+        "value": 120.4
+    },
+    {
+        "name": "Deutsche Telekom",
+        "id": 115,
+        "value": 120.4
+    },
+    {
+        "name": "E.ON",
+        "id": 116,
+        "value": 120.4
+    },
+    {
+        "name": "Fresenius",
+        "id": 117,
+        "value": 120.4
+    },
+    {
+        "name": "Fresenius Medical Care",
+        "id": 118,
+        "value": 120.4
+    },
+    {
+        "name": "Hannover Rück",
+        "id": 119,
+        "value": 120.4
+    },
+    {
+        "name": "HeidelbergCement",
+        "id": 120,
+        "value": 120.4
+    },
+    {
+        "name": "Henkel",
+        "id": 121,
+        "value": 120.4
+    },
+    {
+        "name": "Infineon",
+        "id": 122,
+        "value": 120.4
+    },
+    {
+        "name": "Linde",
+        "id": 123,
+        "value": 120.4
+    },
+    {
+        "name": "Mercedes-Benz Group",
+        "id": 124,
+        "value": 120.4
+    },
+    {
+        "name": "Merck",
+        "id": 125,
+        "value": 120.4
+    },
+    {
+        "name": "MTU Aero Engines",
+        "id": 126,
+        "value": 120.4
+    },
+    {
+        "name": "Münchener Rück",
+        "id": 127,
+        "value": 120.4
+    },
+    {
+        "name": "Porsche Automobil Holding",
+        "id": 128,
+        "value": 120.4
+    },
+    {
+        "name": "Puma",
+        "id": 129,
+        "value": 120.4
+    },
+    {
+        "name": "Qiagen",
+        "id": 130,
+        "value": 120.4
+    },
+    {
+        "name": "RWE",
+        "id": 131,
+        "value": 120.4
+    },
+    {
+        "name": "SAP",
+        "id": 132,
+        "value": 120.4
+    },
+    {
+        "name": "Sartorius",
+        "id": 133,
+        "value": 120.4
+    },
+    {
+        "name": "Siemens",
+        "id": 134,
+        "value": 120.4
+    },
+    {
+        "name": "Siemens Energy",
+        "id": 135,
+        "value": 120.4
+    },
+    {
+        "name": "Siemens Healthineers",
+        "id": 136,
+        "value": 120.4
+    },
+    {
+        "name": "Symrise",
+        "id": 137,
+        "value": 120.4
+    },
+    {
+        "name": "Volkswagen",
+        "id": 138,
+        "value": 120.4
+    },
+    {
+        "name": "Vonovia",
+        "id": 139,
+        "value": 45.1
+    },
+    {
+        "name": "Zalando",
+        "id": 140,
+        "value": 30.2
+    }
+]

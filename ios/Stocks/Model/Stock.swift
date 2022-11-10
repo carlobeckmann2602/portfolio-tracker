@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct Stock: Identifiable {
-  let id = UUID()
-  var name: String
+struct Stock: Hashable, Codable, Identifiable {
+    var id: Int //UUID()
+    var name: String
+    var value: Float
 }

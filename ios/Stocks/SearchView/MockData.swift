@@ -7,7 +7,7 @@
 
 import Foundation
 
-let STOCKS_IN_DAX = [
+/*let STOCKS_IN_DAX = [
   Stock(name: "Adidas"),
   Stock(name: "Airbus"),
   Stock(name: "Allianz"),
@@ -48,4 +48,4 @@ let STOCKS_IN_DAX = [
   Stock(name: "Volkswagen"),
   Stock(name: "Vonovia"),
   Stock(name: "Zalando"),
-]
+]*/

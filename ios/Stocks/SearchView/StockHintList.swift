@@ -19,7 +19,7 @@ struct StockHintListCell: View {
 }
 
 func filterStocks(text: String) -> [Stock] {
-  return STOCKS_IN_DAX.filter({ stock in
+    return ModelData().stocks.filter({ stock in
     return !text.isEmpty && stock.name.lowercased().starts(with: text.lowercased())
   })
 }
