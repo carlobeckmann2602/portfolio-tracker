@@ -8,7 +8,7 @@
 import Foundation
 
 struct PortfolioStock: Hashable, Codable, Identifiable {
-    var id = UUID()
-    var stock: Stock
-    var amount: Float
+  var id = UUID()
+  var stock: Stock
+  var amount: Float
 }

@@ -18,7 +18,7 @@ struct StockListCell: View {
 struct StocksList: View {
   var body: some View {
     List {
-        ForEach(ModelData().stocks) { stock in
+      ForEach(ModelData().stocks) { stock in
         StockListCell(stock: stock)
       }
     }
