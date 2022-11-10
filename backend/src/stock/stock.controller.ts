@@ -7,12 +7,11 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 export class StockController {
   constructor(private readonly stockService: StockService) {}
 
-  @Get('?search')
+  @Get()
   @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name' })
-  @ApiResponse({ status: 200, description: 'Returns all found stocks as a stream of json-objects' })
-  @ApiResponse({ status: 400, description: 'There was a fatal error fetching the stocks' })
-  findAll(@Query('search') stockname: string) {
-    //return this.stockService.search();
+  @ApiResponse({ status: 200, description: 'Returns all found stocks as an array of json-objects' })
+  async findAll(@Query('name') stockName: string) {
+    return this.stockService.searchStocks(stockName);
   }
 
   @Get(':id')

@@ -76,4 +76,29 @@ export class StockService {
     }
     return `This action updates a user with id #${id} with the transmitted stock data`;
   }
+
+  async searchStocks(stockName: string) {
+    //searchs stock with name or symbol
+    const stock = await this.prisma.stock.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: stockName,
+              mode: 'insensitive',
+            },
+          },
+          {
+            AND: {
+              symbol: {
+                contains: stockName,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      },
+    });
+    return stock;
+  }
 }
