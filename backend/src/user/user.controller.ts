@@ -18,35 +18,86 @@ export class UserController {
     lastName: 'Mustermann',
   };
 
+  mockUserEdited = {
+    id: 1,
+    createdAt: '2022-11-10T13:25:43.741Z',
+    updatedAt: '2022-11-11T11:11:38.939Z',
+    email: 'musterfrau@web.de',
+    firstName: 'Erika',
+    lastName: 'Musterfrau',
+  };
+
   mockStocksOnUser = {
     stocks: [
       {
         stock: {
-          id: 2,
-          symbol: 'CON',
-          name: 'Continental',
-          open: '3.1',
-          close: '3.5',
-          high: '11.0',
-          low: '9.0',
-          description: 'Automobilzulieferer',
-          time: '2022-01-01T00:00:00.000Z',
+          id: 0,
+          symbol: 'ADS',
+          name: 'Adidas',
+          open: '137.5000',
+          close: '175.4600',
+          high: '184.2000',
+          low: '132.1000',
+          description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          time: '2022-10-11T14:37:10.000Z',
         },
-        amount: 11,
+        amount: 84,
       },
       {
         stock: {
           id: 1,
-          symbol: 'ADS',
-          name: 'Adidas',
-          open: '12.0',
-          close: '22.1',
-          high: '20.2',
-          low: '10.1',
-          description: 'Sportartikel',
-          time: '2022-10-11T14:37:10.000Z',
+          symbol: 'CON',
+          name: 'Continental',
+          open: '54.5000',
+          close: '83.9000',
+          high: '156.2000',
+          low: '54.5000',
+          description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          time: '2022-01-01T00:00:00.000Z',
         },
         amount: 100,
+      },
+      {
+        stock: {
+          id: 2,
+          symbol: 'EXA',
+          name: 'Example',
+          open: '135.6000',
+          close: '147.9000',
+          high: '173.2000',
+          low: '12ß.5000',
+          description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          time: '2022-01-01T00:00:00.000Z',
+        },
+        amount: 22,
+      },
+      {
+        stock: {
+          id: 3,
+          symbol: 'DPD',
+          name: 'DPD',
+          open: '235.5000',
+          close: '211.9000',
+          high: '240.2000',
+          low: '180.5000',
+          description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          time: '2022-01-01T00:00:00.000Z',
+        },
+        amount: 13,
+      },
+      {
+        stock: {
+          id: 4,
+          symbol: 'AAPL',
+          name: 'Apple',
+          open: '566.5000',
+          close: '600.9000',
+          high: '612.2000',
+          low: '566.5000',
+          description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          time: '2022-01-01T00:00:00.000Z',
+        },
+        amount: 2,
       },
     ],
   };
@@ -82,7 +133,7 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     if (this.mockMode) {
-      return this.mockUser;
+      return this.mockUserEdited;
     }
     return this.userService.update(+id, updateUserDto);
   }

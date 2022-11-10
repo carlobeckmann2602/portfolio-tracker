@@ -5,17 +5,40 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @Controller('stocks')
 export class StockController {
   mockMode = true;
-  mockStock = {
-    id: 1,
-    symbol: 'ADS',
-    name: 'Adidas',
-    open: '12.0',
-    close: '22.1',
-    high: '20.2',
-    low: '10.1',
-    description: 'Sportartikel',
-    time: '2022-10-11T14:37:10.000Z',
-  };
+  mockStocks = [
+    {
+      id: 0,
+      symbol: 'ADS',
+      name: 'Adidas',
+      open: '137.5000',
+      close: '175.4600',
+      high: '184.2000',
+      low: '132.1000',
+      description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+      time: '2022-10-11T14:37:10.000Z',
+    },
+    {
+      id: 1,
+      symbol: 'CON',
+      name: 'Continental',
+      open: '54.5000',
+      close: '83.9000',
+      high: '156.2000',
+      low: '54.5000',
+      description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+      time: '2022-01-01T00:00:00.000Z',
+    },
+    {
+      id: 2,
+      symbol: 'IBM',
+      name: 'IBM',
+      open: '125.0000',
+      close: '122.1000',
+      high: '127.2000',
+      low: '122.3000',
+      description: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+      time: '2022-10-11T14:37:10.000Z',
+    }];
 
   constructor(private readonly stockService: StockService) {}
 
@@ -23,6 +46,9 @@ export class StockController {
   @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name' })
   @ApiResponse({ status: 200, description: 'Returns all found stocks as an array of json-objects' })
   async findAll(@Query('name') stockName: string) {
+    if (this.mockMode) {
+      return this.mockStocks;
+    }
     return this.stockService.searchStocks(stockName);
   }
 
@@ -32,7 +58,12 @@ export class StockController {
   @ApiResponse({ status: 400, description: 'There was no stock with the given sid. No stock-object is returned' })
   findOne(@Param('id') id: number) {
     if (this.mockMode) {
-      return this.mockStock;
+      if(id >= 0 && id < 3) {
+          return this.mockStocks[id];
+      }
+      else {
+          return this.mockStocks[0]; //TODO: Return error code instead of default object
+      }
     }
     return this.stockService.findOne(+id);
   }
