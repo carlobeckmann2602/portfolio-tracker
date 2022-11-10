@@ -21,12 +21,8 @@ export class UserService {
           email: createUserDto.email,
           hash,
         },
-        select: {
-          //"Select" allows us to send wanted data back to the client.
-          id: true,
-          email: true,
-        },
       });
+      delete user.hash;
       return user;
     } catch (error) {
       //caching prismas unique duplicate error P2002
