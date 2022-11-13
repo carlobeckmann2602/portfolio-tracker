@@ -1,22 +1,71 @@
-import { Chart } from "react-google-charts";
+import React from "react";
+import { PieChart, pieChartDefaultProps } from "react-minimal-pie-chart";
 
-const pieChartData = [
-  ["Stock", "Ammount"],
-  ["StockA", 1],
-  ["StockB", 2],
-  ["StockC", 3],
-  ["StockD", 4],
-];
+export type PortfolioItem = {
+  symbol: string;
+  value: number;
+};
 
-const Portfolio = () => {
+export type PortfolioProps = {
+  items?: PortfolioItem[];
+};
+
+type PieChartItem = PortfolioItem & {
+  color: string;
+};
+
+const colors = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
+const selectedSegmentOffset = 5;
+
+const mockItemsCount = 8;
+const mockItems: PieChartItem[] = new Array(mockItemsCount)
+  .fill(undefined)
+  .map((_, i) => ({
+    symbol: "",
+    value: mockItemsCount - i,
+    color: colors[i % colors.length],
+  }));
+
+const Portfolio = ({ items }: PortfolioProps) => {
+  const [selected, setSelected] = React.useState<number | null>(null);
+  const [hovered, setHovered] = React.useState<number | null>(null);
+
+  const pieChartItems = React.useMemo<PieChartItem[] | undefined>(
+    () =>
+      items &&
+      items.map((item, i) => ({
+        ...item,
+        color: colors[i % colors.length],
+      })),
+    [items]
+  );
+
   return (
-    <div className="relative pt-full">
+    <div className="relative pt-full text-base">
       <div className="absolute inset-0">
-        <Chart
-          chartType="PieChart"
-          height="100%"
-          data={pieChartData}
-          options={{ legend: null }}
+        <PieChart
+          startAngle={-90}
+          animate
+          lineWidth={35}
+          radius={pieChartDefaultProps.radius - selectedSegmentOffset}
+          data={pieChartItems || mockItems}
+          labelStyle={(_) => ({
+            fontSize: "3px",
+            letterSpacing: "-0.15px",
+            fontWeight: 700,
+            pointerEvents: "none",
+            opacity: 0.5,
+          })}
+          labelPosition={100 - 35 / 2}
+          segmentsShift={(i) => (i === selected ? selectedSegmentOffset : 0)}
+          segmentsStyle={(i) => ({
+            cursor: "pointer",
+            transition: "0.2s ease filter",
+            filter: hovered === i ? "brightness(0.6)" : undefined,
+          })}
+          onClick={(_, i) => setSelected(selected === i ? null : i)}
+          onMouseOver={(_, i) => setHovered(i)}
+          onMouseOut={() => setHovered(null)}
         />
       </div>
     </div>
