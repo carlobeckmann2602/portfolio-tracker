@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
+import { CenterSection } from "../components/center-section";
+import { PageHeading } from "../components/page-heading";
 
 const Login: NextPage = () => {
   return (
-    <>
-      <h1>Login</h1>
+    <CenterSection>
+      <PageHeading>Login</PageHeading>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -16,7 +18,7 @@ const Login: NextPage = () => {
         <input type="password" id="password" />
         <button type="submit">Login</button>
       </form>
-    </>
+    </CenterSection>
   );
 };
 

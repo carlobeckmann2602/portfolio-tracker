@@ -1,9 +1,11 @@
 import type { NextPage } from "next";
+import { CenterSection } from "../components/center-section";
+import { PageHeading } from "../components/page-heading";
 
 const Register: NextPage = () => {
   return (
-    <>
-      <h1>Register</h1>
+    <CenterSection>
+      <PageHeading>Register</PageHeading>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -20,7 +22,7 @@ const Register: NextPage = () => {
         </label>
         <button type="submit">Register</button>
       </form>
-    </>
+    </CenterSection>
   );
 };
 
