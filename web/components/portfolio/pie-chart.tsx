@@ -37,14 +37,6 @@ export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
           lineWidth={35}
           radius={pieChartDefaultProps.radius - selectedSegmentOffset}
           data={pieChartItems}
-          labelStyle={(_) => ({
-            fontSize: "3px",
-            letterSpacing: "-0.15px",
-            fontWeight: 700,
-            pointerEvents: "none",
-            opacity: 0.5,
-          })}
-          labelPosition={100 - 35 / 2}
           segmentsShift={(i) => (i === selected ? selectedSegmentOffset : 0)}
           segmentsStyle={{
             cursor: "pointer",
