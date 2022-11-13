@@ -1,13 +1,14 @@
 import React from "react";
-import { PieChart, pieChartDefaultProps } from "react-minimal-pie-chart";
+import {
+  PieChart as PieChartBase,
+  pieChartDefaultProps,
+} from "react-minimal-pie-chart";
+import { PortfolioItem } from ".";
 
-export type PortfolioItem = {
-  symbol: string;
-  value: number;
-};
-
-export type PortfolioProps = {
-  items?: PortfolioItem[];
+export type PieChartProps = {
+  items: PortfolioItem[];
+  selected?: number;
+  onClick?: (id: number) => void;
 };
 
 type PieChartItem = PortfolioItem & {
@@ -17,21 +18,9 @@ type PieChartItem = PortfolioItem & {
 const colors = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
 const selectedSegmentOffset = 5;
 
-const mockItemsCount = 8;
-const mockItems: PieChartItem[] = new Array(mockItemsCount)
-  .fill(undefined)
-  .map((_, i) => ({
-    symbol: "",
-    value: mockItemsCount - i,
-    color: colors[i % colors.length],
-  }));
-
-const Portfolio = ({ items }: PortfolioProps) => {
-  const [selected, setSelected] = React.useState<number | null>(null);
-
-  const pieChartItems = React.useMemo<PieChartItem[] | undefined>(
+export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
+  const pieChartItems = React.useMemo<PieChartItem[]>(
     () =>
-      items &&
       items.map((item, i) => ({
         ...item,
         color: colors[i % colors.length],
@@ -42,12 +31,12 @@ const Portfolio = ({ items }: PortfolioProps) => {
   return (
     <div className="relative pt-full text-base">
       <div className="absolute inset-0">
-        <PieChart
+        <PieChartBase
           startAngle={-90}
           animate
           lineWidth={35}
           radius={pieChartDefaultProps.radius - selectedSegmentOffset}
-          data={pieChartItems || mockItems}
+          data={pieChartItems}
           labelStyle={(_) => ({
             fontSize: "3px",
             letterSpacing: "-0.15px",
@@ -60,11 +49,9 @@ const Portfolio = ({ items }: PortfolioProps) => {
           segmentsStyle={{
             cursor: "pointer",
           }}
-          onClick={(_, i) => setSelected(selected === i ? null : i)}
+          onClick={onClick && ((_, i) => onClick(i))}
         />
       </div>
     </div>
   );
 };
-
-export default Portfolio;
