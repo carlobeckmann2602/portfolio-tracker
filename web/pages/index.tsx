@@ -1,6 +1,6 @@
-import type { NextPage } from 'next'
-import Portfolio from '../components/portfolio'
-import Search from '../components/search'
+import type { NextPage } from "next";
+import Portfolio from "../components/portfolio";
+import Search from "../components/search";
 
 const Home: NextPage = () => {
   return (
@@ -8,7 +8,7 @@ const Home: NextPage = () => {
       <Portfolio />
       <Search />
     </>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
