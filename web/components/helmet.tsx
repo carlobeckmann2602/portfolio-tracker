@@ -6,10 +6,7 @@ const siteTitle = "Stonks";
 export function Helmet({ title }: { title?: string }) {
   return (
     <Head>
-      <title>
-        {title && `${title} – `}
-        {siteTitle}
-      </title>
+      <title>{title ? `${title} – ${siteTitle}` : siteTitle}</title>
     </Head>
   );
 }
