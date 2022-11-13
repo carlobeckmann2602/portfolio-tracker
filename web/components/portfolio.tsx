@@ -28,7 +28,6 @@ const mockItems: PieChartItem[] = new Array(mockItemsCount)
 
 const Portfolio = ({ items }: PortfolioProps) => {
   const [selected, setSelected] = React.useState<number | null>(null);
-  const [hovered, setHovered] = React.useState<number | null>(null);
 
   const pieChartItems = React.useMemo<PieChartItem[] | undefined>(
     () =>
@@ -58,14 +57,10 @@ const Portfolio = ({ items }: PortfolioProps) => {
           })}
           labelPosition={100 - 35 / 2}
           segmentsShift={(i) => (i === selected ? selectedSegmentOffset : 0)}
-          segmentsStyle={(i) => ({
+          segmentsStyle={{
             cursor: "pointer",
-            transition: "0.2s ease filter",
-            filter: hovered === i ? "brightness(0.6)" : undefined,
-          })}
+          }}
           onClick={(_, i) => setSelected(selected === i ? null : i)}
-          onMouseOver={(_, i) => setHovered(i)}
-          onMouseOut={() => setHovered(null)}
         />
       </div>
     </div>
