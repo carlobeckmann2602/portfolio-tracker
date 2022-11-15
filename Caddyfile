@@ -1,0 +1,7 @@
+api.mobilesys.de {
+  respond "Silence is golden."
+}
+
+h2899527.stratoserver.net {
+  reverse_proxy web:3000
+}
