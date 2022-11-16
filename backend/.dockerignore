@@ -1,2 +1,7 @@
-/node_modules
-.gitignore
+**/node_modules/
+**/dist
+.git
+npm-debug.log
+.coverage
+.coverage.*
+#.env
