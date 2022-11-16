@@ -16,6 +16,12 @@ CREATE TABLE "Stock" (
     "id" INTEGER NOT NULL,
     "symbol" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "close" TEXT NOT NULL,
+    "description" TEXT,
+    "high" TEXT NOT NULL,
+    "low" TEXT NOT NULL,
+    "open" TEXT NOT NULL,
+    "time" TIMESTAMP(3) NOT NULL,
 
     CONSTRAINT "Stock_pkey" PRIMARY KEY ("id")
 );
@@ -39,7 +45,7 @@ CREATE UNIQUE INDEX "Stock_symbol_key" ON "Stock"("symbol");
 CREATE UNIQUE INDEX "Stock_name_key" ON "Stock"("name");
 
 -- AddForeignKey
-ALTER TABLE "StocksOnUsers" ADD CONSTRAINT "StocksOnUsers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "StocksOnUsers" ADD CONSTRAINT "StocksOnUsers_stockId_fkey" FOREIGN KEY ("stockId") REFERENCES "Stock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "StocksOnUsers" ADD CONSTRAINT "StocksOnUsers_stockId_fkey" FOREIGN KEY ("stockId") REFERENCES "Stock"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "StocksOnUsers" ADD CONSTRAINT "StocksOnUsers_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

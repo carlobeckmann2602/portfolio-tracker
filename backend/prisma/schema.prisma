@@ -1,62 +1,42 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") //takes the db URL from the .env file
+  url      = env("DATABASE_URL")
 }
 
-//Instead of handling models in entity folders in the logic with Prisma you declare the models in this folder
-//Prisma Clients provides a TypeString Object accessable under import {User, Stock} from "@prisma/client"
-
-//DB Models here>>>
-
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  email String @unique
-  hash  String
-
-  firstName String? //maybe we dont need this...Depends on Frontend
+  id        Int             @id @default(autoincrement())
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  email     String          @unique
+  hash      String
+  firstName String?
   lastName  String?
-
-  stocks StocksOnUsers[]
+  stocks    StocksOnUsers[]
 }
 
 model Stock {
-  id    Int             @id
-  users StocksOnUsers[]
-
-  //Infos from Stock API > keine Ahnung welche Datentypen uebergeben werden > Konstantin muss korrigieren > Robin muss mit Design die benoetigten Felder klaeren
-  symbol      String   @unique
-  name        String   @unique
-  open        String
+  id          Int             @id
+  symbol      String          @unique
+  name        String          @unique
   close       String
+  description String?
   high        String
   low         String
-  description String?
+  open        String
   time        DateTime
-
-  //>>>hier muessen noch die Daten von der externen StockAPI rein
-  //value Int?...
+  users       StocksOnUsers[]
 }
 
-//mapping table for n-to-m relation between stocks and users
 model StocksOnUsers {
-  user    User  @relation(fields: [userId], references: [id])
-  userId  Int // relation scalar field (used in the `@relation` attribute above)
+  userId  Int
+  stockId Int
+  amount  Int
   stock   Stock @relation(fields: [stockId], references: [id])
-  stockId Int // relation scalar field (used in the `@relation` attribute above)
-  amount  Int // info about the amount of the stock which a owner owns
-
-  // assignedAt DateTime @default(now())
-  // assignedBy String
+  user    User  @relation(fields: [userId], references: [id])
 
   @@id([userId, stockId])
 }
