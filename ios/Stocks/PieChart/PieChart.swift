@@ -10,12 +10,12 @@ import SwiftUI
 struct PieChart: View {
 
   var title: String
-  var data: [ChartData]
+  var portfolio: Portfolio
   var separatorColor: Color
   var accentColors: [Color]
 
   @State private var currentValue = ""
-  @State private var currentLabel = ""
+  @State private var currentLabel = ""  // TODO currentPortfolioEntry
   @State private var touchLocation: CGPoint = .init(x: -1, y: -1)
 
   //Uncomment the following initializer to use fully generate random colors instead of using a custom color set
@@ -33,8 +33,8 @@ struct PieChart: View {
   var pieSlices: [PieSlice] {
 
     var slices = [PieSlice]()
-    data.enumerated().forEach { (index, data) in
-      let value = normalizedValue(index: index, data: self.data)
+    portfolio.stocks.enumerated().forEach { (index, data) in
+      let value = normalizedValue(index: index, portfolio: self.portfolio)
       if slices.isEmpty {
         slices.append((.init(startDegree: 0, endDegree: value * 360)))
       } else {
@@ -54,7 +54,7 @@ struct PieChart: View {
       ZStack {
         GeometryReader { geometry in
           ZStack {
-            ForEach(0..<self.data.count) { i in
+            ForEach(0..<self.portfolio.stocks.count) { i in
               PieChartSlice(
                 center: CGPoint(
                   x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY),
@@ -115,8 +115,8 @@ struct PieChart: View {
     let currentIndex =
       pieSlices.firstIndex(where: { $0.startDegree < angle && $0.endDegree > angle }) ?? -1
 
-    currentLabel = data[currentIndex].label
-    currentValue = String(format: "%.2f€", data[currentIndex].value)
+    currentLabel = portfolio.stocks[currentIndex].stock.name
+    currentValue = String(format: "%.2f€", portfolio.stocks[currentIndex].calculateStockValue())
   }
 
   func resetValues() {

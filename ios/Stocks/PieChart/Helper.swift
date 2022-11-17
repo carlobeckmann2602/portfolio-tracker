@@ -49,12 +49,13 @@ let pieColors = [
   Color.init(hex: "#ffa600"),
 ]
 
-func normalizedValue(index: Int, data: [ChartData]) -> Double {
+func normalizedValue(index: Int, portfolio: Portfolio) -> Double {
   var total = 0.0
-  data.forEach { data in
-    total += data.value
+  portfolio.stocks.forEach { data in
+    total += data.calculateStockValue()
   }
-  return data[index].value / total
+
+  return portfolio.stocks[index].calculateStockValue() / total
 }
 
 struct PieSlice {

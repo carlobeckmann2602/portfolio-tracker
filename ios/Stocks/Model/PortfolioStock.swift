@@ -11,4 +11,8 @@ struct PortfolioStock: Hashable, Codable, Identifiable {
   var id = UUID()
   var stock: Stock
   var amount: Float
+
+  func calculateStockValue() -> Double {
+    return (Double)(stock.value * amount)
+  }
 }

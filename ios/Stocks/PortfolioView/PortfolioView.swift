@@ -20,16 +20,8 @@ struct PortfolioView: View {
     VStack {
       PieChart(
         title: "My Portfolio",
-        data: portfolio.stocks.map({ portfolioEntry in
-          let doubleAmount = (Double)(portfolioEntry.amount * portfolioEntry.stock.value)
-          let floatAmount = portfolioEntry.amount * portfolioEntry.stock.value
-          print(String(format: "%.2f", doubleAmount))
-          print(String(format: "%.2f", floatAmount))
-          return ChartData(
-            label: portfolioEntry.stock.name,
-            value: (Double)(portfolioEntry.amount * portfolioEntry.stock.value))
-        }
-        ), separatorColor: Color(UIColor.systemBackground), accentColors: pieColors)
+        portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
+        accentColors: pieColors)
     }
 
   }
