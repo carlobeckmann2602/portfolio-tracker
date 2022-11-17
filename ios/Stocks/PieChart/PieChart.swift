@@ -33,8 +33,8 @@ struct PieChart: View {
   var pieSlices: [PieSlice] {
 
     var slices = [PieSlice]()
-    portfolio.stocks.enumerated().forEach { (index, data) in
-      let value = normalizedValue(index: index, portfolio: self.portfolio)
+    portfolio.stocks.forEach { data in
+      let value = normalizedValue(portfolioEntry: data, portfolio: self.portfolio)
       if slices.isEmpty {
         slices.append((.init(startDegree: 0, endDegree: value * 360)))
       } else {
@@ -71,13 +71,6 @@ struct PieChart: View {
                 touchLocation = position.location
                 updateCurrentValue(inPie: pieSize)
               })
-              .onEnded({ _ in
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                  withAnimation(Animation.easeOut) {
-                    resetValues()
-                  }
-                }
-              })
           )
         }
         .aspectRatio(contentMode: .fit)
@@ -102,6 +95,18 @@ struct PieChart: View {
 
         }
         .padding()
+      }
+      VStack {
+        if currentPortfolioEntry != nil {
+          Text(currentPortfolioEntry!.stock.name)
+          Text(
+            String(
+              format: "%.2f%% of your Portfolio",
+              normalizedValue(portfolioEntry: currentPortfolioEntry!, portfolio: self.portfolio)
+                * 100))
+          Text(String(format: "Current price: %.2f", currentPortfolioEntry!.stock.value))
+          Text("Trend: +0.76%")
+        }
       }
     }
     .padding()
