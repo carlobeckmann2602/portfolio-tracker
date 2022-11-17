@@ -39,14 +39,12 @@ extension Color {
 }
 
 let pieColors = [
-  Color.init(hex: "#2f4b7c"),
-  Color.init(hex: "#003f5c"),
-  Color.init(hex: "#665191"),
-  Color.init(hex: "#a05195"),
-  Color.init(hex: "#d45087"),
-  Color.init(hex: "#f95d6a"),
-  Color.init(hex: "#ff7c43"),
-  Color.init(hex: "#ffa600"),
+  Color.init(hex: "#0094ff"),
+  Color.init(hex: "#78d4fd"),
+  Color.init(hex: "#73b3ec"),
+  Color.init(hex: "#b6e4ff"),
+  Color.init(hex: "#9cc1e1"),
+  Color.init(hex: "#b9d7f1"),
 ]
 
 func normalizedValue(portfolioEntry: PortfolioEntry, portfolio: Portfolio) -> Double {

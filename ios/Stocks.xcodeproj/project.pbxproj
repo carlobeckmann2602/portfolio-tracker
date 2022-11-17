@@ -11,6 +11,7 @@
 		3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F329262EF300DB3C8F /* Helper.swift */; };
 		3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */; };
 		3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F729262EF300DB3C8F /* PieChart.swift */; };
+		3D67B9002926414F00DB3C8F /* PortfolioEntryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */; };
 		3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA98E1B29098A260091F88F /* StocksApp.swift */; };
 		3DA98E1E29098A260091F88F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA98E1D29098A260091F88F /* ContentView.swift */; };
 		3DA98E2029098A270091F88F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DA98E1F29098A270091F88F /* Assets.xcassets */; };
@@ -53,6 +54,7 @@
 		3D67B8F329262EF300DB3C8F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartSlice.swift; sourceTree = "<group>"; };
 		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
+		3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntryInfo.swift; sourceTree = "<group>"; };
 		3DA98E1829098A260091F88F /* Stocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DA98E1B29098A260091F88F /* StocksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksApp.swift; sourceTree = "<group>"; };
 		3DA98E1D29098A260091F88F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -107,6 +109,7 @@
 				3D67B8F329262EF300DB3C8F /* Helper.swift */,
 				3D67B8F729262EF300DB3C8F /* PieChart.swift */,
 				3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */,
+				3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */,
 			);
 			path = PieChart;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */,
 				3DE049662913C80000B9D392 /* StockHintList.swift in Sources */,
 				EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */,
+				3D67B9002926414F00DB3C8F /* PortfolioEntryInfo.swift in Sources */,
 				3DE049642913C7DB00B9D392 /* StockList.swift in Sources */,
 				EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */,
 				3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */,

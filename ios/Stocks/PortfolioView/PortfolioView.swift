@@ -17,13 +17,16 @@ struct PortfolioView: View {
   ])
 
   var body: some View {
-    VStack {
-      PieChart(
-        title: "My Portfolio",
-        portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
-        accentColors: pieColors)
+    ZStack {
+      Color.black
+        .edgesIgnoringSafeArea(.all)
+      VStack {
+        PieChart(
+          title: "My Portfolio",
+          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
+          accentColors: pieColors)
+      }
     }
-
   }
 }
 

@@ -47,10 +47,11 @@ struct PieChart: View {
   }
 
   var body: some View {
-    VStack {
+    VStack(alignment: .leading, spacing: 30) {
       Text(title)
         .bold()
         .font(.largeTitle)
+        .foregroundColor(Color.white)
       ZStack {
         GeometryReader { geometry in
           ZStack {
@@ -98,14 +99,7 @@ struct PieChart: View {
       }
       VStack {
         if currentPortfolioEntry != nil {
-          Text(currentPortfolioEntry!.stock.name)
-          Text(
-            String(
-              format: "%.2f%% of your Portfolio",
-              normalizedValue(portfolioEntry: currentPortfolioEntry!, portfolio: self.portfolio)
-                * 100))
-          Text(String(format: "Current price: %.2f", currentPortfolioEntry!.stock.value))
-          Text("Trend: +0.76%")
+          PortfolioEntryInfo(portfolioEntry: currentPortfolioEntry!, portfolio: self.portfolio)
         }
       }
     }
