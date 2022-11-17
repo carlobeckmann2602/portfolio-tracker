@@ -8,5 +8,5 @@
 import Foundation
 
 struct Portfolio {
-  var stocks: [PortfolioStock]
+  var stocks: [PortfolioEntry]
 }

@@ -11,9 +11,9 @@ import SwiftUI
 struct PortfolioView: View {
   @EnvironmentObject var modelData: ModelData
   @State var portfolio = Portfolio(stocks: [
-    PortfolioStock(stock: ModelData().stocks[0], amount: 5.4),
-    PortfolioStock(stock: ModelData().stocks[4], amount: 8),
-    PortfolioStock(stock: ModelData().stocks[22], amount: 15),
+    PortfolioEntry(stock: ModelData().stocks[0], amount: 5.4),
+    PortfolioEntry(stock: ModelData().stocks[4], amount: 8),
+    PortfolioEntry(stock: ModelData().stocks[22], amount: 15),
   ])
 
   var body: some View {

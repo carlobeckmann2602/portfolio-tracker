@@ -28,7 +28,7 @@
 		EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C83291C0D4E00A420E2 /* ModelData.swift */; };
 		EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C85291C128E00A420E2 /* Portfolio.swift */; };
 		EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C87291C25E600A420E2 /* PortfolioListItem.swift */; };
-		EDA81C8A291C2A1500A420E2 /* PortfolioStock.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C89291C2A1500A420E2 /* PortfolioStock.swift */; };
+		EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,7 +73,7 @@
 		EDA81C83291C0D4E00A420E2 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		EDA81C85291C128E00A420E2 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		EDA81C87291C25E600A420E2 /* PortfolioListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListItem.swift; sourceTree = "<group>"; };
-		EDA81C89291C2A1500A420E2 /* PortfolioStock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioStock.swift; sourceTree = "<group>"; };
+		EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,7 +199,7 @@
 				3DE049612913C7A400B9D392 /* Stock.swift */,
 				EDA81C83291C0D4E00A420E2 /* ModelData.swift */,
 				EDA81C85291C128E00A420E2 /* Portfolio.swift */,
-				EDA81C89291C2A1500A420E2 /* PortfolioStock.swift */,
+				EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -351,7 +351,7 @@
 				EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */,
 				3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */,
 				3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */,
-				EDA81C8A291C2A1500A420E2 /* PortfolioStock.swift in Sources */,
+				EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */,
 				EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */,
 				3DA98E47290992670091F88F /* SearchView.swift in Sources */,
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,

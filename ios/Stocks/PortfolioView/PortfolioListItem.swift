@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PortfolioListItem: View {
-  var portfolioStock: PortfolioStock
+  var portfolioStock: PortfolioEntry
   var body: some View {
     HStack {
       Text(portfolioStock.stock.name)
@@ -24,7 +24,7 @@ struct PortfolioListItem: View {
 struct PortfolioListItem_Previews: PreviewProvider {
   static var previews: some View {
     PortfolioListItem(
-      portfolioStock: PortfolioStock(
+      portfolioStock: PortfolioEntry(
         stock: Stock(id: 101, name: "Adidas", value: 120.4), amount: 2.3))
   }
 }

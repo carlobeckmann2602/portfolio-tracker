@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct PortfolioStock: Hashable, Codable, Identifiable {
+struct PortfolioEntry: Hashable, Codable, Identifiable {
   var id = UUID()
   var stock: Stock
   var amount: Float

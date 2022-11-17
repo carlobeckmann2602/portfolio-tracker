@@ -14,7 +14,7 @@ struct PieChart: View {
   var separatorColor: Color
   var accentColors: [Color]
 
-  @State private var currentPortfolioEntry: PortfolioStock? = nil
+  @State private var currentPortfolioEntry: PortfolioEntry? = nil
 
   @State private var touchLocation: CGPoint = .init(x: -1, y: -1)
 
