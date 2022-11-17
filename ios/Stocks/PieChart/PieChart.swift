@@ -14,8 +14,8 @@ struct PieChart: View {
   var separatorColor: Color
   var accentColors: [Color]
 
-  @State private var currentValue = ""
-  @State private var currentLabel = ""  // TODO currentPortfolioEntry
+  @State private var currentPortfolioEntry: PortfolioStock? = nil
+
   @State private var touchLocation: CGPoint = .init(x: -1, y: -1)
 
   //Uncomment the following initializer to use fully generate random colors instead of using a custom color set
@@ -82,18 +82,16 @@ struct PieChart: View {
         }
         .aspectRatio(contentMode: .fit)
         VStack {
-          if !currentLabel.isEmpty {
-            Text(currentLabel)
+          if currentPortfolioEntry != nil {
+            Text(currentPortfolioEntry!.stock.name)
               .font(.caption)
               .bold()
               .foregroundColor(.black)
               .padding(10)
               .background(
                 RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
-          }
 
-          if !currentValue.isEmpty {
-            Text(currentValue)
+            Text(String(format: "%.2f€", currentPortfolioEntry!.calculateStockValue()))
               .font(.caption)
               .bold()
               .foregroundColor(.black)
@@ -101,6 +99,7 @@ struct PieChart: View {
               .background(
                 RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
           }
+
         }
         .padding()
       }
@@ -115,13 +114,11 @@ struct PieChart: View {
     let currentIndex =
       pieSlices.firstIndex(where: { $0.startDegree < angle && $0.endDegree > angle }) ?? -1
 
-    currentLabel = portfolio.stocks[currentIndex].stock.name
-    currentValue = String(format: "%.2f€", portfolio.stocks[currentIndex].calculateStockValue())
+    currentPortfolioEntry = portfolio.stocks[currentIndex]
   }
 
   func resetValues() {
-    currentValue = ""
-    currentLabel = ""
+    currentPortfolioEntry = nil
     touchLocation = .init(x: -1, y: -1)
   }
 
