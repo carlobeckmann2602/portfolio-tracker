@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */; };
+		3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F329262EF300DB3C8F /* Helper.swift */; };
+		3D67B8FA29262EF300DB3C8F /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F429262EF300DB3C8F /* ChartData.swift */; };
+		3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */; };
+		3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F729262EF300DB3C8F /* PieChart.swift */; };
 		3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA98E1B29098A260091F88F /* StocksApp.swift */; };
 		3DA98E1E29098A260091F88F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DA98E1D29098A260091F88F /* ContentView.swift */; };
 		3DA98E2029098A270091F88F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3DA98E1F29098A270091F88F /* Assets.xcassets */; };
@@ -47,6 +51,10 @@
 
 /* Begin PBXFileReference section */
 		3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
+		3D67B8F329262EF300DB3C8F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
+		3D67B8F429262EF300DB3C8F /* ChartData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
+		3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartSlice.swift; sourceTree = "<group>"; };
+		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		3DA98E1829098A260091F88F /* Stocks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Stocks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3DA98E1B29098A260091F88F /* StocksApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksApp.swift; sourceTree = "<group>"; };
 		3DA98E1D29098A260091F88F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -95,6 +103,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3D67B8F229262ED700DB3C8F /* PieChart */ = {
+			isa = PBXGroup;
+			children = (
+				3D67B8F429262EF300DB3C8F /* ChartData.swift */,
+				3D67B8F329262EF300DB3C8F /* Helper.swift */,
+				3D67B8F729262EF300DB3C8F /* PieChart.swift */,
+				3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */,
+			);
+			path = PieChart;
+			sourceTree = "<group>";
+		};
 		3DA98E0F29098A260091F88F = {
 			isa = PBXGroup;
 			children = (
@@ -118,6 +137,7 @@
 		3DA98E1A29098A260091F88F /* Stocks */ = {
 			isa = PBXGroup;
 			children = (
+				3D67B8F229262ED700DB3C8F /* PieChart */,
 				EDA81C80291C09CE00A420E2 /* Resources */,
 				3DE049602913C79700B9D392 /* Model */,
 				3DA98E1B29098A260091F88F /* StocksApp.swift */,
@@ -327,10 +347,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				3DA98E1E29098A260091F88F /* ContentView.swift in Sources */,
+				3D67B8FA29262EF300DB3C8F /* ChartData.swift in Sources */,
+				3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */,
 				3DE049662913C80000B9D392 /* StockHintList.swift in Sources */,
 				EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */,
 				3DE049642913C7DB00B9D392 /* StockList.swift in Sources */,
 				EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */,
+				3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */,
+				3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */,
 				EDA81C8A291C2A1500A420E2 /* PortfolioStock.swift in Sources */,
 				EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */,
 				3DA98E47290992670091F88F /* SearchView.swift in Sources */,

@@ -18,13 +18,20 @@ struct PortfolioView: View {
 
   var body: some View {
     VStack {
-      List {
-        ForEach(portfolio.stocks) { portfolioStock in
-          PortfolioListItem(portfolioStock: portfolioStock)
+      PieChart(
+        title: "My Portfolio",
+        data: portfolio.stocks.map({ portfolioEntry in
+          let doubleAmount = (Double)(portfolioEntry.amount * portfolioEntry.stock.value)
+          let floatAmount = portfolioEntry.amount * portfolioEntry.stock.value
+          print(String(format: "%.2f", doubleAmount))
+          print(String(format: "%.2f", floatAmount))
+          return ChartData(
+            label: portfolioEntry.stock.name,
+            value: (Double)(portfolioEntry.amount * portfolioEntry.stock.value))
         }
-      }
-      .navigationTitle("Portfolio")
+        ), separatorColor: Color(UIColor.systemBackground), accentColors: pieColors)
     }
+
   }
 }
 
