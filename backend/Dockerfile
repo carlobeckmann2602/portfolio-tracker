@@ -1,20 +1,15 @@
-FROM node:current-alpine3.16
+FROM node:16
 WORKDIR /usr/app
-COPY package.json .
 
-# COPY package.json and package-lock.json files
 COPY package*.json ./
 
-# generated prisma files
-COPY prisma ./prisma/
+RUN npm ci
 
-# COPY ENV variable
-COPY .env ./
-
-# COPY tsconfig.json file
-COPY tsconfig.json ./
-
-# COPY
 COPY . .
-RUN npm install --quiet
+
 RUN npx prisma generate
+RUN npm run build
+
+EXPOSE 8080
+
+CMD npx prisma migrate deploy && npm run start:prod
