@@ -10,6 +10,26 @@ services:
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
       - ./caddy:/data
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: "123"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  backend:
+    image: mobsys-backend
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:123@db:5432/postgres?schema=public
+    depends_on: [db]
+
   web:
     image: mobsys-frontend
     build: ./web
+    restart: unless-stopped
+    depends_on: [backend]

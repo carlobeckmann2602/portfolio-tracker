@@ -1,5 +1,5 @@
 api.mobilesys.de {
-  respond "Silence is golden."
+  reverse_proxy backend:8080
 }
 
 h2899527.stratoserver.net {
