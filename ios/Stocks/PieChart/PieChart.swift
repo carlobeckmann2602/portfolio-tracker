@@ -12,6 +12,7 @@ struct PieChart: View {
   var title: String
   var portfolio: Portfolio
   var separatorColor: Color
+    var innerColor: Color
   var accentColors: [Color]
 
   @State private var currentPortfolioEntry: PortfolioEntry? = nil
@@ -59,10 +60,12 @@ struct PieChart: View {
               PieChartSlice(
                 center: CGPoint(
                   x: geometry.frame(in: .local).midX, y: geometry.frame(in: .local).midY),
-                radius: geometry.frame(in: .local).width / 2, startDegree: pieSlices[i].startDegree,
+                radius: geometry.frame(in: .local).width / 2,
+                innerRatio: 0.5 ,
+                startDegree: pieSlices[i].startDegree,
                 endDegree: pieSlices[i].endDegree,
                 isTouched: sliceIsTouched(index: i, inPie: geometry.frame(in: .local)),
-                accentColor: accentColors[i], separatorColor: separatorColor)
+                accentColor: accentColors[i], innerColor: innerColor, separatorColor: separatorColor)
             }
           }
           .gesture(

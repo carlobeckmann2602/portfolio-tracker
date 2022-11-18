@@ -23,7 +23,7 @@ struct PortfolioView: View {
       VStack {
         PieChart(
           title: "My Portfolio",
-          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
+          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
           accentColors: pieColors)
       }
     }
