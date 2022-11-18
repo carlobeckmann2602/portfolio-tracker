@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    image: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile
+      - ./caddy:/data
+  web:
+    image: mobsys-frontend
+    build: ./web
