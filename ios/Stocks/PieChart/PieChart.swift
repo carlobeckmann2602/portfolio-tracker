@@ -94,7 +94,6 @@ struct PieChart: View {
           }
 
         }
-        .padding()
       }
       VStack {
         if currentPortfolioEntry != nil {
@@ -102,7 +101,6 @@ struct PieChart: View {
         }
       }
     }
-    .padding()
   }
 
   func updateCurrentValue(inPie pieSize: CGRect) {
