@@ -22,7 +22,7 @@ struct PortfolioView: View {
         .edgesIgnoringSafeArea(.all)
       VStack {
         PieChart(
-          title: "My Portfolio",
+          title: "Portfolio",
           portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
           accentColors: pieColors)
       }
