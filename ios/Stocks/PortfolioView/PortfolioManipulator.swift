@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class PortfolioManager: ObservableObject {
+final class PortfolioManipulator: ObservableObject {
   @Published var portfolio: Portfolio
   init(portfolio: Portfolio) {
     self.portfolio = portfolio
