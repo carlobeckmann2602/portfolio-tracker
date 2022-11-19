@@ -11,12 +11,7 @@ import SwiftUI
 struct PortfolioLoadedView: View {
   let portfolio: Portfolio
   var body: some View {
-    VStack(alignment: .leading, spacing: 20) {
-      Text("Portfolio")
-        .bold()
-        .font(.system(size: 50))
-        .fontWeight(.bold)
-        .foregroundColor(Color.white)
+    VStack(alignment: .leading) {
       if !portfolio.stocks.isEmpty {
         Text(String(format: "Total value: %.2f€", portfolio.totalValue()))
           .bold()
@@ -24,34 +19,45 @@ struct PortfolioLoadedView: View {
           .fontWeight(.regular)
           .foregroundColor(Color.white)
       }
-      Label("add", systemImage: "plus.circle")
-        .font(.system(size: 40))
-        .foregroundColor(Color(hex: "0094ff"))
-        .labelStyle(.iconOnly)
+      HStack {
+        Spacer()
+        NavigationLink(destination: AddStockView().navigationTitle("Add Stock")) {
+          Label("add", systemImage: "plus.circle")
+            .font(.system(size: 40))
+            .foregroundColor(Color(hex: "0094ff"))
+            .labelStyle(.iconOnly)
+        }
+      }
+
       if portfolio.stocks.isEmpty {
         Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
       } else {
         PieChart(
-          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
+          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
+          innerColor: .black,
           accentColors: pieColors)
       }
     }.padding()
+      .navigationTitle("Portfolio").toolbarBackground(.red, for: .navigationBar)
   }
+
 }
 
 struct PortfolioView: View {
   var portfolioLoader = PortfolioLoader()
-  var body: some View {
-    ZStack {
-      Color.black
-        .edgesIgnoringSafeArea(.all)
-      AsyncContentView(
-        loadable: portfolioLoader,
-        loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
-      ) { portfolio in
-        PortfolioLoadedView(portfolio: portfolio)
-      }
 
+  var body: some View {
+    NavigationView {
+      ZStack {
+        Color.black
+        AsyncContentView(
+          loadable: portfolioLoader,
+          loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
+        ) { portfolio in
+          PortfolioLoadedView(portfolio: portfolio)
+        }
+
+      }
     }
   }
 }

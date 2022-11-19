@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */; };
+		3D334D1229290B5400060649 /* AddStockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D1129290B5400060649 /* AddStockView.swift */; };
 		3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F329262EF300DB3C8F /* Helper.swift */; };
 		3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */; };
 		3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F729262EF300DB3C8F /* PieChart.swift */; };
@@ -51,6 +52,7 @@
 
 /* Begin PBXFileReference section */
 		3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
+		3D334D1129290B5400060649 /* AddStockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddStockView.swift; sourceTree = "<group>"; };
 		3D67B8F329262EF300DB3C8F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartSlice.swift; sourceTree = "<group>"; };
 		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 			children = (
 				3DA98E49290992970091F88F /* PortfolioView.swift */,
 				3D9823952928F33B002002FA /* PortfolioLoader.swift */,
+				3D334D1129290B5400060649 /* AddStockView.swift */,
 			);
 			path = PortfolioView;
 			sourceTree = "<group>";
@@ -363,6 +366,7 @@
 				3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */,
 				3DA98E4A290992970091F88F /* PortfolioView.swift in Sources */,
 				3DE0495D2913C6D400B9D392 /* MockData.swift in Sources */,
+				3D334D1229290B5400060649 /* AddStockView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
