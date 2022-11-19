@@ -28,7 +28,6 @@
 		EDA81C82291C0A1100A420E2 /* Stocks_Mocked.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */; };
 		EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C83291C0D4E00A420E2 /* ModelData.swift */; };
 		EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C85291C128E00A420E2 /* Portfolio.swift */; };
-		EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C87291C25E600A420E2 /* PortfolioListItem.swift */; };
 		EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */; };
 /* End PBXBuildFile section */
 
@@ -74,7 +73,6 @@
 		EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Stocks_Mocked.json; sourceTree = "<group>"; };
 		EDA81C83291C0D4E00A420E2 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		EDA81C85291C128E00A420E2 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
-		EDA81C87291C25E600A420E2 /* PortfolioListItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioListItem.swift; sourceTree = "<group>"; };
 		EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntry.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -191,7 +189,6 @@
 			isa = PBXGroup;
 			children = (
 				3DA98E49290992970091F88F /* PortfolioView.swift */,
-				EDA81C87291C25E600A420E2 /* PortfolioListItem.swift */,
 			);
 			path = PortfolioView;
 			sourceTree = "<group>";
@@ -352,7 +349,6 @@
 				EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */,
 				3D67B9002926414F00DB3C8F /* PortfolioEntryInfo.swift in Sources */,
 				3DE049642913C7DB00B9D392 /* StockList.swift in Sources */,
-				EDA81C88291C25E600A420E2 /* PortfolioListItem.swift in Sources */,
 				3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */,
 				3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */,
 				EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */,
