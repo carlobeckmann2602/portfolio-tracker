@@ -8,6 +8,22 @@
 import Foundation
 import SwiftUI
 
+struct PortfolioLoadedView: View {
+  let portfolio: Portfolio
+  var body: some View {
+    VStack {
+      if portfolio.stocks.isEmpty {
+        Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
+      } else {
+        PieChart(
+          title: "Portfolio",
+          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
+          accentColors: pieColors)
+      }
+    }
+  }
+}
+
 struct PortfolioView: View {
   var portfolioLoader = PortfolioLoader()
   var body: some View {
@@ -18,10 +34,7 @@ struct PortfolioView: View {
         loadable: portfolioLoader,
         loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
       ) { portfolio in
-        PieChart(
-          title: "Portfolio",
-          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
-          accentColors: pieColors)
+        PortfolioLoadedView(portfolio: portfolio)
       }
 
     }

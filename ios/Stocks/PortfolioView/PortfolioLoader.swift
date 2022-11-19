@@ -8,12 +8,18 @@
 import Foundation
 
 class PortfolioLoader: LoadableObject {
+  var loadEmpty: Bool = false
   @Published private(set) var state = LoadingState<Portfolio>.idle
 
   func load() {
     state = .loading
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       let stocks = ModelData()
+      if self.loadEmpty {
+        self.state = .loaded(
+          Portfolio(stocks: []))
+        return
+      }
       self.state = .loaded(
         Portfolio(stocks: [
           PortfolioEntry(stock: stocks.stocks[0], amount: 5.4),
