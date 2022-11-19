@@ -20,14 +20,14 @@ struct SearchStocksList: View {
 
   var body: some View {
     if isSearching {
-      StockHintList()
+      SearchResultsList()
     } else {
-      StocksList()
+      OftenAddedStocksList()
     }
   }
 }
 
-class StocksLoader: LoadableObject {
+class OftenAddedStocksLoader: LoadableObject {
   @Published private(set) var state = LoadingState<[Stock]>.idle
 
   func load() {
@@ -38,23 +38,24 @@ class StocksLoader: LoadableObject {
   }
 }
 
-struct SearchView: View {
+struct AddStocksView: View {
 
   @StateObject var searchState = SearchState()
-  var stocksLoader = StocksLoader()
+  var oftenAddedStocksLoader = OftenAddedStocksLoader()
 
   var body: some View {
-    NavigationView {
-      AsyncContentView(loadable: stocksLoader, loadingView: ProgressView()) { stocks in
-        SearchStocksList()
-      }
-    }.searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
+    AsyncContentView(
+      loadable: oftenAddedStocksLoader, loadingView: ProgressView("loading often added")
+    ) { stocks in
+      SearchStocksList()
+    }
+    .searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
       searchState)
   }
 }
 
-struct SearchView_Previews: PreviewProvider {
+struct AddStocksView_Previews: PreviewProvider {
   static var previews: some View {
-    SearchView()
+    AddStocksView()
   }
 }

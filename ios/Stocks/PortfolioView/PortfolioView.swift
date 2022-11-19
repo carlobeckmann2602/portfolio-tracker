@@ -21,7 +21,7 @@ struct PortfolioLoadedView: View {
       }
       HStack {
         Spacer()
-        NavigationLink(destination: AddStockView().navigationTitle("Add Stock")) {
+        NavigationLink(destination: AddStocksView().navigationTitle("Add Stock")) {
           Label("add", systemImage: "plus.circle")
             .font(.system(size: 40))
             .foregroundColor(Color(hex: "0094ff"))
