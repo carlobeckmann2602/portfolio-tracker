@@ -13,4 +13,8 @@ struct Portfolio {
   func totalValue() -> Double {
     return stocks.map { $0.calculateStockValue() }.reduce(0, +)
   }
+
+  func isEmpty() -> Bool {
+    return stocks.isEmpty
+  }
 }

@@ -11,16 +11,31 @@ import SwiftUI
 struct PortfolioLoadedView: View {
   let portfolio: Portfolio
   var body: some View {
-    VStack {
+    VStack(alignment: .leading, spacing: 20) {
+      Text("Portfolio")
+        .bold()
+        .font(.system(size: 50))
+        .fontWeight(.bold)
+        .foregroundColor(Color.white)
+      if !portfolio.stocks.isEmpty {
+        Text(String(format: "Total value: %.2f€", portfolio.totalValue()))
+          .bold()
+          .font(.system(size: 35))
+          .fontWeight(.regular)
+          .foregroundColor(Color.white)
+      }
+      Label("add", systemImage: "plus.circle")
+        .font(.system(size: 40))
+        .foregroundColor(Color(hex: "0094ff"))
+        .labelStyle(.iconOnly)
       if portfolio.stocks.isEmpty {
         Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
       } else {
         PieChart(
-          title: "Portfolio",
           portfolio: portfolio, separatorColor: Color(UIColor.systemBackground), innerColor: .black,
           accentColors: pieColors)
       }
-    }
+    }.padding()
   }
 }
 

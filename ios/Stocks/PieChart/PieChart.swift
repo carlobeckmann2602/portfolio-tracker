@@ -9,7 +9,6 @@ import SwiftUI
 
 struct PieChart: View {
 
-  var title: String
   var portfolio: Portfolio
   var separatorColor: Color
   var innerColor: Color
@@ -49,16 +48,6 @@ struct PieChart: View {
 
   var body: some View {
     VStack(alignment: .leading, spacing: 20) {
-      Text(title)
-        .bold()
-        .font(.system(size: 50))
-        .fontWeight(.bold)
-        .foregroundColor(Color.white)
-      Text(String(format: "Total value: %.2f€", portfolio.totalValue()))
-        .bold()
-        .font(.system(size: 35))
-        .fontWeight(.regular)
-        .foregroundColor(Color.white)
       ZStack {
         GeometryReader { geometry in
           ZStack {
