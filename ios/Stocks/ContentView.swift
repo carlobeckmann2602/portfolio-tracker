@@ -9,10 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    TabView {
-      PortfolioView().tabItem { Label("Portfolio", systemImage: "chart.pie") }
-      SearchView().tabItem { Label("Search", systemImage: "magnifyingglass") }
-    }
+    PortfolioView().tabItem { Label("Portfolio", systemImage: "chart.pie") }
   }
 }
 
