@@ -19,7 +19,9 @@ struct SearchResultsList: View {
   var body: some View {
     List {
       ForEach(filterStocks(text: searchState.searchText)) { stock in
-        StockListCell(stock: stock)
+        NavigationLink(destination: Text("Add \(stock.name) to your portfolio")) {
+          StockListCell(stock: stock)
+        }
       }
     }
   }
