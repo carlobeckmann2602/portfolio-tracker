@@ -10,6 +10,8 @@ import SwiftUI
 
 struct AddToPortfolioView: View {
   var stock: Stock
+  var portfolio: Portfolio
+
   @State var input = "1"
   var body: some View {
     VStack {
@@ -25,6 +27,7 @@ struct AddToPortfolioView: View {
         Spacer()
       }
       Button {
+        portfolio.addStockToPortfolio(stock: stock, amount: 1)
         NavigationUtils.popToRootView()
       } label: {
         Text("Add to portfolio")

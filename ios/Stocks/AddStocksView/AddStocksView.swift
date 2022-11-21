@@ -14,15 +14,16 @@ class SearchState: ObservableObject {
 }
 
 struct SearchStocksList: View {
+  var portfolio: Portfolio
 
   @Environment(\.isSearching)
   private var isSearching: Bool
 
   var body: some View {
     if isSearching {
-      SearchResultsList()
+      SearchResultsList(portfolio: portfolio)
     } else {
-      OftenAddedStocksList()
+      OftenAddedStocksList(portfolio: portfolio)
     }
   }
 }
@@ -32,7 +33,7 @@ class OftenAddedStocksLoader: LoadableObject {
 
   func load() {
     state = .loading
-    DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       self.state = .loaded([Stock(id: 1, name: "DemoStock", value: 1)])
     }
   }
@@ -42,20 +43,15 @@ struct AddStocksView: View {
 
   @StateObject var searchState = SearchState()
   var oftenAddedStocksLoader = OftenAddedStocksLoader()
+  var portfolio: Portfolio
 
   var body: some View {
     AsyncContentView(
       loadable: oftenAddedStocksLoader, loadingView: ProgressView("loading often added")
     ) { stocks in
-      SearchStocksList()
+      SearchStocksList(portfolio: portfolio)
     }
     .searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
       searchState)
-  }
-}
-
-struct AddStocksView_Previews: PreviewProvider {
-  static var previews: some View {
-    AddStocksView()
   }
 }

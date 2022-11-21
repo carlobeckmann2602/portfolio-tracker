@@ -9,10 +9,15 @@ import Foundation
 import SwiftUI
 
 struct OftenAddedStocksList: View {
+  var portfolio: Portfolio
   var body: some View {
     List {
       ForEach(ModelData().stocks) { stock in
-        StockListCell(stock: stock)
+        NavigationLink(
+          destination: AddToPortfolioView(stock: stock, portfolio: portfolio)
+        ) {
+          StockListCell(stock: stock)
+        }
       }
     }
   }

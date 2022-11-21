@@ -9,7 +9,8 @@ import Foundation
 import SwiftUI
 
 struct PortfolioLoadedView: View {
-  let portfolio: Portfolio
+  @ObservedObject var portfolio: Portfolio
+
   var body: some View {
     VStack(alignment: .leading) {
       if !portfolio.stocks.isEmpty {
@@ -21,7 +22,10 @@ struct PortfolioLoadedView: View {
       }
       HStack {
         Spacer()
-        NavigationLink(destination: AddStocksView().navigationTitle("Add Stock")) {
+        NavigationLink(
+          destination: AddStocksView(portfolio: portfolio).navigationTitle(
+            "Add Stock")
+        ) {
           Label("add", systemImage: "plus.circle")
             .font(.system(size: 40))
             .foregroundColor(Color(hex: "0094ff"))
@@ -29,11 +33,12 @@ struct PortfolioLoadedView: View {
         }
       }
 
-      if portfolio.stocks.isEmpty {
+      if portfolio.isEmpty() {
         Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
       } else {
         PieChart(
-          portfolio: portfolio, separatorColor: Color(UIColor.systemBackground),
+          portfolio: portfolio,
+          separatorColor: Color(UIColor.systemBackground),
           innerColor: .black,
           accentColors: pieColors)
       }

@@ -11,18 +11,18 @@ import SwiftUI
 struct StockListCell: View {
   var stock: Stock
   var body: some View {
-    NavigationLink(destination: AddToPortfolioView(stock: stock)) {
-      HStack {
-        Image(systemName: "arrow.up.circle.fill")
-          .font(.system(size: 30))
-        VStack(alignment: .leading) {
-          Text(stock.name)
-          Text("+2,5%")
-            .font(.system(size: 12))
-        }
-        Spacer()
-        Text(String(format: "%.2f€", stock.value))
+
+    HStack {
+      Image(systemName: "arrow.up.circle.fill")
+        .font(.system(size: 30))
+      VStack(alignment: .leading) {
+        Text(stock.name)
+        Text("+2,5%")
+          .font(.system(size: 12))
       }
+      Spacer()
+      Text(String(format: "%.2f€", stock.value))
     }
+
   }
 }

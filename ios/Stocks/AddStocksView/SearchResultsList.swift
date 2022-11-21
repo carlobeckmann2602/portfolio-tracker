@@ -16,10 +16,14 @@ func filterStocks(text: String) -> [Stock] {
 
 struct SearchResultsList: View {
   @EnvironmentObject var searchState: SearchState
+  var portfolio: Portfolio
   var body: some View {
     List {
       ForEach(filterStocks(text: searchState.searchText)) { stock in
-        NavigationLink(destination: Text("Add \(stock.name) to your portfolio")) {
+        NavigationLink(
+          destination: AddToPortfolioView(
+            stock: stock, portfolio: portfolio)
+        ) {
           StockListCell(stock: stock)
         }
       }
