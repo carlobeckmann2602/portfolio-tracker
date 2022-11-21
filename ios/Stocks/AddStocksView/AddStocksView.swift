@@ -16,6 +16,8 @@ class SearchState: ObservableObject {
 struct SearchStocksList: View {
   var portfolio: Portfolio
 
+  var oftenAddedStocksLoader = OftenAddedStocksLoader()
+
   @Environment(\.isSearching)
   private var isSearching: Bool
 
@@ -23,7 +25,11 @@ struct SearchStocksList: View {
     if isSearching {
       SearchResultsList(portfolio: portfolio)
     } else {
-      OftenAddedStocksList(portfolio: portfolio)
+      AsyncContentView(
+        loadable: oftenAddedStocksLoader, loadingView: ProgressView()
+      ) { stocks in
+        OftenAddedStocksList(portfolio: portfolio)
+      }
     }
   }
 }
@@ -42,16 +48,13 @@ class OftenAddedStocksLoader: LoadableObject {
 struct AddStocksView: View {
 
   @StateObject var searchState = SearchState()
-  var oftenAddedStocksLoader = OftenAddedStocksLoader()
   var portfolio: Portfolio
 
   var body: some View {
-    AsyncContentView(
-      loadable: oftenAddedStocksLoader, loadingView: ProgressView("loading often added")
-    ) { stocks in
-      SearchStocksList(portfolio: portfolio)
-    }
-    .searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
-      searchState)
+
+    SearchStocksList(portfolio: portfolio)
+
+      .searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
+        searchState)
   }
 }
