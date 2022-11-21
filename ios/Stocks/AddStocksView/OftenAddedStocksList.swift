@@ -11,14 +11,20 @@ import SwiftUI
 struct OftenAddedStocksList: View {
   var portfolio: Portfolio
   var body: some View {
-    List {
-      ForEach(ModelData().stocks) { stock in
-        NavigationLink(
-          destination: AddToPortfolioView(stock: stock, portfolio: portfolio)
-        ) {
-          StockListCell(stock: stock)
+    VStack(alignment: .leading) {
+      Text("Often added")
+        .padding([.leading, .trailing], 20).padding([.top], 30)
+        .fontWeight(.semibold).italic()
+      List {
+        ForEach(ModelData().stocks) { stock in
+          NavigationLink(
+            destination: AddToPortfolioView(stock: stock, portfolio: portfolio)
+          ) {
+            StockListCell(stock: stock)
+          }
         }
       }
     }
+
   }
 }
