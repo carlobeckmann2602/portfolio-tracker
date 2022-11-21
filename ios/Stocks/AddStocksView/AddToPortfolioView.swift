@@ -20,21 +20,25 @@ struct AddToPortfolioView: View {
         TextField("", text: $input)
           .padding()
           .keyboardType(.decimalPad)
-      }
+          .textFieldStyle(.roundedBorder)
+      }.padding()
       HStack {
         Text("Money spend")
         Text(String(format: "%.2f€", amountSpend()))
         Spacer()
-      }
+      }.padding()
       Button {
-        portfolio.addStockToPortfolio(stock: stock, amount: 1)
+        portfolio.addStockToPortfolio(stock: stock, amount: stockNumberToPurchase())
         NavigationUtils.popToRootView()
       } label: {
         Text("Add to portfolio")
-      }
+      }.buttonStyle(.borderedProminent)
     }.navigationTitle(stock.name)
-  }
 
+  }
+  func stockNumberToPurchase() -> Int {
+    return Int(input) ?? 0
+  }
   func amountSpend() -> Float {
     return stock.value * (Float(input) ?? 0)
   }
