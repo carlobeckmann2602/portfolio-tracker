@@ -3,15 +3,16 @@ import {
   PieChart as PieChartBase,
   pieChartDefaultProps,
 } from "react-minimal-pie-chart";
-import { PortfolioItem } from ".";
+import { StockHolding } from "../../lib/backend";
 
 export type PieChartProps = {
-  items: PortfolioItem[];
+  items: StockHolding[];
   selected?: number;
   onClick?: (id: number) => void;
 };
 
-type PieChartItem = PortfolioItem & {
+type PieChartItem = {
+  value: number;
   color: string;
 };
 
@@ -22,7 +23,7 @@ export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
   const pieChartItems = React.useMemo<PieChartItem[]>(
     () =>
       items.map((item, i) => ({
-        ...item,
+        value: item.amount,
         color: colors[i % colors.length],
       })),
     [items]
