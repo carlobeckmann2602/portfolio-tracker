@@ -1,20 +1,35 @@
 import type { NextPage } from "next";
-import { Helmet } from "../components/helmet";
-import { CenterSection } from "../components/center-section";
-import { PageHeading } from "../components/page-heading";
-import { Input } from "../components/form/input";
 import { Button } from "../components/button";
+import { CenterSection } from "../components/center-section";
+import { Input } from "../components/form/input";
+import { Helmet } from "../components/helmet";
+import { PageHeading } from "../components/page-heading";
+import { useLogin } from "../lib/backend";
 
 const Login: NextPage = () => {
+  const login = useLogin()
+
   return (
     <>
       <Helmet title="Login" />
       <CenterSection>
         <PageHeading>Login</PageHeading>
         <form
-          onSubmit={(event) => {
+          onSubmit={async (event) => {
             event.preventDefault();
-            console.log("login form submitted");
+            const formData = new FormData(event.currentTarget);
+
+            const email = formData.get("email") as string;
+            const password = formData.get("password") as string;
+
+            login.mutate({
+              email,
+              password,
+            }, {
+              onSuccess: (data) => {
+                console.log(data);
+              }
+            })
           }}
         >
           <Input type="email" name="email" label="Email" />
