@@ -24,7 +24,7 @@ export const Search = ({}: SearchProps) => {
             key={index}
             name={stock.name}
             trend={rand(-4.0, 4.0)}
-            value={rand(0, 15)}
+            value={stock.open}
           />
         );
       })

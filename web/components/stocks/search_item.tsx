@@ -10,10 +10,15 @@ import {
 export type SearcItemProps = {
   trend: number;
   name: string;
-  value: number;
+  value: string;
 };
 
 export const SearchItem = ({ trend, name, value }: SearcItemProps) => {
+  const formatedStockValue = new Intl.NumberFormat("de-DE", {
+    style: "currency",
+    currency: "EUR",
+  }).format(parseFloat(value));
+
   const getTrendArrow = () => {
     if (trend > -0.5 && trend < 0.5) {
       return <FiArrowRight />;
@@ -41,7 +46,7 @@ export const SearchItem = ({ trend, name, value }: SearcItemProps) => {
           <p>{trend}%</p>
         </div>
       </div>
-      <div>{value} €</div>
+      <div>{formatedStockValue}</div>
     </div>
   );
 };
