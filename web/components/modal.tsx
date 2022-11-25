@@ -28,9 +28,9 @@ export const Modal = ({
           onClick={(evt) => {
             if (evt.target === evt.currentTarget) onClose();
           }}
-          className="bg-gray-500/50 w-full h-full flex items-center justify-center pointer-events-auto"
+          className="bg-gray-500/50 w-full h-screen flex items-center justify-center pointer-events-auto md:p-8"
         >
-          <div className="bg-white md:rounded-md w-full h-full md:w-2/3 md:h-1/2 p-6">
+          <div className="flex flex-col items-stretch bg-white md:rounded-md w-full h-full md:w-2/3 md:max-h-full p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">{title}</h2>
               {closeButton && (
@@ -42,7 +42,7 @@ export const Modal = ({
                 </div>
               )}
             </div>
-            {children}
+            <div className="overflow-hidden">{children}</div>
           </div>
         </div>,
         root

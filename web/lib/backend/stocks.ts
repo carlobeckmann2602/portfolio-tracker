@@ -34,7 +34,6 @@ async function fetchStockByUser(): Promise<StockHolding[]> {
 }
 
 async function fetchStocks(searchTerm: string): Promise<StockData[]> {
-  if(searchTerm === "") return []; 
   const res = await fetch(`${BACKEND_REST_URL}/stocks?name=${searchTerm}`);
   const data: StockData[] = await res.json();
   return tempFilterStocksByName(data, searchTerm);
