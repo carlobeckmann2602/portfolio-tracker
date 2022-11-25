@@ -15,7 +15,7 @@ struct RemoveAllAmount: View {
   @State var input = "1"
     var body: some View {
         Button {
-            portfolio.removeAllStockFromPortfolio(stock: stock, amount: 1)
+            portfolio.removeAllStockFromPortfolio(stock: stock)
         } label: {
             Text("Remove All")
         }.buttonStyle(.borderedProminent)
