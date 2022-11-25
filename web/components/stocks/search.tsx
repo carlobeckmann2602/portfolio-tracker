@@ -17,6 +17,7 @@ export const Search = ({}: SearchProps) => {
   const oftenAddedLabel =
     searchTerm === "" ? <i className="mb-2">Often added:</i> : null;
 
+  /* trend is a random value, replace when trend is included in the endpoint response */
   let filteredStocksList = filteredStocks
     ? filteredStocks.map((stock: StockData, index: number) => {
         return (
