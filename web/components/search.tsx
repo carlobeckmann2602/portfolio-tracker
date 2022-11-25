@@ -1,7 +1,8 @@
+import { Input } from "./form/input";
+
 const Search = () => {
   return (
     <>
-      <h1>Search</h1>
       <form
         onSubmit={(event) => {
           event.preventDefault();
@@ -10,8 +11,7 @@ const Search = () => {
           console.log("search form submitted", formData.get("searchTerm"));
         }}
       >
-        <label htmlFor="searchTerm">Stock Name</label>
-        <input type="text" id="searchTerm" name="searchTerm" />
+        <Input name="searchTerm" label="Search for a stock" />
       </form>
     </>
   );

@@ -2,12 +2,12 @@ import React from "react";
 import { InputLabel } from "./input_label";
 
 export type InputProps = {
-  type: string;
+  type?: string;
   name: string;
   label: string;
 };
 
-export const Input = ({ type, name, label }: InputProps) => {
+export const Input = ({ type = "text", name, label }: InputProps) => {
   return (
     <div className="relative text-base form-group my-2">
       <label className="flex flex-col">

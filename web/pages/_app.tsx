@@ -22,6 +22,10 @@ function MyApp({ Component, pageProps }: AppProps) {
       <BackendApiProvider>
         <Component {...pageProps} />
       </BackendApiProvider>
+      <div
+        id="modal-portal"
+        className="absolute w-full h-full top-0 left-0 pointer-events-none"
+      ></div>
     </>
   );
 }
