@@ -4,6 +4,6 @@ api.mobilesys.de {
   reverse_proxy backend:8080
 }
 
-h2899527.stratoserver.net {
+app.mobilesys.de {
   reverse_proxy web:3000
 }
