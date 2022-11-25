@@ -33,6 +33,7 @@ struct PortfolioEntryInfo: View {
       Text(String(format: "Current price: %.2f€", portfolioEntry.stock.value))
       Text("Trend: +0.76%")
         StepperView()
+        RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)
     }.foregroundColor(Color.white)
   }
   func formatPortfolioProportion() -> String {

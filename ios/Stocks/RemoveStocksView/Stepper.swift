@@ -10,7 +10,6 @@ import SwiftUI
 
 struct StepperView: View {
     @State private var amount = 0
-//    @State var portfolioEntry: PortfolioEntry
     
     func incrementStep() {
         amount += 1
@@ -18,7 +17,7 @@ struct StepperView: View {
     }
     
     func decrementStep() {
-        amount -= 1
+       amount -= 1
         
     }
     

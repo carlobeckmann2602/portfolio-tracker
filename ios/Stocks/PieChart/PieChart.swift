@@ -21,6 +21,7 @@ struct PieChart: View {
   func currentPortfolioEntry() -> PortfolioEntry? {
     return self.portfolio.stocks.first(where: { $0.stock.id == currentStockId })
   }
+    
 
   func computePieSclices() -> [PieSlice] {
     var slices = [PieSlice]()

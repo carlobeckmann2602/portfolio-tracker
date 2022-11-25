@@ -34,4 +34,18 @@ class Portfolio: ObservableObject {
       self.stocks = self.stocks
     }
   }
+    
+    func removeAllStockFromPortfolio(stock: Stock, amount: Int) {
+      DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
+        if existingEntryIndex != nil {
+          self.stocks[existingEntryIndex!].amount -= self.stocks[existingEntryIndex!].amount
+        } else {
+          let entry = PortfolioEntry(stock: stock, amount: amount)
+          self.stocks.append(entry)
+        }
+        self.stocks = self.stocks
+      }
+    }
+    
 }
