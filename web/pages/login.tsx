@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import { useRouter } from "next/router";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Input } from "../components/form/input";
@@ -8,6 +9,7 @@ import { useLogin } from "../lib/backend";
 
 const Login: NextPage = () => {
   const login = useLogin()
+  const router = useRouter()
 
   return (
     <>
@@ -27,7 +29,9 @@ const Login: NextPage = () => {
               password,
             }, {
               onSuccess: (data) => {
-                console.log(data);
+                if (data.ok) {
+                  router.push("/")
+                }
               }
             })
           }}
