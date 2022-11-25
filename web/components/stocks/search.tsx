@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { StockData, useStocks } from "../../lib/backend";
 import { Input } from "../form/input";
-import { FiArrowDownRight } from "react-icons/fi";
+import { SearchItem } from "./search_item";
 
 export type SearchProps = {};
 
@@ -10,24 +10,19 @@ export const Search = ({}: SearchProps) => {
   const { data: filteredStocks } = useStocks(searchTerm);
   const searchDelay = 500;
 
+  const rand = (min: number, max: number) => {
+    return parseFloat((Math.random() * (max - min + 1) + min).toFixed(2));
+  };
+
   let filteredStocksList = filteredStocks
     ? filteredStocks.map((stock: StockData, index: number) => {
         return (
-          <div
+          <SearchItem
             key={index}
-            className="flex items-center mb-2 justify-between px-4 py-2 border-2 border-solida bg-main-300 rounded-sm"
-          >
-            <div className="flex items-center">
-              <div className="mr-4 w-8 h-8 p-2 bg-main-500 text-white rounded-full flex items-center justify-center">
-                <FiArrowDownRight />
-              </div>
-              <div>
-                <p>{stock.name}</p>
-                <p>+2.6%</p>
-              </div>
-            </div>
-            <div>15 €</div>
-          </div>
+            name={stock.name}
+            trend={rand(-4.0, 4.0)}
+            value={rand(0, 15)}
+          />
         );
       })
     : null;
