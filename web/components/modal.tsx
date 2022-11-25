@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { FiX } from "react-icons/fi";
 
 export type ModalProps = {
   open?: boolean;
@@ -35,9 +36,9 @@ export const Modal = ({
               {closeButton && (
                 <div
                   onClick={onClose}
-                  className="rounded-full border-2 border-black border-solid w-8 h-8 items-center text-center cursor-pointer"
+                  className="flex items-center justify-center rounded-full border-2 border-black border-solid w-8 h-8 cursor-pointer"
                 >
-                  x
+                  <FiX />
                 </div>
               )}
             </div>

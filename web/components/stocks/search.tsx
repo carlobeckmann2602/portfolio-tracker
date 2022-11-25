@@ -1,50 +1,47 @@
 import React, { useEffect, useState } from "react";
-import { StockData, useStockHoldings } from "../../lib/backend";
+import { StockData, useStocks } from "../../lib/backend";
 import { Input } from "../form/input";
+import { FiArrowDownRight } from "react-icons/fi";
 
 export type SearchProps = {};
 
 export const Search = ({}: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredStocks, setFilteredStocks] = useState<StockData[]>([]);
+  const { data: filteredStocks } = useStocks(searchTerm);
   const searchDelay = 500;
-  let filteredStocksList = filteredStocks.map((stock, index) => {
-    return <div key={index}>{stock.name}</div>;
-  });
+
+  let filteredStocksList = filteredStocks
+    ? filteredStocks.map((stock: StockData, index: number) => {
+        return (
+          <div
+            key={index}
+            className="flex items-center mb-2 justify-between px-4 py-2 border-2 border-solida bg-main-300 rounded-sm"
+          >
+            <div className="flex items-center">
+              <div className="mr-4 w-8 h-8 p-2 bg-main-500 text-white rounded-full flex items-center justify-center">
+                <FiArrowDownRight />
+              </div>
+              <div>
+                <p>{stock.name}</p>
+                <p>+2.6%</p>
+              </div>
+            </div>
+            <div>15 €</div>
+          </div>
+        );
+      })
+    : null;
 
   const handleSearchChange = (evt: Event) => {
-    setSearchTerm((evt.target as HTMLTextAreaElement).value);
+    handleSearchInput((evt.target as HTMLTextAreaElement).value);
   };
 
-  /* will be replaced when filter is implemented in backend */
-  const tempFilterStocksByName = (stocks: StockData[], searchTerm: string) => {
-    const filteredStocks: StockData[] = [];
-    stocks.forEach((stock) => {
-      if (
-        stock.name
-          .toLocaleLowerCase()
-          .startsWith(searchTerm.toLocaleLowerCase())
-      ) {
-        filteredStocks.push(stock);
-      }
-    });
-    return filteredStocks;
-  };
-
-  useEffect(() => {
+  const handleSearchInput = (input: string) => {
     const delay = setTimeout(async () => {
-      if (searchTerm === "") {
-        setFilteredStocks([]);
-        return;
-      }
-      const res = await fetch(
-        `https://api.mobilesys.de/stocks?name=${searchTerm}"`
-      );
-      const data = await res.json();
-      setFilteredStocks(tempFilterStocksByName(data, searchTerm));
+      setSearchTerm(input);
     }, searchDelay);
     return () => clearTimeout(delay);
-  }, [searchTerm]);
+  };
 
   return (
     <>

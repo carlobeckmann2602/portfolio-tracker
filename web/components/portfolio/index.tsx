@@ -3,6 +3,7 @@ import { Modal } from "../modal";
 import { PieChart } from "./pie-chart";
 import { useStockHoldings } from "../../lib/backend";
 import { Search } from "../stocks/search";
+import { FiPlus } from "react-icons/fi";
 
 const Portfolio = () => {
   const { data: items } = useStockHoldings();
@@ -15,13 +16,12 @@ const Portfolio = () => {
 
   return (
     <div className="relative flex flex-col gap-4">
-      <Search></Search>
       <div className="z-0">
         <div
           onClick={() => setModalIsOpen(true)}
-          className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 items-center text-center cursor-pointer"
+          className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
         >
-          +
+          <FiPlus />
         </div>
         <PieChart items={items} onClick={setSelectedId} selected={selectedId} />
         <div>
@@ -36,7 +36,7 @@ const Portfolio = () => {
           setModalIsOpen(false);
         }}
       >
-        <Search />
+        <Search></Search>
       </Modal>
     </div>
   );
