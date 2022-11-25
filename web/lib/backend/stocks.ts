@@ -1,4 +1,4 @@
-import { QueryKey, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { BACKEND_REST_URL } from ".";
 
 export type StockData = {
