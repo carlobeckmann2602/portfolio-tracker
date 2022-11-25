@@ -1,15 +1,17 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
+import { useContext } from "react";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Input } from "../components/form/input";
 import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
-import { useLogin } from "../lib/backend";
+import { AuthContext, useLogin } from "../lib/backend";
 
 const Login: NextPage = () => {
   const login = useLogin()
   const router = useRouter()
+  const [, setUserID] = useContext(AuthContext);
 
   return (
     <>
@@ -30,6 +32,7 @@ const Login: NextPage = () => {
             }, {
               onSuccess: (data) => {
                 if (data.ok) {
+                  setUserID("1")
                   router.push("/")
                 }
               }

@@ -1,5 +1,10 @@
 import { useMutation } from "@tanstack/react-query";
 import { BACKEND_REST_URL } from ".";
+import { createContext, Dispatch, SetStateAction } from "react";
+
+export const AuthContext = createContext<
+  [string | null, Dispatch<SetStateAction<string | null>>]
+>([null, () => {}]);
 
 type CreateUserDTO = {
   email: string;

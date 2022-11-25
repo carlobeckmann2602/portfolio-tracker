@@ -1,9 +1,12 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { BackendApiProvider } from "../lib/backend";
+import { AuthContext, BackendApiProvider } from "../lib/backend";
+import { useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [userID, setUserID] = useState<string | null>(null);
+
   return (
     <>
       <Head>
@@ -20,7 +23,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
-        <Component {...pageProps} />
+        <AuthContext.Provider value={[userID, setUserID]}>
+          <Component {...pageProps} />
+        </AuthContext.Provider>
       </BackendApiProvider>
       <div
         id="modal-portal"
