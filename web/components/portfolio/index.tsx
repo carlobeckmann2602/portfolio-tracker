@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal } from "../modal";
-import Search from "../search";
 import { PieChart } from "./pie-chart";
 import { useStockHoldings } from "../../lib/backend";
+import { Search } from "../search/search";
 
 const Portfolio = () => {
   const { data: items } = useStockHoldings();
@@ -15,6 +15,7 @@ const Portfolio = () => {
 
   return (
     <div className="relative flex flex-col gap-4">
+      <Search></Search>
       <div className="z-0">
         <div
           onClick={() => setModalIsOpen(true)}
