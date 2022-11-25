@@ -32,12 +32,8 @@ export const Search = ({}: SearchProps) => {
     : null;
 
   const handleSearchChange = (evt: Event) => {
-    handleSearchInput((evt.target as HTMLTextAreaElement).value);
-  };
-
-  const handleSearchInput = (input: string) => {
     const delay = setTimeout(async () => {
-      setSearchTerm(input);
+      setSearchTerm((evt.target as HTMLTextAreaElement).value);
     }, searchDelay);
     return () => clearTimeout(delay);
   };
