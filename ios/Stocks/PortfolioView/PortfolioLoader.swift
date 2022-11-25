@@ -22,7 +22,7 @@ class PortfolioLoader: LoadableObject {
       }
       self.state = .loaded(
         Portfolio(stocks: [
-          PortfolioEntry(stock: stocks.stocks[0], amount: 5.4),
+          PortfolioEntry(stock: stocks.stocks[0], amount: 5),
           PortfolioEntry(stock: stocks.stocks[4], amount: 8),
           PortfolioEntry(stock: stocks.stocks[22], amount: 15),
         ]))

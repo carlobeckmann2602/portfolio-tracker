@@ -24,7 +24,7 @@ struct AddToPortfolioView: View {
       }.padding()
       HStack {
         Text("Money spend")
-        Text(String(format: "%.2f€", amountSpend()))
+        Text(String(amountSpend()))
         Spacer()
       }.padding()
       Button {
@@ -39,7 +39,7 @@ struct AddToPortfolioView: View {
   func stockNumberToPurchase() -> Int {
     return Int(input) ?? 0
   }
-  func amountSpend() -> Float {
-    return stock.value * (Float(input) ?? 0)
+  func amountSpend() -> Int {
+    return Int(stock.value) * (Int(input) ?? 0)
   }
 }

@@ -10,9 +10,9 @@ import Foundation
 struct PortfolioEntry: Hashable, Codable, Identifiable {
   var id = UUID()
   var stock: Stock
-  var amount: Float
+  var amount: Int
 
   func calculateStockValue() -> Double {
-    return (Double)(stock.value * amount)
+    return (Double)(stock.value * Float(amount))
   }
 }

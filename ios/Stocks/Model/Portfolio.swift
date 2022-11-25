@@ -26,9 +26,9 @@ class Portfolio: ObservableObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
       if existingEntryIndex != nil {
-        self.stocks[existingEntryIndex!].amount += Float(amount)
+        self.stocks[existingEntryIndex!].amount += amount
       } else {
-        let entry = PortfolioEntry(stock: stock, amount: (Float)(amount))
+        let entry = PortfolioEntry(stock: stock, amount: amount)
         self.stocks.append(entry)
       }
       self.stocks = self.stocks
