@@ -6,6 +6,7 @@ export type InputProps = {
   name: string;
   label?: string;
   placeholder?: string;
+  handleChange?: (evt: Event) => void;
 };
 
 export const Input = ({
@@ -13,6 +14,7 @@ export const Input = ({
   name,
   label,
   placeholder,
+  handleChange,
 }: InputProps) => {
   const labelElement = label ? <InputLabel>{label}</InputLabel> : null;
   return (
@@ -23,6 +25,7 @@ export const Input = ({
           type={type}
           name={name}
           placeholder={placeholder}
+          onChange={handleChange}
           className="border outline-none border-solid border-main-400/50 focus:border-main-400 p-1 rounded-sm"
         />
       </label>

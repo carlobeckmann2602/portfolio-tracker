@@ -2,7 +2,7 @@ import React from "react";
 import { Modal } from "../modal";
 import { PieChart } from "./pie-chart";
 import { useStockHoldings } from "../../lib/backend";
-import { Search } from "../search/search";
+import { Search } from "../stocks/search";
 
 const Portfolio = () => {
   const { data: items } = useStockHoldings();
