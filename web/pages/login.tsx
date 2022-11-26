@@ -1,17 +1,16 @@
 import type { NextPage } from "next";
 import { useRouter } from "next/router";
-import { useContext } from "react";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Input } from "../components/form/input";
 import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
-import { AuthContext, useLogin } from "../lib/backend";
+import { useAuthContext, useLogin } from "../lib/backend";
 
 const Login: NextPage = () => {
-  const login = useLogin()
-  const router = useRouter()
-  const [, setUserID] = useContext(AuthContext);
+  const login = useLogin();
+  const router = useRouter();
+  const [, setUserID] = useAuthContext();
 
   return (
     <>
@@ -26,17 +25,20 @@ const Login: NextPage = () => {
             const email = formData.get("email") as string;
             const password = formData.get("password") as string;
 
-            login.mutate({
-              email,
-              password,
-            }, {
-              onSuccess: (data) => {
-                if (data.ok) {
-                  setUserID("1")
-                  router.push("/")
-                }
+            login.mutate(
+              {
+                email,
+                password,
+              },
+              {
+                onSuccess: (data) => {
+                  if (data.ok) {
+                    setUserID("1");
+                    router.push("/");
+                  }
+                },
               }
-            })
+            );
           }}
         >
           <Input type="email" name="email" label="Email" />
