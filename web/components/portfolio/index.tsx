@@ -1,5 +1,6 @@
 import React from "react";
 import { PieChart } from "./pie-chart";
+import { StockDetails } from "./stock-details";
 
 export type PortfolioItem = {
   // TODO: Replace with actual schema from backend.
@@ -12,10 +13,6 @@ export type PortfolioItem = {
 
 export type PortfolioProps = {
   items?: PortfolioItem[];
-};
-
-type PieChartItem = PortfolioItem & {
-  color: string;
 };
 
 const mockItems: PortfolioItem[] = [
@@ -87,35 +84,7 @@ const Portfolio = ({ items }: PortfolioProps) => {
   return (
     <div className="flex flex-col gap-4">
       <PieChart items={items} onClick={setSelectedId} selected={selectedId} />
-      <div className="w-4/5 self-center">
-        <div className="flex flex-row">
-          <div className="rounded-full w-16 h-16 bg-gray-600 mr-6 mb-6">
-          </div>
-          <div>
-            <h2 className="text-4xl mb-2 font-medium">{selected.name}</h2>
-            <p className="text-2xl">{selected.value.toFixed(2)}€</p>
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Current price:</p>
-            <p className="text-2xl">{selected.currentPrice}€</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Trend:</p>
-            <p className="text-2xl">{selected.trend}%</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Count:</p>
-            <div className="flex flex-row items-center">
-              <button className="text-2xl rounded-md border border-black w-11 h-11">-</button>
-              <p className="text-2xl p-3">0</p>
-              <button className="text-2xl rounded-md border border-black w-11 h-11">+</button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button className="text-2xl rounded-md border border-black w-[350px] h-20">Remove all</button>
+      <StockDetails stock={selected} />
     </div>
   );
 };
