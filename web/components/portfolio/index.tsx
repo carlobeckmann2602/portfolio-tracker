@@ -15,8 +15,8 @@ const Portfolio = () => {
   const selected = items[selectedId];
 
   return (
-    <div className="relative flex flex-col gap-4">
-      <div className="z-0">
+    <>
+      <div className="relative flex flex-col gap-6 z-0">
         <div
           onClick={() => setModalIsOpen(true)}
           className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 items-center text-center cursor-pointer"
@@ -35,7 +35,7 @@ const Portfolio = () => {
       >
         <Search />
       </Modal>
-    </div>
+    </>
   );
 };
 

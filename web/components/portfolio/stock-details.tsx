@@ -1,42 +1,65 @@
+import React from "react";
 import { StockHolding } from "../../lib/backend";
+
+const TableRow = ({ children }: React.PropsWithChildren) => (
+  <div className="flex justify-between">{children}</div>
+);
+
+function CounterInput({
+  value,
+  onChange,
+}: {
+  value: number;
+  onChange: (value: number) => void;
+}) {
+  return (
+    <div className="flex items-center">
+      <button
+        className="rounded-md border border-black w-8 select-none"
+        onClick={() => onChange(value - 1)}
+      >
+        -
+      </button>
+      <div className="w-20 text-center">{value}</div>
+      <button
+        className="rounded-md border border-black w-8 select-none"
+        onClick={() => onChange(value + 1)}
+      >
+        +
+      </button>
+    </div>
+  );
+}
 
 export function StockDetails({ holding }: { holding: StockHolding }) {
   const { name, symbol, high } = holding.stock;
+  const [count, setCount] = React.useState(holding.amount);
+  React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
-    <div>
-      <div className="w-4/5 self-center">
-        <div className="flex flex-row">
-          <div className="rounded-full w-16 h-16 bg-gray-600 mr-6 mb-6"></div>
-          <div>
-            <h2 className="text-4xl mb-2 font-medium">{name}</h2>
-            <p className="text-2xl">{holding.amount.toFixed(2)}€</p>
-          </div>
-        </div>
-        <div className="flex flex-col">
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Symbol:</p>
-            <p className="text-2xl">{symbol}</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Current price:</p>
-            <p className="text-2xl">{high}€</p>
-          </div>
-          <div className="flex flex-row justify-between">
-            <p className="font-medium text-2xl">Count:</p>
-            <div className="flex flex-row items-center">
-              <button className="text-2xl rounded-md border border-black w-11 h-11">
-                -
-              </button>
-              <p className="text-2xl p-3">0</p>
-              <button className="text-2xl rounded-md border border-black w-11 h-11">
-                +
-              </button>
-            </div>
-          </div>
+    <div className="px-6 flex flex-col gap-6">
+      <div className="flex items-center gap-4">
+        <div className="rounded-full w-16 h-16 bg-gray-300"></div>
+        <div>
+          <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
+          <p>{holding.amount.toFixed(2)}€</p>
         </div>
       </div>
-      <button className="text-2xl rounded-md border border-black w-[350px] h-20">
+      <div className="flex flex-col text-lg gap-2">
+        <TableRow>
+          <div>Symbol:</div>
+          <div>{symbol}</div>
+        </TableRow>
+        <TableRow>
+          <div>Current price:</div>
+          <div>{high}€</div>
+        </TableRow>
+        <TableRow>
+          <div>Count:</div>
+          <CounterInput value={count} onChange={setCount} />
+        </TableRow>
+      </div>
+      <button className="text-lg rounded-md border border-black w-full p-4">
         Remove all
       </button>
     </div>
