@@ -10,10 +10,12 @@ import SwiftUI
 
 struct StepperView: View {
     @State private var amount = 0
+    var stock: Stock
+    var portfolio: Portfolio
     
     func incrementStep() {
         amount += 1
-        
+        portfolio.addStockToPortfolio(stock: stock, amount: 1)
     }
     
     func decrementStep() {

@@ -32,7 +32,7 @@ struct PortfolioEntryInfo: View {
         .frame(height: 2)
       Text(String(format: "Current price: %.2f€", portfolioEntry.stock.value))
       Text("Trend: +0.76%")
-        StepperView()
+        StepperView(stock: portfolioEntry.stock, portfolio: portfolio)
         RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)
     }.foregroundColor(Color.white)
   }
