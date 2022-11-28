@@ -20,8 +20,10 @@ struct StepperView: View {
     }
     
     func decrementStep() {
-       amount -= 1
-        portfolio.removeONEStockFromPortfolio(stock: stock)
+        if (portfolioEntry.get_amount() > 0) {
+            amount -= 1
+            portfolio.removeONEStockFromPortfolio(stock: stock)
+        }
     }
     
     var body: some View {
