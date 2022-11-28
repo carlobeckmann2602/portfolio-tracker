@@ -14,15 +14,4 @@ export class CreateUserDto {
   @IsNotEmpty()
   @ApiProperty()
   password: string;
-
-  @IsString()
-  @ApiProperty()
-  firstName: string;
-
-  @IsString()
-  @ApiProperty()
-  lastName: string;
-
-  //weitere Felder aus Registration form
-  //.... abhaengig von Design/Marketing
 }

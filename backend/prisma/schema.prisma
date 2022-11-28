@@ -13,8 +13,6 @@ model User {
   updatedAt DateTime        @updatedAt
   email     String          @unique
   hash      String
-  firstName String?
-  lastName  String?
   stocks    StocksOnUsers[]
 }
 
@@ -27,6 +25,7 @@ model Stock {
   high        String
   low         String
   open        String
+  trend       String
   time        DateTime
   users       StocksOnUsers[]
 }
