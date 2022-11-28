@@ -12,6 +12,7 @@ struct StepperView: View {
     @State private var amount = 0
     var stock: Stock
     var portfolio: Portfolio
+    var portfolioEntry: PortfolioEntry
     
     func incrementStep() {
         amount += 1
@@ -25,7 +26,7 @@ struct StepperView: View {
     
     var body: some View {
         HStack{
-            Text("Amount: \(amount)        ")
+            Text("Amount: \(portfolioEntry.get_amount())        ")
             Stepper {
             } onIncrement: {
                 incrementStep()
