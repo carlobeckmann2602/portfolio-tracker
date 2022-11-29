@@ -33,6 +33,7 @@ const Login: NextPage = () => {
           <Input type="password" name="password" label="Password" />
           <Button type="submit">Login</Button>
         </form>
+        <Link href="/register">No account yet? Register here.</Link>
       </CenterSection>
     </>
   );
