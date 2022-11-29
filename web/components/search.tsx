@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
+  StockData,
   useStockHoldingAddition,
   useStockHoldings,
   useStockSearch,
 } from "../lib/backend";
 import { Input } from "./form/input";
+
+type StockSearchResult = { stock: StockData; inPortfolio: boolean };
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -34,11 +37,13 @@ const Search = () => {
     return () => input.removeEventListener("input", handleChange);
   }, []);
 
-  const filteredStocks = useMemo(
+  const results = useMemo<StockSearchResult[]>(
     () =>
-      foundStocks?.filter((stock) =>
-        holdings?.every((holding) => holding.stock.id != stock.id)
-      ),
+      foundStocks?.map((stock) => ({
+        stock,
+        inPortfolio:
+          holdings?.some((holding) => holding.stock.id == stock.id) || false,
+      })) || [],
     [foundStocks, holdings]
   );
 
@@ -47,20 +52,26 @@ const Search = () => {
       <Input name="searchTerm" label="Search for a stock" innerRef={inputRef} />
       <div className="relative h-full">
         <div className="absolute inset-0 overflow-auto">
-          {filteredStocks &&
-            filteredStocks.map((stock, i) => (
-              <button
-                key={i}
-                className="flex justify-between w-full px-4 py-2 rounded-md hover:bg-gray-100"
-                onClick={() => addStockHolding?.({ stock, amount: 1 })}
-              >
-                <span className="block">
-                  {stock.name}{" "}
-                  <span className="text-gray-400">({stock.symbol})</span>
-                </span>
-                <span className="block">{stock.high}€</span>
-              </button>
-            ))}
+          {results.map(({ stock, inPortfolio }, i) => (
+            <button
+              key={i}
+              className={`flex justify-between w-full px-4 py-2 ${
+                inPortfolio ? "opacity-25" : "rounded-md hover:bg-gray-100"
+              }`}
+              onClick={
+                !inPortfolio
+                  ? () => addStockHolding?.({ stock, amount: 1 })
+                  : undefined
+              }
+              disabled={inPortfolio}
+            >
+              <span className="block">
+                {stock.name}{" "}
+                <span className="text-gray-400">({stock.symbol})</span>
+              </span>
+              <span className="block">{stock.high}€</span>
+            </button>
+          ))}
         </div>
       </div>
     </div>
