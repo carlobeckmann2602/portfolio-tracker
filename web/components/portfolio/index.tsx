@@ -1,18 +1,47 @@
 import React from "react";
+import { StockHolding, useStockHoldings } from "../../lib/backend";
 import { Modal } from "../modal";
 import Search from "../search";
 import { PieChart } from "./pie-chart";
 import { StockDetails } from "./stock-details";
-import { useStockHoldings } from "../../lib/backend";
+
+/**
+ * Whenever `holdings` changes: Check whether a new holding
+ * has been added and if so, select it.
+ */
+function useSelectionState(
+  holdings?: StockHolding[]
+): [number, (value: number) => void] {
+  const [selectedId, setSelectedId] = React.useState(0);
+  const prevHoldingsRef = React.useRef(holdings);
+
+  React.useEffect(() => {
+    if (!holdings) return;
+
+    const prevHoldings = prevHoldingsRef.current;
+    if (prevHoldings) {
+      const newHolding = holdings.find(
+        (holding) =>
+          !prevHoldings.find(
+            (prevHolding) => holding.stock.id == prevHolding.stock.id
+          )
+      );
+
+      if (newHolding) setSelectedId(holdings.indexOf(newHolding));
+    }
+
+    prevHoldingsRef.current = holdings;
+  }, [holdings]);
+
+  return [selectedId, setSelectedId];
+}
 
 const Portfolio = () => {
-  const { data: items } = useStockHoldings();
-  const [selectedId, setSelectedId] = React.useState(0);
+  const { data: holdings } = useStockHoldings();
+  const [selectedId, setSelectedId] = useSelectionState(holdings);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
-  if (!items) return <span>Loading...</span>;
-
-  const selected = items[selectedId];
+  if (!holdings) return <span>Loading...</span>;
 
   return (
     <>
@@ -23,8 +52,12 @@ const Portfolio = () => {
         >
           +
         </div>
-        <PieChart items={items} onClick={setSelectedId} selected={selectedId} />
-        <StockDetails holding={selected} />
+        <PieChart
+          items={holdings}
+          onClick={setSelectedId}
+          selected={selectedId}
+        />
+        {holdings.length > 0 && <StockDetails holding={holdings[selectedId]} />}
       </div>
       <Modal
         title="Add stocks"

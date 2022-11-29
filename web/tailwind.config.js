@@ -21,6 +21,9 @@ module.exports = {
       padding: {
         full: "100%",
       },
+      maxHeight: {
+        128: "32rem",
+      },
     },
   },
   plugins: [],
