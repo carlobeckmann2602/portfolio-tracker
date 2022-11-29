@@ -27,10 +27,7 @@ function useSelectionState(
           )
       );
 
-      if (newHolding) {
-        console.log("NEW HOLDING", newHolding);
-        setSelectedId(holdings.indexOf(newHolding));
-      }
+      if (newHolding) setSelectedId(holdings.indexOf(newHolding));
     }
 
     prevHoldingsRef.current = holdings;
