@@ -12,8 +12,6 @@ const Portfolio = () => {
 
   if (!items) return <span>Loading...</span>;
 
-  const selected = items[selectedId];
-
   return (
     <>
       <div className="relative flex flex-col gap-6 z-0">
@@ -24,7 +22,7 @@ const Portfolio = () => {
           +
         </div>
         <PieChart items={items} onClick={setSelectedId} selected={selectedId} />
-        <StockDetails holding={selected} />
+        {items.length > 0 && <StockDetails holding={items[selectedId]} />}
       </div>
       <Modal
         title="Add stocks"
