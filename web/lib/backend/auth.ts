@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { BACKEND_REST_URL } from ".";
 import { createContext, Dispatch, SetStateAction, useContext } from "react";
+import { useRouter } from "next/router";
 
 const AuthContext = createContext<
   [string | null, Dispatch<SetStateAction<string | null>>]
@@ -47,9 +48,27 @@ export function useAuthContext() {
 }
 
 export function useRegistration() {
-  return useMutation(register);
+  const router = useRouter();
+
+  return useMutation(register, {
+    onSuccess: (data) => {
+      if (data.ok) {
+        router.push("/login");
+      }
+    },
+  });
 }
 
 export function useLogin() {
-  return useMutation(login);
+  const router = useRouter();
+  const [, setUserID] = useAuthContext();
+
+  return useMutation(login, {
+    onSuccess: (data) => {
+      if (data.ok) {
+        setUserID("1");
+        router.push("/");
+      }
+    },
+  });
 }

@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Checkbox } from "../components/form/checkbox";
@@ -13,7 +12,6 @@ import { useRegistration } from "../lib/backend";
 
 const Register: NextPage = () => {
   const registration = useRegistration()
-  const router = useRouter()
 
   return (
     <>
@@ -35,12 +33,6 @@ const Register: NextPage = () => {
               password,
               firstName,
               lastName,
-            }, {
-              onSuccess: (data) => {
-                if (data.ok) {
-                  router.push("/login")
-                }
-              }
             })
           }}
         >
