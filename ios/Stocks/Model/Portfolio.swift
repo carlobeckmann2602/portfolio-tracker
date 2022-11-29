@@ -35,7 +35,11 @@ class Portfolio: ObservableObject {
     }
   }
     
-    func removeONEStockFromPortfolio(stock: Stock) {
+    func incrementStockFromPortfolio(stock: Stock) {
+        addStockToPortfolio(stock: stock, amount: 1)
+    }
+    
+    func decrementStockFromPortfolio(stock: Stock) {
       DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
         var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
         if existingEntryIndex != nil {

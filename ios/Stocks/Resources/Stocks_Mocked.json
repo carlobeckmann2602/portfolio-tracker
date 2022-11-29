@@ -2,7 +2,7 @@
     {
         "name": "Adidas",
         "id": 101,
-        "value": 120.4
+        "value": 115.1
     },
     {
         "name": "Airbus",
@@ -22,7 +22,7 @@
     {
         "name": "Bayer",
         "id": 105,
-        "value": 120.4
+        "value": 20.6
     },
     {
         "name": "Beiersdorf",
@@ -112,7 +112,7 @@
     {
         "name": "Linde",
         "id": 123,
-        "value": 120.4
+        "value": 40.5
     },
     {
         "name": "Mercedes-Benz Group",
