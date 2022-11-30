@@ -50,13 +50,19 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   const [count, setCount] = React.useState(holding.amount);
   const holdingMut = useStockHoldingMutation();
 
-  const onAmountChange = React.useCallback(
+  const setAmount = React.useCallback(
     (amount: number) => {
       setCount(amount);
+      // Overwrite the current holding with the correct number of shares
       holdingMut.mutate(createStockHolding(holding.stock, amount));
     },
     [holding, holdingMut]
   );
+
+  const removeHolding = React.useCallback(() => {
+    // Set the number of shares of the current holding to 0
+    holdingMut.mutate(createStockHolding(holding.stock, 0));
+  }, [holding, holdingMut]);
 
   React.useEffect(() => setCount(holding.amount), [holding]);
 
@@ -80,14 +86,12 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         </TableRow>
         <TableRow>
           <div>Count:</div>
-          <CounterInput value={count} onChange={onAmountChange} min={1} />
+          <CounterInput value={count} onChange={setAmount} min={1} />
         </TableRow>
       </div>
       <button
         className="text-lg rounded-md border border-black w-full p-4"
-        onClick={() => {
-          holdingMut.mutate(createStockHolding(holding.stock, 0));
-        }}
+        onClick={removeHolding}
       >
         Remove stock
       </button>
