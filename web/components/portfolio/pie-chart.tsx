@@ -24,7 +24,7 @@ export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
     () =>
       items.length
         ? items.map((item, i) => ({
-            value: item.amount,
+            value: item.value,
             color: colors[i % colors.length],
           }))
         : [
