@@ -3,7 +3,7 @@ import {
   createStockHolding,
   Stock,
   stringifyCurrencyValue,
-  useStockHoldingAddition,
+  useStockHoldingMutation,
   useStockHoldings,
   useStockSearch,
 } from "../lib/backend";
@@ -15,7 +15,7 @@ const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: holdings } = useStockHoldings();
   const { data: foundStocks } = useStockSearch(searchTerm);
-  const addStockHolding = useStockHoldingAddition();
+  const holdingMut = useStockHoldingMutation();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -62,7 +62,7 @@ const Search = () => {
               }`}
               onClick={
                 !inPortfolio
-                  ? () => addStockHolding?.(createStockHolding(stock))
+                  ? () => holdingMut.mutate(createStockHolding(stock))
                   : undefined
               }
               disabled={inPortfolio}
