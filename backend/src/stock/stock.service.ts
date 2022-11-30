@@ -28,12 +28,13 @@ export class StockService {
       });
       return `This action updates a user with id #${id} with the transmitted stock data`;
     } catch (error) {
-      //caching prismas notFound error P2025
+      //caching prismas notFound error P2025/P2003
       if (error instanceof PrismaClientKnownRequestError) {
-        if (error.code === 'P2025') {
+        if (error.code === 'P2025' || error.code === 'P2003') {
           throw new NotFoundException('Stock not found');
         }
       }
+      console.log(error);
       throw error;
     }
   }
