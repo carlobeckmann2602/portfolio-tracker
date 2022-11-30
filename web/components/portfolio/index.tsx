@@ -23,12 +23,22 @@ function useSelectedId(
   const holdingsRef = React.useRef(holdings);
   holdingsRef.current = holdings;
 
-  const setIdCb = React.useCallback((newId: number) => {
+  const setIdAction = React.useCallback((newId: number) => {
     setId(newId);
     const holdings = holdingsRef.current;
     if (holdings && newId <= holdings.length - 1)
       setStockId(holdings[newId].stock.id);
   }, []);
+
+  const cappedId = React.useMemo(
+    () => (holdings?.length ? Math.min(holdings.length - 1, id) : 0),
+    [id, holdings]
+  );
+
+  React.useEffect(() => {
+    if (id == cappedId) return;
+    setIdAction(cappedId);
+  }, [id, cappedId, setIdAction]);
 
   React.useEffect(() => {
     if (!holdings?.length) return;
@@ -40,7 +50,7 @@ function useSelectedId(
     }
   }, [stockId, holdings]);
 
-  return [id, setIdCb];
+  return [cappedId, setIdAction];
 }
 
 /**

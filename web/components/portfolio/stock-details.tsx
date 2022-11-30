@@ -83,8 +83,13 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
           <CounterInput value={count} onChange={onAmountChange} min={1} />
         </TableRow>
       </div>
-      <button className="text-lg rounded-md border border-black w-full p-4">
-        Remove all
+      <button
+        className="text-lg rounded-md border border-black w-full p-4"
+        onClick={() => {
+          holdingMut.mutate(createStockHolding(holding.stock, 0));
+        }}
+      >
+        Remove stock
       </button>
     </div>
   );
