@@ -6,13 +6,51 @@ import { PieChart } from "./pie-chart";
 import { StockDetails } from "./stock-details";
 
 /**
+ * Manages the ID of the currently selected holding.
+ *
+ * This hook is so annoyingly complicated because when
+ * the user updates a holding, it is possible that the
+ * holding changes its position in the `holdings` list.
+ * When this happens we need to make sure that the
+ * selection does not suddenly change from one stock
+ * to another.
+ */
+function useSelectedId(
+  holdings?: StockHolding[]
+): [number, (value: number) => void] {
+  const [id, setId] = React.useState(0);
+  const [stockId, setStockId] = React.useState(-1);
+  const holdingsRef = React.useRef(holdings);
+  holdingsRef.current = holdings;
+
+  const setIdCb = React.useCallback((newId: number) => {
+    setId(newId);
+    const holdings = holdingsRef.current;
+    if (holdings && newId <= holdings.length - 1)
+      setStockId(holdings[newId].stock.id);
+  }, []);
+
+  React.useEffect(() => {
+    if (!holdings?.length) return;
+    if (stockId < 0) {
+      setStockId(holdings[0].stock.id);
+    } else {
+      const id = holdings.findIndex((holding) => holding.stock.id == stockId);
+      if (id > -1) setId(id);
+    }
+  }, [stockId, holdings]);
+
+  return [id, setIdCb];
+}
+
+/**
  * Whenever `holdings` changes: Check whether a new holding
  * has been added and if so, select it.
  */
-function useSelectionState(
-  holdings?: StockHolding[]
-): [number, (value: number) => void] {
-  const [selectedId, setSelectedId] = React.useState(0);
+function useHoldingAddedEffect(
+  holdings: StockHolding[] | undefined,
+  setSelectedId: (id: number) => void
+) {
   const prevHoldingsRef = React.useRef(holdings);
 
   React.useEffect(() => {
@@ -31,15 +69,15 @@ function useSelectionState(
     }
 
     prevHoldingsRef.current = holdings;
-  }, [holdings]);
-
-  return [selectedId, setSelectedId];
+  }, [holdings, setSelectedId]);
 }
 
 const Portfolio = () => {
   const { data: holdings } = useStockHoldings();
-  const [selectedId, setSelectedId] = useSelectionState(holdings);
+  const [selectedId, setSelectedId] = useSelectedId(holdings);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+
+  useHoldingAddedEffect(holdings, setSelectedId);
 
   if (!holdings) return <span>Loading...</span>;
 

@@ -1,5 +1,10 @@
 import React from "react";
-import { StockHolding, stringifyCurrencyValue } from "../../lib/backend";
+import {
+  createStockHolding,
+  StockHolding,
+  stringifyCurrencyValue,
+  useStockHoldingMutation,
+} from "../../lib/backend";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
@@ -43,6 +48,16 @@ function CounterInput({
 export function StockDetails({ holding }: { holding: StockHolding }) {
   const { name, symbol, price } = holding.stock;
   const [count, setCount] = React.useState(holding.amount);
+  const holdingMut = useStockHoldingMutation();
+
+  const onAmountChange = React.useCallback(
+    (amount: number) => {
+      setCount(amount);
+      holdingMut.mutate(createStockHolding(holding.stock, amount));
+    },
+    [holding, holdingMut]
+  );
+
   React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
@@ -65,7 +80,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         </TableRow>
         <TableRow>
           <div>Count:</div>
-          <CounterInput value={count} onChange={setCount} min={1} />
+          <CounterInput value={count} onChange={onAmountChange} min={1} />
         </TableRow>
       </div>
       <button className="text-lg rounded-md border border-black w-full p-4">
