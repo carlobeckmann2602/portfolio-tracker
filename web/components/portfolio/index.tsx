@@ -1,18 +1,95 @@
 import React from "react";
+import { StockHolding, useStockHoldings } from "../../lib/backend";
 import { Modal } from "../modal";
 import Search from "../search";
 import { PieChart } from "./pie-chart";
 import { StockDetails } from "./stock-details";
-import { useStockHoldings } from "../../lib/backend";
+
+/**
+ * Manages the ID of the currently selected holding.
+ *
+ * This hook is so annoyingly complicated because when
+ * the user updates a holding, it is possible that the
+ * holding changes its position in the `holdings` list.
+ * When this happens we need to make sure that the
+ * selection does not suddenly change from one stock
+ * to another.
+ */
+function useSelectedId(
+  holdings?: StockHolding[]
+): [number, (value: number) => void] {
+  const [id, setId] = React.useState(0);
+  const [stockId, setStockId] = React.useState(-1);
+  const holdingsRef = React.useRef(holdings);
+  holdingsRef.current = holdings;
+
+  const setIdAction = React.useCallback((newId: number) => {
+    setId(newId);
+    const holdings = holdingsRef.current;
+    if (holdings && newId <= holdings.length - 1)
+      setStockId(holdings[newId].stock.id);
+  }, []);
+
+  const cappedId = React.useMemo(
+    () => (holdings?.length ? Math.min(holdings.length - 1, id) : 0),
+    [id, holdings]
+  );
+
+  React.useEffect(() => {
+    if (id == cappedId) return;
+    setIdAction(cappedId);
+  }, [id, cappedId, setIdAction]);
+
+  React.useEffect(() => {
+    if (!holdings?.length) return;
+    if (stockId < 0) {
+      setStockId(holdings[0].stock.id);
+    } else {
+      const id = holdings.findIndex((holding) => holding.stock.id == stockId);
+      if (id > -1) setId(id);
+    }
+  }, [stockId, holdings]);
+
+  return [cappedId, setIdAction];
+}
+
+/**
+ * Whenever `holdings` changes: Check whether a new holding
+ * has been added and if so, select it.
+ */
+function useHoldingAddedEffect(
+  holdings: StockHolding[] | undefined,
+  setSelectedId: (id: number) => void
+) {
+  const prevHoldingsRef = React.useRef(holdings);
+
+  React.useEffect(() => {
+    if (!holdings) return;
+
+    const prevHoldings = prevHoldingsRef.current;
+    if (prevHoldings) {
+      const newHolding = holdings.find(
+        (holding) =>
+          !prevHoldings.find(
+            (prevHolding) => holding.stock.id == prevHolding.stock.id
+          )
+      );
+
+      if (newHolding) setSelectedId(holdings.indexOf(newHolding));
+    }
+
+    prevHoldingsRef.current = holdings;
+  }, [holdings, setSelectedId]);
+}
 
 const Portfolio = () => {
-  const { data: items } = useStockHoldings();
-  const [selectedId, setSelectedId] = React.useState(0);
+  const { data: holdings } = useStockHoldings();
+  const [selectedId, setSelectedId] = useSelectedId(holdings);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
 
-  if (!items) return <span>Loading...</span>;
+  useHoldingAddedEffect(holdings, setSelectedId);
 
-  const selected = items[selectedId];
+  if (!holdings) return <span>Loading...</span>;
 
   return (
     <>
@@ -23,8 +100,12 @@ const Portfolio = () => {
         >
           +
         </div>
-        <PieChart items={items} onClick={setSelectedId} selected={selectedId} />
-        <StockDetails holding={selected} />
+        <PieChart
+          items={holdings}
+          onClick={setSelectedId}
+          selected={selectedId}
+        />
+        {holdings.length > 0 && <StockDetails holding={holdings[selectedId]} />}
       </div>
       <Modal
         title="Add stocks"
