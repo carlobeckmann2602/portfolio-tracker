@@ -5,28 +5,37 @@ const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
 );
 
+const CounterButton = (
+  props: React.DetailedHTMLProps<
+    React.ButtonHTMLAttributes<HTMLButtonElement>,
+    HTMLButtonElement
+  >
+) => (
+  <button
+    {...props}
+    className="rounded-md border border-black w-8 select-none transition disabled:opacity-0"
+  />
+);
+
 function CounterInput({
   value,
   onChange,
+  min,
 }: {
   value: number;
   onChange: (value: number) => void;
+  min?: number;
 }) {
   return (
     <div className="flex items-center">
-      <button
-        className="rounded-md border border-black w-8 select-none"
+      <CounterButton
         onClick={() => onChange(value - 1)}
+        disabled={min != undefined && min >= value}
       >
         -
-      </button>
+      </CounterButton>
       <div className="w-20 text-center">{value}</div>
-      <button
-        className="rounded-md border border-black w-8 select-none"
-        onClick={() => onChange(value + 1)}
-      >
-        +
-      </button>
+      <CounterButton onClick={() => onChange(value + 1)}>+</CounterButton>
     </div>
   );
 }
@@ -56,7 +65,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         </TableRow>
         <TableRow>
           <div>Count:</div>
-          <CounterInput value={count} onChange={setCount} />
+          <CounterInput value={count} onChange={setCount} min={1} />
         </TableRow>
       </div>
       <button className="text-lg rounded-md border border-black w-full p-4">
