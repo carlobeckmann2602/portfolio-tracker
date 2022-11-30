@@ -16,11 +16,12 @@ export class AuthController {
     return this.authService.login(authDto);
   }
 
-  @Get('/logout')
-  @ApiOperation({ summary: 'Logout current user' })
-  @ApiResponse({ status: 200, description: 'The logout was successfull' })
-  @ApiResponse({ status: 404, description: 'There was no active user-session which could be terminated' })
-  logout() {
-    return this.authService.logout();
-  }
+  // JWT is stateless and will not safed in the backend. To logout a user you have to delete the token in the frontend
+  // @Get('/logout')
+  // @ApiOperation({ summary: 'Logout current user' })
+  // @ApiResponse({ status: 200, description: 'The logout was successfull' })
+  // @ApiResponse({ status: 404, description: 'There was no active user-session which could be terminated' })
+  // logout() {
+  //   return this.authService.logout();
+  // }
 }
