@@ -1,5 +1,5 @@
 import React from "react";
-import { StockHolding } from "../../lib/backend";
+import { StockHolding, stringifyCurrencyValue } from "../../lib/backend";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
@@ -32,7 +32,7 @@ function CounterInput({
 }
 
 export function StockDetails({ holding }: { holding: StockHolding }) {
-  const { name, symbol, high } = holding.stock;
+  const { name, symbol, price } = holding.stock;
   const [count, setCount] = React.useState(holding.amount);
   React.useEffect(() => setCount(holding.amount), [holding]);
 
@@ -42,7 +42,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         <div className="rounded-full w-16 h-16 bg-gray-300"></div>
         <div>
           <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
-          <p>{holding.amount.toFixed(2)}€</p>
+          <p>{stringifyCurrencyValue(holding.value)}</p>
         </div>
       </div>
       <div className="flex flex-col text-lg gap-2">
@@ -52,7 +52,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         </TableRow>
         <TableRow>
           <div>Current price:</div>
-          <div>{high}€</div>
+          <div>{stringifyCurrencyValue(price)}</div>
         </TableRow>
         <TableRow>
           <div>Count:</div>
