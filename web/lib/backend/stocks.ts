@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useCallback } from "react";
 import { BACKEND_REST_URL } from ".";
 
 /** Data of a stock as received from the REST API. */
@@ -70,12 +69,14 @@ function createStockHoldingFromDTO(dto: StockHoldingDTO): StockHolding {
   return createStockHolding(createStockFromDTO(dto.stock), dto.amount);
 }
 
+/** Fetch the user's stock holdings from REST API. */
 async function fetchStockHoldings(): Promise<StockHolding[]> {
   const res = await fetch(`${BACKEND_REST_URL}/users/0/stocks`);
   const dtos: StockHoldingDTO[] = (await res.json()).stocks;
   return dtos.map((dto) => createStockHoldingFromDTO(dto));
 }
 
+/** Search stocks by name in REST API. */
 async function fetchStockSearch(searchTerm: string): Promise<Stock[]> {
   if (!searchTerm) return [];
   const res = await fetch(`${BACKEND_REST_URL}/stocks?name=${searchTerm}`);
@@ -85,14 +86,23 @@ async function fetchStockSearch(searchTerm: string): Promise<Stock[]> {
 
 const STOCK_HOLDINGS_KEY = "stock-holdings";
 
+/** Gets user's stock holdings from local storage. */
 function getLocalStockHoldings(): StockHolding[] {
   const value = localStorage.getItem(STOCK_HOLDINGS_KEY);
   return value ? JSON.parse(value) : [];
 }
 
-function setLocalStockHoldings(holdings: StockHolding[]) {
+/** Takes a stock holding and persists it in local storage. */
+async function updateLocalHolding(holding: StockHolding) {
+  let holdings = getLocalStockHoldings().filter(
+    (other) => other.stock.id != holding.stock.id
+  );
+
+  if (holding.amount) holdings.push(holding);
+
+  holdings = holdings.sort((a, b) => b.value - a.value);
+
   localStorage.setItem(STOCK_HOLDINGS_KEY, JSON.stringify(holdings));
-  return Promise.resolve();
 }
 
 export function useStockHoldings() {
@@ -105,53 +115,13 @@ export function useStockSearch(searchTerm: string) {
   );
 }
 
-export function useStockHoldingSetter() {
+export function useStockHoldingMutation() {
   const client = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: setLocalStockHoldings,
+
+  return useMutation({
+    mutationFn: updateLocalHolding,
     onSuccess() {
       client.invalidateQueries([STOCK_HOLDINGS_KEY]);
     },
   });
-  return useCallback(
-    (holdings: StockHolding[]) =>
-      mutation.mutate(
-        holdings.sort((a, b) => a.stock.symbol.localeCompare(b.stock.symbol))
-      ),
-    [mutation]
-  );
-}
-
-export function useStockHoldingAddition() {
-  const setStockHoldings = useStockHoldingSetter();
-  const { data: holdings } = useStockHoldings();
-  const addHolding = useCallback(
-    (holding: StockHolding) => {
-      if (
-        !holdings ||
-        holdings.find((other) => holding.stock.id == other.stock.id)
-      )
-        return;
-      setStockHoldings([...holdings, holding]);
-    },
-    [holdings, setStockHoldings]
-  );
-
-  return holdings ? addHolding : null;
-}
-
-export function useStockHoldingRemoval() {
-  const setStockHoldings = useStockHoldingSetter();
-  const { data: holdings } = useStockHoldings();
-  const removeHolding = useCallback(
-    (holding: StockHolding) => {
-      if (!holdings) return;
-      setStockHoldings(
-        holdings.filter((other) => holding.stock.id != other.stock.id)
-      );
-    },
-    [holdings, setStockHoldings]
-  );
-
-  return holdings ? removeHolding : null;
 }
