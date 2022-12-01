@@ -4,19 +4,27 @@ import { InputLabel } from "./input_label";
 export type InputProps = {
   type?: string;
   name: string;
-  label: string;
+  label?: string;
+  placeholder?: string;
   innerRef?: React.RefObject<HTMLInputElement>;
 };
 
-export const Input = ({ type = "text", name, label, innerRef }: InputProps) => {
+export const Input = ({
+  type = "text",
+  name,
+  label,
+  innerRef,
+  placeholder,
+}: InputProps) => {
+  const labelElement = label ? <InputLabel>{label}</InputLabel> : null;
   return (
     <div className="relative text-base form-group my-2">
       <label className="flex flex-col">
-        <InputLabel>{label}</InputLabel>
+        {labelElement}
         <input
           type={type}
           name={name}
-          placeholder={label}
+          placeholder={placeholder}
           className="border outline-none border-solid border-main-400/50 focus:border-main-400 p-1 rounded-sm"
           ref={innerRef}
         />

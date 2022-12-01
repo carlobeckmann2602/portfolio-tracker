@@ -78,10 +78,10 @@ async function fetchStockHoldings(): Promise<StockHolding[]> {
 
 /** Search stocks by name in REST API. */
 async function fetchStockSearch(searchTerm: string): Promise<Stock[]> {
-  if (!searchTerm) return [];
   const res = await fetch(`${BACKEND_REST_URL}/stocks?name=${searchTerm}`);
   const dtos: StockDTO[] = await res.json();
-  return dtos.map((dto) => createStockFromDTO(dto));
+  const filteredDtos = tempFilterStocksByName(dtos, searchTerm);
+  return filteredDtos.map((dto) => createStockFromDTO(dto));
 }
 
 const STOCK_HOLDINGS_KEY = "stock-holdings";
@@ -114,6 +114,22 @@ export function useStockSearch(searchTerm: string) {
     fetchStockSearch(queryKey[1])
   );
 }
+
+  /* will be removed when filter is implemented in backend */
+  const tempFilterStocksByName = (stocks: StockDTO[], searchTerm: string) => {
+    const filteredStocks: StockDTO[] = [];
+    stocks.forEach((stock) => {
+      if (
+        stock.name
+          .toLocaleLowerCase()
+          .startsWith(searchTerm.toLocaleLowerCase())
+      ) {
+        filteredStocks.push(stock);
+      }
+    });
+    return filteredStocks;
+  };
+
 
 export function useStockHoldingMutation() {
   const client = useQueryClient();
