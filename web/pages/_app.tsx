@@ -2,10 +2,20 @@ import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
 import { BackendApiProvider, AuthContextProvider } from "../lib/backend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const [userID, setUserID] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserID(localStorage.getItem("userID"));
+  }, []);
+
+  useEffect(() => {
+    if (userID) {
+      localStorage.setItem("userID", userID);
+    }
+  }, [userID]);
 
   return (
     <>
