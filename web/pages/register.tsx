@@ -1,5 +1,4 @@
 import type { NextPage } from "next";
-import { useRouter } from "next/router";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Checkbox } from "../components/form/checkbox";
@@ -13,7 +12,6 @@ import { useRegistration } from "../lib/backend";
 
 const Register: NextPage = () => {
   const registration = useRegistration()
-  const router = useRouter()
 
   return (
     <>
@@ -35,12 +33,6 @@ const Register: NextPage = () => {
               password,
               firstName,
               lastName,
-            }, {
-              onSuccess: (data) => {
-                if (data.ok) {
-                  router.push("/login")
-                }
-              }
             })
           }}
         >
@@ -55,11 +47,11 @@ const Register: NextPage = () => {
             options={["Prof.", "Dr."]}
             nullable
           />
-          <Input type="email" name="email" label="Email" />
-          <Input type="password" name="password" label="Password" />
-          <Input type="text" name="firstname" label="Firstname" />
-          <Input type="text" name="lastname" label="Lastname" />
-          <TextArea name="description" label="Description" />
+          <Input type="email" name="email" label="Email" placeholder="Email" />
+          <Input type="password" name="password" label="Password" placeholder="Password" />
+          <Input type="text" name="firstname" label="Firstname" placeholder="Firstname" />
+          <Input type="text" name="lastname" label="Lastname" placeholder="Lastname"/>
+          <TextArea name="description" label="Description" placeholder="Description" />
           <Checkbox name="agb" label="AGB" text="AGBs akzeptieren."></Checkbox>
           <Button type="submit">Register</Button>
         </form>

@@ -1,9 +1,10 @@
 import React from "react";
 import { StockHolding, useStockHoldings } from "../../lib/backend";
 import { Modal } from "../modal";
-import Search from "../search";
 import { PieChart } from "./pie-chart";
 import { StockDetails } from "./stock-details";
+import Search from "../search/index";
+import { FiPlus } from "react-icons/fi";
 
 /**
  * Manages the ID of the currently selected holding.
@@ -96,9 +97,9 @@ const Portfolio = () => {
       <div className="relative flex flex-col gap-6 z-0">
         <div
           onClick={() => setModalIsOpen(true)}
-          className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 items-center text-center cursor-pointer"
+          className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
         >
-          +
+          <FiPlus />
         </div>
         <PieChart
           items={holdings}

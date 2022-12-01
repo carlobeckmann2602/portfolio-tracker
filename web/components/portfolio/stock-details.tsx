@@ -5,6 +5,7 @@ import {
   stringifyCurrencyValue,
   useStockHoldingMutation,
 } from "../../lib/backend";
+import { TrendIcon } from "../stock/trend_icon";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
@@ -69,7 +70,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   return (
     <div className="px-6 flex flex-col gap-6">
       <div className="flex items-center gap-4">
-        <div className="rounded-full w-16 h-16 bg-gray-300"></div>
+        <TrendIcon trend={0} />
         <div>
           <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
           <p>{stringifyCurrencyValue(holding.value)}</p>
