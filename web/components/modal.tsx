@@ -42,7 +42,7 @@ export const Modal = ({
                 </div>
               )}
             </div>
-            <div className="overflow-hidden">{children}</div>
+            <div className="overflow-hidden h-full">{children}</div>
           </div>
         </div>,
         root

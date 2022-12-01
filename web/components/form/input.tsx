@@ -6,15 +6,15 @@ export type InputProps = {
   name: string;
   label?: string;
   placeholder?: string;
-  handleChange?: (evt: Event) => void;
+  innerRef?: React.RefObject<HTMLInputElement>;
 };
 
 export const Input = ({
   type = "text",
   name,
   label,
+  innerRef,
   placeholder,
-  handleChange,
 }: InputProps) => {
   const labelElement = label ? <InputLabel>{label}</InputLabel> : null;
   return (
@@ -25,8 +25,8 @@ export const Input = ({
           type={type}
           name={name}
           placeholder={placeholder}
-          onChange={handleChange}
           className="border outline-none border-solid border-main-400/50 focus:border-main-400 p-1 rounded-sm"
+          ref={innerRef}
         />
       </label>
     </div>
