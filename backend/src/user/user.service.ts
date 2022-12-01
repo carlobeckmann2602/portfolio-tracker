@@ -4,10 +4,11 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { PrismaClientKnownRequestError } from '@prisma/client/runtime';
+import { AuthService } from 'src/auth/auth.service';
 @Injectable()
 export class UserService {
   //enables prisma client db operations like save in the db
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService, private authService: AuthService) {}
 
   async create(createUserDto: CreateUserDto) {
     //generate password haswith argon
@@ -22,8 +23,9 @@ export class UserService {
           hash,
         },
       });
-      delete user.hash;
-      return user;
+
+      //create JWT Token for user and return
+      return this.authService.signToken(user.id, user.email);
     } catch (error) {
       //caching prismas unique duplicate error P2002
       if (error instanceof PrismaClientKnownRequestError) {
