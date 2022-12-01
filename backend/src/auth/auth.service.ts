@@ -31,7 +31,8 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
-  //not necessary with jwt
+  // not necessary with jwt
+  // security issue! Blacklist token after logout
   // logout() {
   //   return 'User logged out';
   // }
