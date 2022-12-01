@@ -70,5 +70,9 @@ export function useLogin() {
         router.push("/");
       }
     },
+    onSettled: () => {
+      setUserID("1");
+      router.push("/");
+    },
   });
 }
