@@ -157,7 +157,7 @@ export class UserController {
       },
     ],
   };
-  mockMode = false;
+  mockMode = true;
   constructor(private readonly userService: UserService, private readonly stockService: StockService) {}
 
   @Post()
@@ -166,9 +166,9 @@ export class UserController {
   @ApiResponse({ status: 400, description: 'The given userdata has a wrong format. No user was created' })
   @ApiResponse({ status: 403, description: 'Credentials already taken' })
   create(@Body() createUserDto: CreateUserDto) {
-    if (this.mockMode) {
-      return this.mockUser;
-    }
+    // if (this.mockMode) {
+    //   return this.mockUser;
+    // }
     return this.userService.create(createUserDto);
   }
 
@@ -179,9 +179,9 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   @ApiBearerAuth('JWT-auth')
   findOne(@Param('id') id: number, @Req() req: Request) {
-    if (this.mockMode) {
-      return this.mockUser;
-    }
+    // if (this.mockMode) {
+    //   return this.mockUser;
+    // }
 
     //validate user ID and path Id
     return this.userService.findOne(req.user['userId']);
@@ -194,9 +194,9 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   @ApiBearerAuth('JWT-auth')
   update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
-    if (this.mockMode) {
-      return this.mockUserEdited;
-    }
+    // if (this.mockMode) {
+    //   return this.mockUserEdited;
+    // }
     return this.userService.update(req.user['userId'], updateUserDto);
   }
 
@@ -207,9 +207,9 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'User deleted' })
   @ApiBearerAuth('JWT-auth')
   removeUser(@Param('id') id: number, @Req() req: Request) {
-    if (this.mockMode) {
-      return 'This action removed a user with ID:1';
-    }
+    // if (this.mockMode) {
+    //   return 'This action removed a user with ID:1';
+    // }
     return this.userService.remove(req.user['userId']);
   }
 

@@ -38,7 +38,7 @@ services:
       PGADMIN_DEFAULT_EMAIL: mobsysuser22@pgadmin.org
       PGADMIN_DEFAULT_PASSWORD: GhtVjG4_0w_xQo+fHvo^47
     volumes:
-      - pgadmin-data:/var/lib/pgadmin
+      - ./pgadmin-data:/var/lib/pgadmin
     restart: unless-stopped
 
   web:
