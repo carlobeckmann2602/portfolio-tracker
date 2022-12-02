@@ -15,4 +15,9 @@ export class UpdateUserDto {
   @IsString()
   @IsNotEmpty()
   password: string;
+
+  @ApiProperty()
+  @IsString()
+  @IsNotEmpty()
+  password2: string;
 }
