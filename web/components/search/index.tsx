@@ -1,3 +1,4 @@
+import { random } from "cypress/types/lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
   createStockHolding,
@@ -6,8 +7,9 @@ import {
   useStockHoldingMutation,
   useStockHoldings,
   useStockSearch,
-} from "../lib/backend";
-import { Input } from "./form/input";
+} from "../../lib/backend";
+import { Input } from "../form/input";
+import { SearchItem } from "./search_item";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
@@ -51,7 +53,12 @@ const Search = () => {
 
   return (
     <div className="h-full flex flex-col gap-4">
-      <Input name="searchTerm" label="Search for a stock" innerRef={inputRef} />
+      <Input
+        name="searchTerm"
+        label="Search for a stock"
+        placeholder="Search for a stock"
+        innerRef={inputRef}
+      />
       <div className="relative h-full">
         <div className="absolute inset-0 overflow-auto">
           {results.map(({ stock, inPortfolio }, i) => (
@@ -67,13 +74,7 @@ const Search = () => {
               }
               disabled={inPortfolio}
             >
-              <span className="block">
-                {stock.name}{" "}
-                <span className="text-gray-400">({stock.symbol})</span>
-              </span>
-              <span className="block">
-                {stringifyCurrencyValue(stock.price)}
-              </span>
+              <SearchItem trend={2.5} name={stock.name} price={stock.price} />
             </button>
           ))}
         </div>

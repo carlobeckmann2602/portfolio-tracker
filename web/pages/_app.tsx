@@ -1,8 +1,22 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
+import { BackendApiProvider, AuthContextProvider } from "../lib/backend";
+import { useEffect, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
+  const [userID, setUserID] = useState<string | null>(null);
+
+  useEffect(() => {
+    setUserID(localStorage.getItem("userID"));
+  }, []);
+
+  useEffect(() => {
+    if (userID) {
+      localStorage.setItem("userID", userID);
+    }
+  }, [userID]);
+
   return (
     <>
       <Head>
@@ -18,7 +32,15 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
         />
       </Head>
-      <Component {...pageProps} />
+      <BackendApiProvider>
+        <AuthContextProvider value={[userID, setUserID]}>
+          <Component {...pageProps} />
+        </AuthContextProvider>
+      </BackendApiProvider>
+      <div
+        id="modal-portal"
+        className="absolute w-full h-full top-0 left-0 pointer-events-none"
+      ></div>
     </>
   );
 }
