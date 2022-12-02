@@ -4,7 +4,7 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 @ApiTags('stocks')
 @Controller('stocks')
 export class StockController {
-  mockMode = true;
+  mockMode = false;
   mockStocks = [
     {
       id: 0,

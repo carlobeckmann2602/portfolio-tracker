@@ -11,6 +11,12 @@ export class UserService {
   constructor(private prisma: PrismaService, private authService: AuthService) {}
 
   async create(createUserDto: CreateUserDto) {
+    //Guard function chech use passwords
+    //maybe adding some more guards like no less then 6 letters...
+    if (createUserDto.password !== createUserDto.password2) {
+      throw new ForbiddenException('Passwords are not the same');
+    }
+
     //generate password haswith argon
     const hash = await argon.hash(createUserDto.password);
 
@@ -53,19 +59,32 @@ export class UserService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
-    const hash = await argon.hash(updateUserDto.password);
-    const user = await this.prisma.user.update({
-      where: {
-        id: id,
-      },
-      data: {
-        email: updateUserDto.email,
-        hash: hash,
-      },
-    });
-    delete user.hash;
-    return user;
+    if (updateUserDto.password !== updateUserDto.password2) {
+      throw new ForbiddenException('Passwords are not the same');
+    }
+    try {
+      const hash = await argon.hash(updateUserDto.password);
+      const user = await this.prisma.user.update({
+        where: {
+          id: id,
+        },
+        data: {
+          email: updateUserDto.email,
+          hash: hash,
+        },
+      });
+      delete user.hash;
+      return user;
+    } catch (error) {
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025') {
+          throw new NotFoundException('No User found');
+        }
+      }
+      throw error;
+    }
   }
+
   async remove(id: number) {
     try {
       //disconnects the stocks in the mapper table
