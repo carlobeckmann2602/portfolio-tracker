@@ -15,8 +15,8 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
   func calculateStockValue() -> Double {
     return (Double)(stock.value * Float(amount))
   }
-    
-    func get_amount() -> Int {
-        return amount
-    }
+
+  func get_amount() -> Int {
+    return amount
+  }
 }

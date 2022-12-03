@@ -13,12 +13,11 @@ struct RemoveAllAmount: View {
   var portfolio: Portfolio
 
   @State var input = "1"
-    var body: some View {
-        Button {
-            portfolio.removeAllStockFromPortfolio(stock: stock)
-        } label: {
-            Text("Remove All")
-        }.buttonStyle(.borderedProminent)
-    }
+  var body: some View {
+    Button {
+      portfolio.removeAllStockFromPortfolio(stock: stock)
+    } label: {
+      Text("Remove All")
+    }.buttonStyle(.borderedProminent)
+  }
 }
-
