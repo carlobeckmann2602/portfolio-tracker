@@ -44,6 +44,7 @@ struct PortfolioLoadedView: View {
           .opacity(0.15)
           .frame(maxWidth: .infinity)
           .cornerRadius(radius: 40.0, corners: [.topLeft, .topRight])
+          .ignoresSafeArea()
         if portfolio.isEmpty() {
           Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
         } else {
@@ -56,7 +57,8 @@ struct PortfolioLoadedView: View {
         }
       }
     }
-    .navigationTitle("Portfolio").toolbarBackground(.red, for: .navigationBar)
+    .navigationTitle("Portfolio")
+    .foregroundColor(.white)
   }
 
 }
@@ -67,7 +69,7 @@ struct PortfolioView: View {
   var body: some View {
     NavigationView {
       ZStack {
-        AppColors.BACKGROUND
+        AppColors.BACKGROUND.ignoresSafeArea()
         AsyncContentView(
           loadable: portfolioLoader,
           loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
