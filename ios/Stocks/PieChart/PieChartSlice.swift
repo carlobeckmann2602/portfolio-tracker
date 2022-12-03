@@ -67,9 +67,9 @@ struct PieChartSlice: View {
   func rotate(pivot: CGPoint, point: CGPoint, angle: Angle) -> CGPoint {
     let translatedToPivot = CGPoint(x: point.x - pivot.x, y: point.y - pivot.y)
     let rotated = CGPoint(
-      x: translatedToPivot.x * CoreGraphics.cos(angle.radians) - translatedToPivot.y
+      x: translatedToPivot.x * CoreGraphics.cos(angle.radians as Double) - translatedToPivot.y
         * CoreGraphics.sin(angle.radians),
-      y: translatedToPivot.x * CoreGraphics.sin(angle.radians) - translatedToPivot.y
+      y: translatedToPivot.x * CoreGraphics.sin(angle.radians as Double) - translatedToPivot.y
         * CoreGraphics.cos(angle.radians))
     let result = CGPoint(x: rotated.x + pivot.x, y: rotated.y + pivot.y)
     return result
