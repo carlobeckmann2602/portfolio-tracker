@@ -40,7 +40,7 @@ struct PieChart: View {
 
   var body: some View {
     let pieSlices = computePieSclices()
-    return VStack(alignment: .leading, spacing: 20) {
+    return VStack(alignment: .center, spacing: 20) {
       ZStack {
         GeometryReader { geometry in
           ZStack {
@@ -71,9 +71,17 @@ struct PieChart: View {
         }
         .aspectRatio(contentMode: .fit)
       }
-      VStack {
+
+      HStack {
         if currentPortfolioEntry() != nil {
           PortfolioEntryInfo(portfolioEntry: currentPortfolioEntry()!, portfolio: self.portfolio)
+        } else {
+          Text("Tap on an area of the donut chart for more.")
+            .font(.custom("Roboto", size: 25))
+            .fontWeight(.light)
+            .foregroundColor(Color.white)
+            .multilineTextAlignment(.center)
+            .frame(width: 260)
         }
       }
     }
