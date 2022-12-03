@@ -45,20 +45,20 @@ struct PortfolioEntryInfo: View {
       HStack {
         Text("Current price:")
           .font(.custom("Roboto", size: 25))
-          .fontWeight(.regular)
+          .fontWeight(.light)
         Spacer()
         Text(String(format: "%.2f€", portfolioEntry.stock.value))
           .font(.custom("Roboto", size: 25))
-          .fontWeight(.regular)
+          .fontWeight(.light)
       }
       HStack {
         Text("Trend:")
           .font(.custom("Roboto", size: 25))
-          .fontWeight(.regular)
+          .fontWeight(.light)
         Spacer()
         Text("+2,45%")
           .font(.custom("Roboto", size: 25))
-          .fontWeight(.regular)
+          .fontWeight(.light)
       }
       StepperView(stock: portfolioEntry.stock, portfolio: portfolio, portfolioEntry: portfolioEntry)
       RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)
