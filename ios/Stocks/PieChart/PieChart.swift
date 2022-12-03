@@ -55,7 +55,8 @@ struct PieChart: View {
                 endDegree: pieSlices[i].endDegree,
                 isTouched: sliceIsTouched(index: i, inPie: geometry.frame(in: .local)),
                 accentColor: accentColors[i % accentColors.count], innerColor: innerColor,
-                separatorColor: separatorColor
+                separatorColor: separatorColor,
+                label: stock.stock.name.prefix(4).uppercased()
               )
             }
           }

@@ -18,6 +18,7 @@ struct PieChartSlice: View {
   var accentColor: Color
   var innerColor: Color
   var separatorColor: Color
+  var label: String
 
   var outter: Path {
     var path = Path()
@@ -43,21 +44,43 @@ struct PieChartSlice: View {
     ZStack {
       outter
         .fill(accentColor)
-        .scaleEffect(isTouched ? 1.05 : 1)
+        .scaleEffect(touchedMultiplier())
         .animation(Animation.spring())
       inner
         .fill(innerColor)
-        .scaleEffect(isTouched ? 1.05 : 1)
+        .scaleEffect(touchedMultiplier())
         .animation(Animation.spring())
+      Text(label).foregroundColor(.white)
+        .position(
+          rotate(
+            pivot: center,
+            point: CGPoint(x: center.x + radius * 0.75 * touchedMultiplier(), y: center.y),
+            angle: Angle(degrees: (startDegree + endDegree) / 2.0))
+        ).animation(Animation.spring())
+
     }
+  }
+  func touchedMultiplier() -> Double {
+    return isTouched ? 1.05 : 1
+  }
+
+  func rotate(pivot: CGPoint, point: CGPoint, angle: Angle) -> CGPoint {
+    let translatedToPivot = CGPoint(x: point.x - pivot.x, y: point.y - pivot.y)
+    let rotated = CGPoint(
+      x: translatedToPivot.x * CoreGraphics.cos(angle.radians) - translatedToPivot.y
+        * CoreGraphics.sin(angle.radians),
+      y: translatedToPivot.x * CoreGraphics.sin(angle.radians) - translatedToPivot.y
+        * CoreGraphics.cos(angle.radians))
+    let result = CGPoint(x: rotated.x + pivot.x, y: rotated.y + pivot.y)
+    return result
   }
 }
 
 struct PieChartSlice_Previews: PreviewProvider {
   static var previews: some View {
     PieChartSlice(
-      center: CGPoint(x: 100, y: 200), radius: 300, innerRatio: 0.5, startDegree: 30, endDegree: 80,
+      center: CGPoint(x: 100, y: 200), radius: 300, innerRatio: 0.5, startDegree: 0, endDegree: 45,
       isTouched: true,
-      accentColor: .orange, innerColor: .white, separatorColor: .black)
+      accentColor: .orange, innerColor: .white, separatorColor: .black, label: "AAPL")
   }
 }
