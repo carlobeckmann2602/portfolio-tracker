@@ -25,7 +25,10 @@ struct StepperView: View {
 
   var body: some View {
     HStack {
-      Text("Amount: \(portfolioEntry.get_amount())        ")
+      Text("Count:")
+        .font(.custom("Roboto", size: 25))
+        .fontWeight(.light)
+      Spacer()
       Button {
         decrementStep()
       } label: {
@@ -33,11 +36,12 @@ struct StepperView: View {
       }
       .frame(width: 50, height: 35)
       .foregroundColor(buttonColor)
-      .background(Color.white)
+      .background(AppColors.PRIMARY)
       .cornerRadius(8)
       .padding(5)
-      .offset(x: -4)
       .disabled(portfolioEntry.get_amount() <= 0)
+      Text("\(portfolioEntry.get_amount())").font(.custom("Roboto", size: 25))
+        .fontWeight(.light)
       Button {
         incrementStep()
       } label: {
@@ -45,10 +49,9 @@ struct StepperView: View {
       }
       .frame(width: 50, height: 35)
       .foregroundColor(Color.black)
-      .background(Color.white)
+      .background(AppColors.PRIMARY)
       .cornerRadius(8)
       .padding(5)
-      .offset(x: -4)
     }
   }
 
