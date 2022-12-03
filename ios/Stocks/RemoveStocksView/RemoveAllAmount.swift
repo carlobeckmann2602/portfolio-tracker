@@ -17,7 +17,15 @@ struct RemoveAllAmount: View {
     Button {
       portfolio.removeAllStockFromPortfolio(stock: stock)
     } label: {
-      Text("Remove All")
-    }.buttonStyle(.borderedProminent)
+      Text("Remove all")
+        .font(.custom("Roboto", size: 20))
+        .fontWeight(.medium)
+        .foregroundColor(.white)
+        .padding()
+        .overlay(
+          RoundedRectangle(cornerRadius: 12)
+            .stroke(.white, lineWidth: 3)
+        ).frame(maxWidth: .infinity)
+    }
   }
 }
