@@ -13,23 +13,29 @@ struct PortfolioLoadedView: View {
 
   var body: some View {
     VStack(alignment: .leading) {
-      if !portfolio.stocks.isEmpty {
-        Text(String(format: "Total value: %.2f€", portfolio.totalValue()))
-          .bold()
-          .font(.system(size: 35))
-          .fontWeight(.regular)
-          .foregroundColor(Color.white)
-      }
-      HStack {
-        Spacer()
-        NavigationLink(
-          destination: AddStocksView(portfolio: portfolio).navigationTitle(
-            "Add Stock")
-        ) {
-          Label("add", systemImage: "plus.circle")
-            .font(.system(size: 40))
-            .foregroundColor(Color(hex: "0094ff"))
-            .labelStyle(.iconOnly)
+      VStack {
+        HStack {
+          Text("Your balance")
+            .font(.custom("Roboto", size: 25))
+            .fontWeight(.regular)
+            .foregroundColor(Color.white)
+          Spacer()
+        }
+        HStack {
+          Text(String(format: "%.2f€", portfolio.totalValue()))
+            .font(.custom("Roboto", size: 40))
+            .fontWeight(.bold)
+            .foregroundColor(AppColors.PRIMARY)
+          Spacer()
+          NavigationLink(
+            destination: AddStocksView(portfolio: portfolio).navigationTitle(
+              "Add Stock")
+          ) {
+            Label("add", systemImage: "plus.circle")
+              .font(.system(size: 50)).fontWeight(.ultraLight)
+              .foregroundColor(AppColors.PRIMARY)
+              .labelStyle(.iconOnly)
+          }
         }
       }
 
