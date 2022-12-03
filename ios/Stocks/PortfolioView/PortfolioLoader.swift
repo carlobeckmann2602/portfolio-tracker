@@ -6,12 +6,20 @@
 //
 
 import Foundation
+import SwiftUI
 
 class PortfolioLoader: LoadableObject {
   var loadEmpty: Bool = false
   @Published private(set) var state = LoadingState<Portfolio>.idle
 
   func load() {
+      for family in UIFont.familyNames {
+               print(family)
+               for names in UIFont.fontNames(forFamilyName: family){
+               print("== \(names)")
+               }
+          }
+      
     state = .loading
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       let stocks = ModelData()
