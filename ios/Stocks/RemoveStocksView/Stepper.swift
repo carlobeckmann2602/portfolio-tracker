@@ -9,19 +9,16 @@ import Foundation
 import SwiftUI
 
 struct StepperView: View {
-    //@State var amount: Int
     var stock: Stock
     var portfolio: Portfolio
     var portfolioEntry: PortfolioEntry
     
     func incrementStep() {
-        //amount += 1
         portfolio.incrementStockFromPortfolio(stock: stock)
     }
     
     func decrementStep() {
         if (portfolioEntry.get_amount() > 0) {
-            //amount -= 1
             portfolio.decrementStockFromPortfolio(stock: stock)
         }
     }
@@ -52,19 +49,6 @@ struct StepperView: View {
             .cornerRadius(8)
             .padding(5)
             .offset(x: -4)
-
-            
-            /*Stepper {
-            } onIncrement: {
-                incrementStep()
-            } onDecrement: {
-                decrementStep()
-            }
-            .padding(5)
-            .frame(width: 100, height: 35)
-            .offset(x: -4)
-            .background(Color.white)
-            .cornerRadius(8)*/
         }
     }
     
