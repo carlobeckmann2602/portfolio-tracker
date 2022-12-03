@@ -51,7 +51,7 @@ struct PortfolioLoadedView: View {
           PieChart(
             portfolio: portfolio,
             separatorColor: Color(UIColor.systemBackground),
-            innerColor: .black,
+            innerColor: Color(hex: "#3a2e60"),
             accentColors: pieColors
           ).padding()
         }
