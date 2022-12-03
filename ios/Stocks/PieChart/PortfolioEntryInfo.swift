@@ -13,25 +13,53 @@ struct PortfolioEntryInfo: View {
   var portfolio: Portfolio
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
-      HStack {
-        Label("", systemImage: "arrow.up.circle.fill")
-          .font(.system(size: 60))
-          .foregroundColor(Color(hex: "0094ff"))
-          .labelStyle(.iconOnly)
-        VStack(alignment: .leading, spacing: 5) {
-          Text(portfolioEntry.stock.name)
-            .font(.system(size: 40))
-            .fontWeight(.bold)
-          Text(
-            formatPortfolioProportion()
+      ZStack {
+        Rectangle()
+          .fill(.white)
+          .opacity(0.1)
+          .frame(height: 80)
+          .overlay(
+            RoundedRectangle(cornerRadius: 12)
+              .stroke(.blue, lineWidth: 3)
           )
-          .font(.system(size: 20))
-        }
+        HStack {
+          VStack(alignment: .leading, spacing: 5) {
+            Text(portfolioEntry.stock.name)
+              .font(.custom("Roboto", size: 25))
+              .fontWeight(.medium)
+            Text(
+              "+2,45%"
+            )
+            .font(.custom("Roboto", size: 18))
+            .fontWeight(.regular)
+          }
+          Spacer()
+          Text(String(format: "%.02f€", portfolioEntry.calculateStockValue())).font(
+            .custom("Roboto", size: 18)
+          )
+          .fontWeight(.regular)
+        }.padding(20)
       }
       Spacer()
         .frame(height: 2)
-      Text(String(format: "Current price: %.2f€", portfolioEntry.stock.value))
-      Text("Trend: +0.76%")
+      HStack {
+        Text("Current price:")
+          .font(.custom("Roboto", size: 25))
+          .fontWeight(.regular)
+        Spacer()
+        Text(String(format: "%.2f€", portfolioEntry.stock.value))
+          .font(.custom("Roboto", size: 25))
+          .fontWeight(.regular)
+      }
+      HStack {
+        Text("Trend:")
+          .font(.custom("Roboto", size: 25))
+          .fontWeight(.regular)
+        Spacer()
+        Text("+2,45%")
+          .font(.custom("Roboto", size: 25))
+          .fontWeight(.regular)
+      }
       StepperView(stock: portfolioEntry.stock, portfolio: portfolio, portfolioEntry: portfolioEntry)
       RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)
     }.foregroundColor(Color.white)
