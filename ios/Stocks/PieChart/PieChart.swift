@@ -70,26 +70,6 @@ struct PieChart: View {
           )
         }
         .aspectRatio(contentMode: .fit)
-        VStack {
-          if currentPortfolioEntry() != nil {
-            Text(currentPortfolioEntry()!.stock.name)
-              .font(.caption)
-              .bold()
-              .foregroundColor(.black)
-              .padding(10)
-              .background(
-                RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
-
-            Text(String(format: "%.2f€", currentPortfolioEntry()!.calculateStockValue()))
-              .font(.caption)
-              .bold()
-              .foregroundColor(.black)
-              .padding(5)
-              .background(
-                RoundedRectangle(cornerRadius: 5).foregroundColor(.white).shadow(radius: 3))
-          }
-
-        }
       }
       VStack {
         if currentPortfolioEntry() != nil {
