@@ -37,19 +37,26 @@ struct PortfolioLoadedView: View {
               .labelStyle(.iconOnly)
           }
         }
+      }.padding()
+      ZStack {
+        Rectangle()
+          .fill(.white)
+          .opacity(0.15)
+          .frame(maxWidth: .infinity)
+          .cornerRadius(radius: 40.0, corners: [.topLeft, .topRight])
+        if portfolio.isEmpty() {
+          Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
+        } else {
+          PieChart(
+            portfolio: portfolio,
+            separatorColor: Color(UIColor.systemBackground),
+            innerColor: .black,
+            accentColors: pieColors
+          ).padding()
+        }
       }
-
-      if portfolio.isEmpty() {
-        Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
-      } else {
-        PieChart(
-          portfolio: portfolio,
-          separatorColor: Color(UIColor.systemBackground),
-          innerColor: .black,
-          accentColors: pieColors)
-      }
-    }.padding()
-      .navigationTitle("Portfolio").toolbarBackground(.red, for: .navigationBar)
+    }
+    .navigationTitle("Portfolio").toolbarBackground(.red, for: .navigationBar)
   }
 
 }
@@ -60,7 +67,7 @@ struct PortfolioView: View {
   var body: some View {
     NavigationView {
       ZStack {
-        Color.black
+        AppColors.BACKGROUND
         AsyncContentView(
           loadable: portfolioLoader,
           loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
