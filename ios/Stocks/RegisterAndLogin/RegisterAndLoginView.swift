@@ -16,24 +16,28 @@ enum LoginState {
 
 struct RegisterAndLoginView: View {
   @State var currentState: LoginState = .landing
-  let authenticationHandler: AuthenticationHandler = AuthenticationHandler()
+  @ObservedObject var authenticationHandler: AuthenticationHandler = AuthenticationHandler()
   var body: some View {
-    if currentState == .landing {
-      LandingScreen(
-        registerAction: {
-          currentState = .register
-        },
-        loginAction: {
-          currentState = .login
-        })
-    } else if currentState == .register {
-      RegisterScreen(loginRequested: {
-        currentState = .login
-      }).environmentObject(authenticationHandler)
+    if authenticationHandler.isLoggedIn {
+      PortfolioView()
     } else {
-      LoginScreen(registerRequested: {
-        currentState = .register
-      }).environmentObject(authenticationHandler)
+      if currentState == .landing {
+        LandingScreen(
+          registerAction: {
+            currentState = .register
+          },
+          loginAction: {
+            currentState = .login
+          })
+      } else if currentState == .register {
+        RegisterScreen(loginRequested: {
+          currentState = .login
+        }).environmentObject(authenticationHandler)
+      } else {
+        LoginScreen(registerRequested: {
+          currentState = .register
+        }).environmentObject(authenticationHandler)
+      }
     }
   }
 }

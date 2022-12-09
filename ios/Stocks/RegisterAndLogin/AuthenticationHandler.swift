@@ -15,6 +15,8 @@ struct AuthResponse: Decodable {
 
 class AuthenticationHandler: ObservableObject {
 
+  @Published var isLoggedIn: Bool = false
+
   private var jwtToken: JwtToken? = nil
 
   func register(email: String, password: String, password2: String) {
@@ -57,9 +59,7 @@ class AuthenticationHandler: ObservableObject {
         }
       })
   }
-  func isLoggedIn() -> Bool {
-    return false
-  }
+
   func wasLoggedInBefore() -> Bool {
     return false
   }
@@ -78,5 +78,6 @@ class AuthenticationHandler: ObservableObject {
     let jwt = try decode(jwt: authReponse.access_token)
     print("Loaded JWT: ", jwt)
     self.jwtToken = JwtToken(decodedToken: jwt)
+    self.isLoggedIn = true
   }
 }
