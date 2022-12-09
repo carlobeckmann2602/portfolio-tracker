@@ -27,22 +27,24 @@ services:
     environment:
       DATABASE_URL: postgresql://postgres:123@db:5432/postgres?schema=public
     depends_on: [db]
+
   pgadmin:
     image: dpage/pgadmin4
-    container_name: pgadmin
-    depends_on:
-      - db
+    restart: unless-stopped
     ports:
-      - '5555:80'
+      - "5555:80"
     environment:
-      PGADMIN_DEFAULT_EMAIL: mobsysuser22@pgadmin.org
+      PGADMIN_DEFAULT_EMAIL: pgadmin@api.mobilesys.de
       PGADMIN_DEFAULT_PASSWORD: GhtVjG4_0w_xQo+fHvo^47
     volumes:
-      - ./pgadmin-data:/var/lib/pgadmin
-    restart: unless-stopped
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on: [db]
 
   web:
     image: mobsys-frontend
     build: ./web
     restart: unless-stopped
     depends_on: [backend]
+
+volumes:
+  pgadmin-data:
