@@ -10,7 +10,7 @@ import JWTDecode
 import Just
 
 struct AuthResponse: Decodable {
-  let access_token: String
+  let accessToken: String
 }
 
 class AuthenticationHandler: ObservableObject {
@@ -74,8 +74,9 @@ class AuthenticationHandler: ObservableObject {
 
   private func getJwtTokenFromResponse(text: String) throws {
     let decoder = JSONDecoder()
+    decoder.keyDecodingStrategy = .convertFromSnakeCase
     let authReponse = try decoder.decode(AuthResponse.self, from: text.data(using: .utf8)!)
-    let jwt = try decode(jwt: authReponse.access_token)
+    let jwt = try decode(jwt: authReponse.accessToken)
     print("Loaded JWT: ", jwt)
     self.jwtToken = JwtToken(decodedToken: jwt)
     self.isLoggedIn = true
