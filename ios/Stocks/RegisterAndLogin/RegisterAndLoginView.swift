@@ -21,15 +21,18 @@ struct RegisterAndLoginView: View {
       LandingScreen(
         registerAction: {
           currentState = .register
-          print("register")
         },
         loginAction: {
           currentState = .login
         })
     } else if currentState == .register {
-      RegisterScreen()
+      RegisterScreen(loginRequested: {
+        currentState = .login
+      })
     } else {
-      LoginScreen()
+      LoginScreen(registerRequested: {
+        currentState = .register
+      })
     }
   }
 }

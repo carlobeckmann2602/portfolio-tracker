@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct LoginScreen: View {
-
+  let registerRequested: () -> Void
   var body: some View {
     ZStack {
       LinearGradient(
@@ -39,6 +39,18 @@ struct LoginScreen: View {
         TextInput(iconName: "lock", label: "Password")
           .padding([.top], 5)
         ActionButton(action: {}, text: "Login").padding([.top], 30)
+        HStack {
+          Text("No account?").font(.custom("Roboto", size: 15))
+            .fontWeight(.light)
+            .foregroundColor(.white)
+          Button {
+            registerRequested()
+          } label: {
+            Text("Create one").font(.custom("Roboto", size: 15))
+              .fontWeight(.light)
+              .foregroundColor(AppColors.PRIMARY).underline()
+          }
+        }.padding([.top], 20)
         Spacer()
         Image("logo_white")
           .resizable()
@@ -50,6 +62,6 @@ struct LoginScreen: View {
 
 struct LoginScreen_Previews: PreviewProvider {
   static var previews: some View {
-    LoginScreen()
+    LoginScreen(registerRequested: {})
   }
 }
