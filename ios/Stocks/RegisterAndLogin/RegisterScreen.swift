@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Just
 import SwiftUI
 
 struct RegisterScreen: View {
@@ -40,8 +41,12 @@ struct RegisterScreen: View {
           .padding([.top], 30)
         TextInput(iconName: "lock", label: "Repeat Password")
           .padding([.top], 5)
-        ActionButton(action: {}, text: "Register").padding([.top], 30)
-
+        ActionButton(
+          action: {
+            NetworkAdapter().register(
+              email: "ios-\(UUID())@test.com", password: "test", password2: "test")
+          }, text: "Register"
+        ).padding([.top], 30)
         HStack {
           Text("Already have an account?").font(.custom("Roboto", size: 15))
             .fontWeight(.light)

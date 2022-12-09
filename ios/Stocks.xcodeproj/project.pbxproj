@@ -15,6 +15,10 @@
 		3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F729262EF300DB3C8F /* PieChart.swift */; };
 		3D67B9002926414F00DB3C8F /* PortfolioEntryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */; };
 		3D67E5212943B8AC009F877D /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5202943B8AC009F877D /* LoginScreen.swift */; };
+		3D67E5272943C441009F877D /* Just in Frameworks */ = {isa = PBXBuildFile; productRef = 3D67E5262943C441009F877D /* Just */; };
+		3D67E52A2943C67E009F877D /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5292943C67E009F877D /* NetworkAdapter.swift */; };
+		3D67E52F2943C896009F877D /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 3D67E52E2943C896009F877D /* JWTDecode */; };
+		3D67E5332943D00E009F877D /* AuthenticationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5322943D00E009F877D /* AuthenticationHandler.swift */; };
 		3D906FD4293B7B2A00E9AE5F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D906FC8293B7B2A00E9AE5F /* Roboto-Regular.ttf */; };
 		3D906FD5293B7B2A00E9AE5F /* Roboto-ThinItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D906FC9293B7B2A00E9AE5F /* Roboto-ThinItalic.ttf */; };
 		3D906FD6293B7B2A00E9AE5F /* Roboto-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D906FCA293B7B2A00E9AE5F /* Roboto-LightItalic.ttf */; };
@@ -84,6 +88,8 @@
 		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntryInfo.swift; sourceTree = "<group>"; };
 		3D67E5202943B8AC009F877D /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
+		3D67E5292943C67E009F877D /* NetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
+		3D67E5322943D00E009F877D /* AuthenticationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHandler.swift; sourceTree = "<group>"; };
 		3D906FC8293B7B2A00E9AE5F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		3D906FC9293B7B2A00E9AE5F /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
 		3D906FCA293B7B2A00E9AE5F /* Roboto-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-LightItalic.ttf"; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D67E52F2943C896009F877D /* JWTDecode in Frameworks */,
+				3D67E5272943C441009F877D /* Just in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,6 +204,8 @@
 				3D97BD162943AE5300B313B2 /* RegisterAndLoginView.swift */,
 				3D97BD182943AF8400B313B2 /* RegisterScreen.swift */,
 				3D67E5202943B8AC009F877D /* LoginScreen.swift */,
+				3D67E5292943C67E009F877D /* NetworkAdapter.swift */,
+				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
 			);
 			path = RegisterAndLogin;
 			sourceTree = "<group>";
@@ -351,6 +361,10 @@
 			dependencies = (
 			);
 			name = Stocks;
+			packageProductDependencies = (
+				3D67E5262943C441009F877D /* Just */,
+				3D67E52E2943C896009F877D /* JWTDecode */,
+			);
 			productName = Stocks;
 			productReference = 3DA98E1829098A260091F88F /* Stocks.app */;
 			productType = "com.apple.product-type.application";
@@ -423,6 +437,10 @@
 				Base,
 			);
 			mainGroup = 3DA98E0F29098A260091F88F;
+			packageReferences = (
+				3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */,
+				3D67E52D2943C896009F877D /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+			);
 			productRefGroup = 3DA98E1929098A260091F88F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -500,10 +518,12 @@
 				3D334D1429290DF000060649 /* StockListCell.swift in Sources */,
 				859B300B29311D7500BBB8F7 /* RemoveAllAmount.swift in Sources */,
 				EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */,
+				3D67E5332943D00E009F877D /* AuthenticationHandler.swift in Sources */,
 				3D906FE4293B809F00E9AE5F /* AppColors.swift in Sources */,
 				3DA98E47290992670091F88F /* AddStocksView.swift in Sources */,
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
+				3D67E52A2943C67E009F877D /* NetworkAdapter.swift in Sources */,
 				3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */,
 				3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */,
 				3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */,
@@ -835,6 +855,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/dduan/Just.git";
+			requirement = {
+				kind = exactVersion;
+				version = 0.8.0;
+			};
+		};
+		3D67E52D2943C896009F877D /* XCRemoteSwiftPackageReference "JWTDecode.swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/auth0/JWTDecode.swift.git";
+			requirement = {
+				kind = exactVersion;
+				version = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		3D67E5262943C441009F877D /* Just */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */;
+			productName = Just;
+		};
+		3D67E52E2943C896009F877D /* JWTDecode */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D67E52D2943C896009F877D /* XCRemoteSwiftPackageReference "JWTDecode.swift" */;
+			productName = JWTDecode;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3DA98E1029098A260091F88F /* Project object */;
 }

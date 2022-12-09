@@ -1,0 +1,23 @@
+{
+  "pins" : [
+    {
+      "identity" : "just",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/dduan/Just.git",
+      "state" : {
+        "revision" : "1824bf84cf52d11d69ae20cfb89f0ce5bffa5650",
+        "version" : "0.8.0"
+      }
+    },
+    {
+      "identity" : "jwtdecode.swift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/auth0/JWTDecode.swift.git",
+      "state" : {
+        "revision" : "d07041068fed2d4b8a38f2b321ea6d97c9152c4a",
+        "version" : "3.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}
