@@ -50,7 +50,8 @@ struct LoginScreen: View {
         TextInput(
           iconName: "lock",
           label: "Password",
-          text: $passwordText
+          text: $passwordText,
+          secure: true
         )
         .padding([.top], 5)
         ActionButton(

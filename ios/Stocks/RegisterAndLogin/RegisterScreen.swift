@@ -51,13 +51,15 @@ struct RegisterScreen: View {
         TextInput(
           iconName: "lock",
           label: "Password",
-          text: $passwordText
+          text: $passwordText,
+          secure: true
         )
         .padding([.top], 30)
         TextInput(
           iconName: "lock",
           label: "Repeat Password",
-          text: $password2Text
+          text: $password2Text,
+          secure: true
         )
         .padding([.top], 5)
         ActionButton(
