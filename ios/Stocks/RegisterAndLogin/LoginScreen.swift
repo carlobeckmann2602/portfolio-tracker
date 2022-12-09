@@ -10,6 +10,13 @@ import SwiftUI
 
 struct LoginScreen: View {
   let registerRequested: () -> Void
+
+  @EnvironmentObject
+  var authenticationHandler: AuthenticationHandler
+
+  @State var emailText: String = ""
+  @State var passwordText: String = ""
+
   var body: some View {
     ZStack {
       LinearGradient(
@@ -34,11 +41,23 @@ struct LoginScreen: View {
             .padding([.top], 0)
         }
         Spacer()
-        TextInput(iconName: "envelope", label: "Email")
-          .padding([.top], 30)
-        TextInput(iconName: "lock", label: "Password")
-          .padding([.top], 5)
-        ActionButton(action: {}, text: "Login").padding([.top], 30)
+        TextInput(
+          iconName: "envelope",
+          label: "Email",
+          text: $emailText
+        )
+        .padding([.top], 30)
+        TextInput(
+          iconName: "lock",
+          label: "Password",
+          text: $passwordText
+        )
+        .padding([.top], 5)
+        ActionButton(
+          action: {
+            authenticationHandler.login(email: emailText, password: passwordText)
+          }, text: "Login"
+        ).padding([.top], 30)
         HStack {
           Text("No account?").font(.custom("Roboto", size: 15))
             .fontWeight(.light)

@@ -11,7 +11,7 @@ import SwiftUI
 struct TextInput: View {
   let iconName: String
   let label: String
-  @State var inputText: String = ""
+  let text: Binding<String>
   var body: some View {
     ZStack {
       Color(hex: "#2f2256")
@@ -22,7 +22,7 @@ struct TextInput: View {
           .foregroundColor(Color(hex: "#999999"))
           .padding(16)
         TextField(
-          self.label, text: $inputText,
+          self.label, text: text,
           prompt: Text(self.label)
             .foregroundColor(Color(hex: "#999999"))
         )
@@ -32,11 +32,5 @@ struct TextInput: View {
         Spacer()
       }.frame(width: 300, height: 50)
     }
-  }
-}
-
-struct TextInput_Previews: PreviewProvider {
-  static var previews: some View {
-    TextInput(iconName: "envelope", label: "Email")
   }
 }

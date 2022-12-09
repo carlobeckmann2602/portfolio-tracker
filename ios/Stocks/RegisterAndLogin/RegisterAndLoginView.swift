@@ -16,6 +16,7 @@ enum LoginState {
 
 struct RegisterAndLoginView: View {
   @State var currentState: LoginState = .landing
+  let authenticationHandler: AuthenticationHandler = AuthenticationHandler()
   var body: some View {
     if currentState == .landing {
       LandingScreen(
@@ -28,11 +29,11 @@ struct RegisterAndLoginView: View {
     } else if currentState == .register {
       RegisterScreen(loginRequested: {
         currentState = .login
-      })
+      }).environmentObject(authenticationHandler)
     } else {
       LoginScreen(registerRequested: {
         currentState = .register
-      })
+      }).environmentObject(authenticationHandler)
     }
   }
 }

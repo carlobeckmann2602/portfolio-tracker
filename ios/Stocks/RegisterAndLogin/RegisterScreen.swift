@@ -11,6 +11,13 @@ import SwiftUI
 
 struct RegisterScreen: View {
   let loginRequested: () -> Void
+  @EnvironmentObject
+  var authenticationHandler: AuthenticationHandler
+
+  @State var emailText: String = ""
+  @State var passwordText: String = ""
+  @State var password2Text: String = ""
+
   var body: some View {
     ZStack {
       LinearGradient(
@@ -35,16 +42,28 @@ struct RegisterScreen: View {
             .padding([.top], 0)
         }
         Spacer()
-        TextInput(iconName: "envelope", label: "Email")
-          .padding([.top], 30)
-        TextInput(iconName: "lock", label: "Password")
-          .padding([.top], 30)
-        TextInput(iconName: "lock", label: "Repeat Password")
-          .padding([.top], 5)
+        TextInput(
+          iconName: "envelope",
+          label: "Email",
+          text: $emailText
+        )
+        .padding([.top], 30)
+        TextInput(
+          iconName: "lock",
+          label: "Password",
+          text: $passwordText
+        )
+        .padding([.top], 30)
+        TextInput(
+          iconName: "lock",
+          label: "Repeat Password",
+          text: $password2Text
+        )
+        .padding([.top], 5)
         ActionButton(
           action: {
-            NetworkAdapter().register(
-              email: "ios-\(UUID())@test.com", password: "test", password2: "test")
+            authenticationHandler.register(
+              email: emailText, password: passwordText, password2: password2Text)
           }, text: "Register"
         ).padding([.top], 30)
         HStack {

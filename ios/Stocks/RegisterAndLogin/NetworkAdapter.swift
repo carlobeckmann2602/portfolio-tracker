@@ -9,10 +9,6 @@ import Foundation
 import JWTDecode
 import Just
 
-struct RegisterResponse: Decodable {
-  let access_token: String
-}
-
 struct JwtToken {
   let decodedToken: JWT
   init(decodedToken: JWT) {
@@ -28,63 +24,18 @@ struct JwtToken {
 
 class NetworkAdapter {
 
-  private var jwtToken: JwtToken?=nil
+  private let authenticationHandler: AuthenticationHandler
 
-  func register(email: String, password: String, password2: String) {
-    Just.post(
-      "https://api.mobilesys.de/users",
-      data: [
-        "email": email, "password": password,
-        "password2": password2,
-      ],
-      asyncCompletionHandler: { r in
-        print(r)
-        if r.ok {
-          print(r.text)
-          do {
-            let decoder = JSONDecoder()
-            let registerResponse = try decoder.decode(
-              RegisterResponse.self, from: r.text!.data(using: .utf8)!)
-            let jwt = try decode(jwt: registerResponse.access_token)
-            print(jwt)
-            self.jwtToken = JwtToken(decodedToken: jwt)
-            self.loadUserPortfolio()
-          } catch {
-            print("Failed to decode JWT: \(error)")
-          }
-        }
-      })
-  }
-
-  func login(email: String, password: String) {
-    Just.post(
-      "https://api.mobilesys.de/auth/login",
-      data: [
-        "email": email, "password": password,
-      ],
-      asyncCompletionHandler: { r in
-        print(r)
-        if r.ok {
-          print(r.text)
-          do {
-            let decoder = JSONDecoder()
-            let registerResponse = try decoder.decode(
-              RegisterResponse.self, from: r.text!.data(using: .utf8)!)
-            let jwt = try decode(jwt: registerResponse.access_token)
-            print(jwt)
-            let jwtToken = JwtToken(decodedToken: jwt)
-            self.loadUserPortfolio()
-          } catch {
-            print("Failed to decode JWT: \(error)")
-          }
-        }
-      })
+  init(authenticationHandler: AuthenticationHandler) {
+    self.authenticationHandler = authenticationHandler
   }
 
   func loadUserPortfolio() {
     Just.get(
-      "https://api.mobilesys.de/users/\(self.jwtToken.userId())/stocks",
-      headers: ["Authorization": "Bearer \(self.jwtToken.decodedToken.string)"],
+      "https://api.mobilesys.de/users/\(self.authenticationHandler.getToken().userId())/stocks",
+      headers: [
+        "Authorization": "Bearer \(self.authenticationHandler.getToken().decodedToken.string)"
+      ],
       asyncCompletionHandler: { r in
         print(r)
         if r.ok {
