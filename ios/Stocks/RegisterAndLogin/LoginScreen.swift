@@ -38,7 +38,7 @@ struct LoginScreen: View {
           .padding([.top], 30)
         TextInput(iconName: "lock", label: "Password")
           .padding([.top], 5)
-        ActionButton(text: "Login").padding([.top], 30)
+        ActionButton(action: {}, text: "Login").padding([.top], 30)
         Spacer()
         Image("logo_white")
           .resizable()

@@ -40,7 +40,7 @@ struct RegisterScreen: View {
           .padding([.top], 30)
         TextInput(iconName: "lock", label: "Repeat Password")
           .padding([.top], 5)
-        ActionButton(text: "Register").padding([.top], 30)
+        ActionButton(action: {}, text: "Register").padding([.top], 30)
         Spacer()
         Image("logo_white")
           .resizable()

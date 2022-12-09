@@ -9,6 +9,8 @@ import Foundation
 import SwiftUI
 
 struct LandingScreen: View {
+  let registerAction: () -> Void
+  let loginAction: () -> Void
   var body: some View {
     ZStack {
       LinearGradient(
@@ -33,29 +35,14 @@ struct LandingScreen: View {
             .font(.custom("Roboto", size: 20))
             .fontWeight(.light)
             .foregroundColor(.white)
-          Button {
-
-          } label: {
-            Text("Register")
-              .font(.custom("Roboto", size: 20))
-              .fontWeight(.bold)
-              .foregroundColor(.white)
-              .padding()
-              .background(
-                LinearGradient(
-                  gradient: Gradient(colors: [
-                    AppColors.PURPLE, Color(hex: "#6472D8"), AppColors.PRIMARY,
-                  ]), startPoint: .leading,
-                  endPoint: .trailing
-                ).frame(width: 300).cornerRadius(10))
-          }
+          ActionButton(action: registerAction, text: "Register")
           HStack {
             Divider().frame(width: 125, height: 2).background(AppColors.PRIMARY)
             Text("or").padding([.leading, .trailing], 10)
             Divider().frame(width: 125, height: 2).background(AppColors.PRIMARY)
           }
           Button {
-
+            loginAction()
           } label: {
             Text("Log-in")
               .font(.custom("Roboto", size: 18))
@@ -70,6 +57,6 @@ struct LandingScreen: View {
 
 struct LandingScreen_Previews: PreviewProvider {
   static var previews: some View {
-    LandingScreen()
+    LandingScreen(registerAction: {}, loginAction: {})
   }
 }

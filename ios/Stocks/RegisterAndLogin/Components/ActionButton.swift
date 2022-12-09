@@ -9,10 +9,11 @@ import Foundation
 import SwiftUI
 
 struct ActionButton: View {
+  let action: () -> Void
   let text: String
   var body: some View {
     Button {
-
+      action()
     } label: {
       Text(self.text)
         .font(.custom("Roboto", size: 20))
@@ -35,6 +36,6 @@ struct ActionButton: View {
 
 struct ActionButton_Previews: PreviewProvider {
   static var previews: some View {
-    ActionButton(text: "Register")
+    ActionButton(action: {}, text: "Register")
   }
 }

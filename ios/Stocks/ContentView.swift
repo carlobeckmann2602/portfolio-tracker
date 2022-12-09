@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContentView: View {
   var body: some View {
-    PortfolioView().preferredColorScheme(.dark)
+    RegisterAndLoginView()
+    //PortfolioView().preferredColorScheme(.dark)
   }
 }
 

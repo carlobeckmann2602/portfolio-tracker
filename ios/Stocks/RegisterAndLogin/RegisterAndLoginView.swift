@@ -18,11 +18,18 @@ struct RegisterAndLoginView: View {
   @State var currentState: LoginState = .landing
   var body: some View {
     if currentState == .landing {
-      return LandingScreen()
+      LandingScreen(
+        registerAction: {
+          currentState = .register
+          print("register")
+        },
+        loginAction: {
+          currentState = .login
+        })
     } else if currentState == .register {
-      return RegisterScreen()
+      RegisterScreen()
     } else {
-      return LoginScreen()
+      LoginScreen()
     }
   }
 }
