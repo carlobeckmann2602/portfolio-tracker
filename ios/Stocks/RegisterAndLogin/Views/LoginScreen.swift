@@ -29,9 +29,14 @@ struct LoginScreen: View {
       ).ignoresSafeArea()
       VStack {
         VStack(alignment: .leading) {
-          Text("Welcome back!")
+          HStack {
+            Spacer()
+          }.frame(width: 280)
+          Text("Welcome")
             .robotoSerif(size: 45, weight: .bold)
             .padding([.top], 130)
+          Text("back!")
+            .robotoSerif(size: 45, weight: .bold)
           Text("Please log in to your GoFundYourself Account.")
             .roboto(size: 20)
             .padding([.top], 0)
