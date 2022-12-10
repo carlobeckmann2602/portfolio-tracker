@@ -13,63 +13,89 @@ struct AuthResponse: Decodable {
   let accessToken: String
 }
 
+struct ReponseError: Decodable {
+  let statusCode: Int
+  let message: String
+  let error: String
+}
+
 class AuthenticationHandler: ObservableObject {
 
   @Published var isLoggedIn: Bool = false
 
   private var jwtToken: JwtToken? = nil
+  private static let BASE_URL = "https://api.mobilesys.de"
 
   func register(email: String, password: String, password2: String) {
     Just.post(
-      "https://api.mobilesys.de/users",
+      "\(AuthenticationHandler.BASE_URL)/users",
       data: [
         "email": email, "password": password,
         "password2": password2,
       ],
       asyncCompletionHandler: { r in
-        print(r)
-        if r.ok {  // TODO check for 201
-          print(r.text)
+        if r.error != nil {
+          print("Error: " + r.reason)
+          return
+        }
+        if r.statusCode == 403 {
+          let reponseError = self.readErrorFromReponse(reponse: r)
+          print("Error: \(reponseError!.message)")
+          return
+        }
+        if r.statusCode == 201 {
           do {
             try self.getJwtTokenFromResponse(text: r.text!)
           } catch {
             print("Failed to decode JWT: \(error)")
+            return
           }
           NetworkAdapter(authenticationHandler: self).loadUserPortfolio()
         }
+        print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
   }
 
   func login(email: String, password: String) {
     Just.post(
-      "https://api.mobilesys.de/auth/login",
+      "\(AuthenticationHandler.BASE_URL)/auth/login",
       data: [
         "email": email, "password": password,
       ],
       asyncCompletionHandler: { r in
-        print(r)
-        if r.ok {  // TODO check for correct response status
-          print(r.text)
+        if r.error != nil {
+          print("Error: " + r.reason)
+          return
+        }
+        if r.statusCode == 403 {
+          let reponseError = self.readErrorFromReponse(reponse: r)
+          print("Error: \(reponseError!.message)")
+          return
+        }
+        if r.statusCode == 201 {
           do {
             try self.getJwtTokenFromResponse(text: r.text!)
           } catch {
             print("Failed to decode JWT: \(error)")
+            return
           }
           NetworkAdapter(authenticationHandler: self).loadUserPortfolio()
         }
+        print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
-  }
-
-  func wasLoggedInBefore() -> Bool {
-    return false
   }
 
   func getToken() -> JwtToken {
     return jwtToken!
   }
-
-  private func writeWasLoggedInBefore() {
-
+  private func readErrorFromReponse(reponse: HTTPResult) -> ReponseError? {
+    let decoder = JSONDecoder()
+    do {
+      return try decoder.decode(ReponseError.self, from: reponse.text!.data(using: .utf8)!)
+    } catch {
+      print("Failed load error message: \(error)")
+      return nil
+    }
   }
 
   private func getJwtTokenFromResponse(text: String) throws {
