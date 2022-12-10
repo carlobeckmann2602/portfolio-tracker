@@ -24,30 +24,27 @@ struct LandingScreen: View {
             .frame(width: 160, height: 160)
             .padding([.top], 166)
           Text("GoFundYourself")
-            .font(.custom("Roboto Serif", size: 24))
-            .fontWeight(.bold)
-            .foregroundColor(.white)
+            .robotoSerif(size: 24, weight: .bold)
             .padding([.top], 27)
         }
         Spacer()
         VStack(spacing: 25) {
           Text("Sign in to manage all your stocks in one place!")
-            .font(.custom("Roboto", size: 20))
-            .fontWeight(.light)
-            .foregroundColor(.white)
+            .roboto(size: 20, weight: .light)
           ActionButton(action: registerAction, text: "Register")
           HStack {
             Divider().frame(width: 125, height: 2).background(AppColors.PRIMARY)
-            Text("or").padding([.leading, .trailing], 10)
+            Text("or")
+              .roboto(size: 16)
+              .padding([.leading, .trailing], 10)
             Divider().frame(width: 125, height: 2).background(AppColors.PRIMARY)
           }
           Button {
             loginAction()
           } label: {
             Text("Log-in")
-              .font(.custom("Roboto", size: 18))
-              .fontWeight(.bold)
-              .foregroundColor(.white).underline()
+              .roboto(size: 18, weight: .bold)
+              .underline()
           }
         }
       }

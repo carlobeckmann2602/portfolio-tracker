@@ -31,14 +31,10 @@ struct RegisterScreen: View {
       VStack {
         VStack(alignment: .leading) {
           Text("Welcome!")
-            .font(.custom("Roboto Serif", size: 45))
-            .fontWeight(.bold)
-            .foregroundColor(.white)
+            .robotoSerif(size: 45, weight: .bold)
             .padding([.top], 130)
           Text("Please create an Account to join GoFundYourself.")
-            .font(.custom("Roboto", size: 20))
-            .fontWeight(.light)
-            .foregroundColor(.white)
+            .roboto(size: 20)
             .padding([.top], 0)
         }
         Spacer()
@@ -69,15 +65,14 @@ struct RegisterScreen: View {
           }, text: "Register"
         ).padding([.top], 30)
         HStack {
-          Text("Already have an account?").font(.custom("Roboto", size: 15))
-            .fontWeight(.light)
-            .foregroundColor(.white)
+          Text("Already have an account?")
+            .roboto(size: 15)
           Button {
             loginRequested()
           } label: {
-            Text("Log in").font(.custom("Roboto", size: 15))
-              .fontWeight(.light)
-              .foregroundColor(AppColors.PRIMARY).underline()
+            Text("Log in")
+              .roboto(size: 15, foregroundColor: AppColors.PRIMARY)
+              .underline()
           }
         }.padding([.top], 20)
         Spacer()

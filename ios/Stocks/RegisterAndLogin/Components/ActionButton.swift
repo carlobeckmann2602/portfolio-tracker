@@ -16,9 +16,7 @@ struct ActionButton: View {
       action()
     } label: {
       Text(self.text)
-        .font(.custom("Roboto", size: 20))
-        .fontWeight(.bold)
-        .foregroundColor(.white)
+        .roboto(size: 20, weight: .bold)
         .padding()
         .background(
           LinearGradient(

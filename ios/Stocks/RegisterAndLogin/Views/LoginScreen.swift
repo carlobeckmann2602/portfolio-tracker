@@ -30,14 +30,10 @@ struct LoginScreen: View {
       VStack {
         VStack(alignment: .leading) {
           Text("Welcome back!")
-            .font(.custom("Roboto Serif", size: 45))
-            .fontWeight(.bold)
-            .foregroundColor(.white)
+            .robotoSerif(size: 45, weight: .bold)
             .padding([.top], 130)
           Text("Please log in to your GoFundYourself Account.")
-            .font(.custom("Roboto", size: 20))
-            .fontWeight(.light)
-            .foregroundColor(.white)
+            .roboto(size: 20)
             .padding([.top], 0)
         }
         Spacer()
@@ -60,15 +56,14 @@ struct LoginScreen: View {
           }, text: "Login"
         ).padding([.top], 30)
         HStack {
-          Text("No account?").font(.custom("Roboto", size: 15))
-            .fontWeight(.light)
-            .foregroundColor(.white)
+          Text("No account?")
+            .roboto(size: 15)
           Button {
             registerRequested()
           } label: {
-            Text("Create one").font(.custom("Roboto", size: 15))
-              .fontWeight(.light)
-              .foregroundColor(AppColors.PRIMARY).underline()
+            Text("Create one")
+              .roboto(size: 15, foregroundColor: AppColors.PRIMARY)
+              .underline()
           }
         }.padding([.top], 20)
         Spacer()

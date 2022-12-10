@@ -77,9 +77,7 @@ struct PieChart: View {
           PortfolioEntryInfo(portfolioEntry: currentPortfolioEntry()!, portfolio: self.portfolio)
         } else {
           Text("Tap on an area of the donut chart for more.")
-            .font(.custom("Roboto", size: 25))
-            .fontWeight(.light)
-            .foregroundColor(Color.white)
+            .roboto(size: 25)
             .multilineTextAlignment(.center)
             .frame(width: 260)
         }

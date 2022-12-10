@@ -18,9 +18,7 @@ struct RemoveAllAmount: View {
       portfolio.removeAllStockFromPortfolio(stock: stock)
     } label: {
       Text("Remove all")
-        .font(.custom("Roboto", size: 20))
-        .fontWeight(.medium)
-        .foregroundColor(.white)
+        .roboto(size: 20, weight: .medium)
         .padding()
         .overlay(
           RoundedRectangle(cornerRadius: 12)

@@ -25,40 +25,32 @@ struct PortfolioEntryInfo: View {
         HStack {
           VStack(alignment: .leading, spacing: 5) {
             Text(portfolioEntry.stock.name)
-              .font(.custom("Roboto", size: 25))
-              .fontWeight(.medium)
+              .roboto(size: 25, weight: .medium)
             Text(
               "+2,45%"
             )
-            .font(.custom("Roboto", size: 18))
-            .fontWeight(.regular)
+            .roboto(size: 18, weight: .regular)
           }
           Spacer()
-          Text(String(format: "%.02f€", portfolioEntry.calculateStockValue())).font(
-            .custom("Roboto", size: 18)
-          )
-          .fontWeight(.regular)
+          Text(String(format: "%.02f€", portfolioEntry.calculateStockValue())).roboto(
+            size: 18, weight: .regular)
         }.padding(20)
       }
       Spacer()
         .frame(height: 2)
       HStack {
         Text("Current price:")
-          .font(.custom("Roboto", size: 25))
-          .fontWeight(.light)
+          .roboto(size: 25)
         Spacer()
         Text(String(format: "%.2f€", portfolioEntry.stock.value))
-          .font(.custom("Roboto", size: 25))
-          .fontWeight(.light)
+          .roboto(size: 25)
       }
       HStack {
         Text("Trend:")
-          .font(.custom("Roboto", size: 25))
-          .fontWeight(.light)
+          .roboto(size: 25)
         Spacer()
         Text("+2,45%")
-          .font(.custom("Roboto", size: 25))
-          .fontWeight(.light)
+          .roboto(size: 25)
       }
       StepperView(stock: portfolioEntry.stock, portfolio: portfolio, portfolioEntry: portfolioEntry)
       RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)

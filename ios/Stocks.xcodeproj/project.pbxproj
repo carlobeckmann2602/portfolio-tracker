@@ -54,6 +54,7 @@
 		3DE049622913C7A400B9D392 /* Stock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE049612913C7A400B9D392 /* Stock.swift */; };
 		3DE049642913C7DB00B9D392 /* OftenAddedStocksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE049632913C7DB00B9D392 /* OftenAddedStocksList.swift */; };
 		3DE049662913C80000B9D392 /* SearchResultsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE049652913C80000B9D392 /* SearchResultsList.swift */; };
+		3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */; };
 		859B300B29311D7500BBB8F7 /* RemoveAllAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B300A29311D7500BBB8F7 /* RemoveAllAmount.swift */; };
 		85A5C4BE2930DC6400478FC0 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A5C4BD2930DC6400478FC0 /* Stepper.swift */; };
 		EDA81C82291C0A1100A420E2 /* Stocks_Mocked.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */; };
@@ -129,6 +130,7 @@
 		3DE049612913C7A400B9D392 /* Stock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stock.swift; sourceTree = "<group>"; };
 		3DE049632913C7DB00B9D392 /* OftenAddedStocksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OftenAddedStocksList.swift; sourceTree = "<group>"; };
 		3DE049652913C80000B9D392 /* SearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsList.swift; sourceTree = "<group>"; };
+		3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
 		859B300A29311D7500BBB8F7 /* RemoveAllAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAllAmount.swift; sourceTree = "<group>"; };
 		85A5C4BD2930DC6400478FC0 /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Stocks_Mocked.json; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		3DA98E1A29098A260091F88F /* Stocks */ = {
 			isa = PBXGroup;
 			children = (
+				3DE6A4C82944A01900F9944A /* Extensions */,
 				3D97BD112943A39C00B313B2 /* RegisterAndLogin */,
 				3D906FE2293B7C5B00E9AE5F /* Info.plist */,
 				3D906FC7293B7A5100E9AE5F /* Fonts */,
@@ -334,6 +337,14 @@
 				3D67E5202943B8AC009F877D /* LoginScreen.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		3DE6A4C82944A01900F9944A /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		85A5C4BC2930DC4200478FC0 /* RemoveStocksView */ = {
@@ -531,6 +542,7 @@
 				3DA98E47290992670091F88F /* AddStocksView.swift in Sources */,
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
+				3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */,
 				3D67E52A2943C67E009F877D /* NetworkAdapter.swift in Sources */,
 				3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */,
 				3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */,

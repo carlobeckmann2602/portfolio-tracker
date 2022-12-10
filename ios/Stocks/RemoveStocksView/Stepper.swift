@@ -26,8 +26,7 @@ struct StepperView: View {
   var body: some View {
     HStack {
       Text("Count:")
-        .font(.custom("Roboto", size: 25))
-        .fontWeight(.light)
+        .roboto(size: 25)
       Spacer()
       Button {
         decrementStep()
@@ -40,8 +39,8 @@ struct StepperView: View {
       .cornerRadius(8)
       .padding(5)
       .disabled(portfolioEntry.get_amount() <= 0)
-      Text("\(portfolioEntry.get_amount())").font(.custom("Roboto", size: 25))
-        .fontWeight(.light)
+      Text("\(portfolioEntry.get_amount())")
+        .roboto(size: 25)
       Button {
         incrementStep()
       } label: {

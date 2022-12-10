@@ -16,16 +16,12 @@ struct PortfolioLoadedView: View {
       VStack {
         HStack {
           Text("Your balance")
-            .font(.custom("Roboto", size: 25))
-            .fontWeight(.regular)
-            .foregroundColor(Color.white)
+            .roboto(size: 25, weight: .regular)
           Spacer()
         }
         HStack {
           Text(String(format: "%.2f€", portfolio.totalValue()))
-            .font(.custom("Roboto", size: 40))
-            .fontWeight(.bold)
-            .foregroundColor(AppColors.PRIMARY)
+            .roboto(size: 40, weight: .bold, foregroundColor: AppColors.PRIMARY)
           Spacer()
           NavigationLink(
             destination: AddStocksView(portfolio: portfolio).navigationTitle(
@@ -58,7 +54,7 @@ struct PortfolioLoadedView: View {
       }
     }
     .navigationTitle("Portfolio")
-    .foregroundColor(.white)
+    .preferredColorScheme(.dark)
   }
 
 }
