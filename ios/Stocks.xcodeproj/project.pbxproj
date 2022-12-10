@@ -16,7 +16,7 @@
 		3D67B9002926414F00DB3C8F /* PortfolioEntryInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */; };
 		3D67E5212943B8AC009F877D /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5202943B8AC009F877D /* LoginScreen.swift */; };
 		3D67E5272943C441009F877D /* Just in Frameworks */ = {isa = PBXBuildFile; productRef = 3D67E5262943C441009F877D /* Just */; };
-		3D67E52A2943C67E009F877D /* NetworkAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5292943C67E009F877D /* NetworkAdapter.swift */; };
+		3D67E52A2943C67E009F877D /* PortfolioHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5292943C67E009F877D /* PortfolioHandler.swift */; };
 		3D67E52F2943C896009F877D /* JWTDecode in Frameworks */ = {isa = PBXBuildFile; productRef = 3D67E52E2943C896009F877D /* JWTDecode */; };
 		3D67E5332943D00E009F877D /* AuthenticationHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67E5322943D00E009F877D /* AuthenticationHandler.swift */; };
 		3D906FD4293B7B2A00E9AE5F /* Roboto-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3D906FC8293B7B2A00E9AE5F /* Roboto-Regular.ttf */; };
@@ -55,6 +55,7 @@
 		3DE049642913C7DB00B9D392 /* OftenAddedStocksList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE049632913C7DB00B9D392 /* OftenAddedStocksList.swift */; };
 		3DE049662913C80000B9D392 /* SearchResultsList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE049652913C80000B9D392 /* SearchResultsList.swift */; };
 		3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */; };
+		3DE6A4CD2944B62F00F9944A /* ApiUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DE6A4CC2944B62F00F9944A /* ApiUtils.swift */; };
 		859B300B29311D7500BBB8F7 /* RemoveAllAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859B300A29311D7500BBB8F7 /* RemoveAllAmount.swift */; };
 		85A5C4BE2930DC6400478FC0 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85A5C4BD2930DC6400478FC0 /* Stepper.swift */; };
 		EDA81C82291C0A1100A420E2 /* Stocks_Mocked.json in Resources */ = {isa = PBXBuildFile; fileRef = EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */; };
@@ -89,7 +90,7 @@
 		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
 		3D67B8FF2926414F00DB3C8F /* PortfolioEntryInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntryInfo.swift; sourceTree = "<group>"; };
 		3D67E5202943B8AC009F877D /* LoginScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
-		3D67E5292943C67E009F877D /* NetworkAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkAdapter.swift; sourceTree = "<group>"; };
+		3D67E5292943C67E009F877D /* PortfolioHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioHandler.swift; sourceTree = "<group>"; };
 		3D67E5322943D00E009F877D /* AuthenticationHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthenticationHandler.swift; sourceTree = "<group>"; };
 		3D906FC8293B7B2A00E9AE5F /* Roboto-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-Regular.ttf"; sourceTree = "<group>"; };
 		3D906FC9293B7B2A00E9AE5F /* Roboto-ThinItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Roboto-ThinItalic.ttf"; sourceTree = "<group>"; };
@@ -131,6 +132,7 @@
 		3DE049632913C7DB00B9D392 /* OftenAddedStocksList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OftenAddedStocksList.swift; sourceTree = "<group>"; };
 		3DE049652913C80000B9D392 /* SearchResultsList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsList.swift; sourceTree = "<group>"; };
 		3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+Extensions.swift"; sourceTree = "<group>"; };
+		3DE6A4CC2944B62F00F9944A /* ApiUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApiUtils.swift; sourceTree = "<group>"; };
 		859B300A29311D7500BBB8F7 /* RemoveAllAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoveAllAmount.swift; sourceTree = "<group>"; };
 		85A5C4BD2930DC6400478FC0 /* Stepper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stepper.swift; sourceTree = "<group>"; };
 		EDA81C81291C0A1100A420E2 /* Stocks_Mocked.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Stocks_Mocked.json; sourceTree = "<group>"; };
@@ -204,8 +206,6 @@
 				3DE6A4C729449F3200F9944A /* Views */,
 				3D97BD1A2943B07B00B313B2 /* Components */,
 				3D97BD162943AE5300B313B2 /* RegisterAndLoginView.swift */,
-				3D67E5292943C67E009F877D /* NetworkAdapter.swift */,
-				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
 			);
 			path = RegisterAndLogin;
 			sourceTree = "<group>";
@@ -252,6 +252,7 @@
 		3DA98E1A29098A260091F88F /* Stocks */ = {
 			isa = PBXGroup;
 			children = (
+				3DE6A4CB2944B5D800F9944A /* BackendApi */,
 				3DE6A4C82944A01900F9944A /* Extensions */,
 				3D97BD112943A39C00B313B2 /* RegisterAndLogin */,
 				3D906FE2293B7C5B00E9AE5F /* Info.plist */,
@@ -345,6 +346,16 @@
 				3DE6A4C92944A02A00F9944A /* Text+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		3DE6A4CB2944B5D800F9944A /* BackendApi */ = {
+			isa = PBXGroup;
+			children = (
+				3D67E5292943C67E009F877D /* PortfolioHandler.swift */,
+				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
+				3DE6A4CC2944B62F00F9944A /* ApiUtils.swift */,
+			);
+			path = BackendApi;
 			sourceTree = "<group>";
 		};
 		85A5C4BC2930DC4200478FC0 /* RemoveStocksView */ = {
@@ -532,6 +543,7 @@
 				3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */,
 				3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */,
 				3DA666F32929401B00C13EDF /* NavigationUtils.swift in Sources */,
+				3DE6A4CD2944B62F00F9944A /* ApiUtils.swift in Sources */,
 				3D97BD1C2943B08F00B313B2 /* ActionButton.swift in Sources */,
 				EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */,
 				3D334D1429290DF000060649 /* StockListCell.swift in Sources */,
@@ -543,7 +555,7 @@
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
 				3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */,
-				3D67E52A2943C67E009F877D /* NetworkAdapter.swift in Sources */,
+				3D67E52A2943C67E009F877D /* PortfolioHandler.swift in Sources */,
 				3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */,
 				3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */,
 				3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */,

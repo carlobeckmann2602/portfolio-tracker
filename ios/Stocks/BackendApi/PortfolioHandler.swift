@@ -19,7 +19,7 @@ class NetworkAdapter {
 
   func loadUserPortfolio() {
     Just.get(
-      "https://api.mobilesys.de/users/\(self.authenticationHandler.getToken().userId())/stocks",
+      "\(ApiUtils.BASE_URL)/users/\(self.authenticationHandler.getToken().userId())/stocks",
       headers: authenticationHandler.getHeaders(),
       asyncCompletionHandler: { r in
         print(r)

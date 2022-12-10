@@ -37,11 +37,10 @@ class AuthenticationHandler: ObservableObject {
   @Published var isLoggedIn: Bool = false
 
   private var jwtToken: JwtToken? = nil
-  private static let BASE_URL = "https://api.mobilesys.de"
 
   func register(email: String, password: String, password2: String) {
     Just.post(
-      "\(AuthenticationHandler.BASE_URL)/users",
+      "\(ApiUtils.BASE_URL)/users",
       data: [
         "email": email, "password": password,
         "password2": password2,
@@ -71,7 +70,7 @@ class AuthenticationHandler: ObservableObject {
 
   func login(email: String, password: String) {
     Just.post(
-      "\(AuthenticationHandler.BASE_URL)/auth/login",
+      "\(ApiUtils.BASE_URL)/auth/login",
       data: [
         "email": email, "password": password,
       ],
