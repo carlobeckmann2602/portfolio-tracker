@@ -75,6 +75,15 @@ struct RegisterScreen: View {
               .underline()
           }
         }.padding([.top], 20)
+        Button {
+          emailText = "ios-\(UUID())@test.com"
+          passwordText = "securepassword"
+          password2Text = "securepassword"
+        } label: {
+          Text("Debug autofill")
+            .roboto(size: 15)
+            .underline()
+        }.padding([.top], 5)
         Spacer()
         Image("logo_white")
           .resizable()

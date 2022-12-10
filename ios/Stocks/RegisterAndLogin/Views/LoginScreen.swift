@@ -66,6 +66,14 @@ struct LoginScreen: View {
               .underline()
           }
         }.padding([.top], 20)
+        Button {
+          emailText = "ios-testing@test.com"
+          passwordText = "securepassword"
+        } label: {
+          Text("Use Debug Account")
+            .roboto(size: 15)
+            .underline()
+        }.padding([.top], 5)
         Spacer()
         Image("logo_white")
           .resizable()
