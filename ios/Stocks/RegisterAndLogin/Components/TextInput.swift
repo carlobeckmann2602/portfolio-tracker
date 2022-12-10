@@ -50,7 +50,9 @@ struct TextInput: View {
           )
           .textFieldStyle(PlainTextFieldStyle()).foregroundColor(.white)
           .keyboardType(
-            .emailAddress)
+            .emailAddress
+          )
+          .disableAutocorrection(true)
         }
         Spacer()
       }.frame(width: 300, height: 50)
