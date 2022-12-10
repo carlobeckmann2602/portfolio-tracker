@@ -199,11 +199,9 @@
 		3D97BD112943A39C00B313B2 /* RegisterAndLogin */ = {
 			isa = PBXGroup;
 			children = (
+				3DE6A4C729449F3200F9944A /* Views */,
 				3D97BD1A2943B07B00B313B2 /* Components */,
-				3D97BD122943A3B300B313B2 /* LandingScreen.swift */,
 				3D97BD162943AE5300B313B2 /* RegisterAndLoginView.swift */,
-				3D97BD182943AF8400B313B2 /* RegisterScreen.swift */,
-				3D67E5202943B8AC009F877D /* LoginScreen.swift */,
 				3D67E5292943C67E009F877D /* NetworkAdapter.swift */,
 				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
 			);
@@ -326,6 +324,16 @@
 				EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		3DE6A4C729449F3200F9944A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3D97BD122943A3B300B313B2 /* LandingScreen.swift */,
+				3D97BD182943AF8400B313B2 /* RegisterScreen.swift */,
+				3D67E5202943B8AC009F877D /* LoginScreen.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		85A5C4BC2930DC4200478FC0 /* RemoveStocksView */ = {
