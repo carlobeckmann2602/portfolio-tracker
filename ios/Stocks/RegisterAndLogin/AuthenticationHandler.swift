@@ -19,6 +19,19 @@ struct ReponseError: Decodable {
   let error: String
 }
 
+struct JwtToken {
+  let decodedToken: JWT
+  init(decodedToken: JWT) {
+    self.decodedToken = decodedToken
+  }
+  func userId() -> Int {
+    return decodedToken["sub"].integer!
+  }
+  func isExpired() -> Bool {
+    return decodedToken.expired
+  }
+}
+
 class AuthenticationHandler: ObservableObject {
 
   @Published var isLoggedIn: Bool = false

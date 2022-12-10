@@ -9,19 +9,6 @@ import Foundation
 import JWTDecode
 import Just
 
-struct JwtToken {
-  let decodedToken: JWT
-  init(decodedToken: JWT) {
-    self.decodedToken = decodedToken
-  }
-  func userId() -> Int {
-    return decodedToken["sub"].integer!
-  }
-  func isExpired() -> Bool {
-    return decodedToken.expired
-  }
-}
-
 class NetworkAdapter {
 
   private let authenticationHandler: AuthenticationHandler
