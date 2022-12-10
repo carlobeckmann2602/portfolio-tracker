@@ -20,9 +20,7 @@ class NetworkAdapter {
   func loadUserPortfolio() {
     Just.get(
       "https://api.mobilesys.de/users/\(self.authenticationHandler.getToken().userId())/stocks",
-      headers: [
-        "Authorization": "Bearer \(self.authenticationHandler.getToken().decodedToken.string)"
-      ],
+      headers: authenticationHandler.getHeaders(),
       asyncCompletionHandler: { r in
         print(r)
         if r.ok {

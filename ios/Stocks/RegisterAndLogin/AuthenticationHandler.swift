@@ -101,6 +101,12 @@ class AuthenticationHandler: ObservableObject {
   func getToken() -> JwtToken {
     return jwtToken!
   }
+  func getHeaders() -> [String: String] {
+    return [
+      "Authorization": "Bearer \(getToken().decodedToken.string)"
+    ]
+  }
+
   private func readErrorFromReponse(reponse: HTTPResult) -> ReponseError? {
     let decoder = JSONDecoder()
     do {
