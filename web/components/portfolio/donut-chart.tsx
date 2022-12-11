@@ -1,17 +1,14 @@
 import React from "react";
-import {
-  PieChart as PieChartBase,
-  pieChartDefaultProps,
-} from "react-minimal-pie-chart";
+import { PieChart, pieChartDefaultProps } from "react-minimal-pie-chart";
 import { StockHolding } from "../../lib/backend";
 
-export type PieChartProps = {
+export type DonutChartProps = {
   items: StockHolding[];
   selected?: number;
   onClick?: (id: number) => void;
 };
 
-type PieChartItem = {
+type DonutChartItem = {
   value: number;
   color: string;
 };
@@ -19,8 +16,8 @@ type PieChartItem = {
 const colors = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
 const selectedSegmentOffset = 5;
 
-export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
-  const pieChartItems = React.useMemo<PieChartItem[]>(
+export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
+  const segments = React.useMemo<DonutChartItem[]>(
     () =>
       items.length
         ? items.map((item, i) => ({
@@ -41,14 +38,14 @@ export const PieChart = ({ items, selected, onClick }: PieChartProps) => {
   return (
     <div className="relative pt-full text-base">
       <div className="absolute inset-0">
-        <PieChartBase
+        <PieChart
           startAngle={-90}
           animate
           lineWidth={35}
           radius={pieChartDefaultProps.radius - selectedSegmentOffset}
-          data={pieChartItems}
+          data={segments}
           segmentsShift={
-            pieChartItems.length > 1
+            segments.length > 1
               ? (i) => (i === selected ? selectedSegmentOffset : 0)
               : undefined
           }

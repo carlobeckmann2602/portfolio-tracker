@@ -1,7 +1,7 @@
 import React from "react";
 import { StockHolding, useStockHoldings } from "../../lib/backend";
 import { Modal } from "../modal";
-import { PieChart } from "./pie-chart";
+import { DonutChart } from "./donut-chart";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
 import { FiPlus } from "react-icons/fi";
@@ -101,7 +101,7 @@ const Portfolio = () => {
         >
           <FiPlus />
         </div>
-        <PieChart
+        <DonutChart
           items={holdings}
           onClick={setSelectedId}
           selected={selectedId}
