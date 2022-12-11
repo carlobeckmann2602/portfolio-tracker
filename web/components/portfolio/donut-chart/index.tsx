@@ -26,41 +26,41 @@ export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
             value: item.value,
             color: segmentColors[i],
           }))
-        : [{ value: 1, color: "#efefef" }],
+        : [{ value: 1, color: "#180A44" }],
     [items, segmentColors]
   );
 
   const isEmpty = !items.length;
 
   return (
-    <div className="relative pt-full text-base">
-      <div className="absolute inset-0">
-        <PieChart
-          startAngle={-90}
-          animate
-          lineWidth={50}
-          radius={pieChartDefaultProps.radius - selectedSegmentOffset}
-          data={segments}
-          segmentsShift={
-            segments.length > 1
-              ? (i) => (i === selected ? selectedSegmentOffset : 0)
-              : undefined
-          }
-          segmentsStyle={
-            !isEmpty
-              ? {
-                  cursor: "pointer",
-                }
-              : undefined
-          }
-          onClick={onClick && ((_, i) => onClick(i))}
-        />
+    <div>
+      <div className="relative pt-full text-base">
+        <div className="absolute inset-0">
+          <PieChart
+            startAngle={-90}
+            animate
+            lineWidth={50}
+            radius={pieChartDefaultProps.radius - selectedSegmentOffset}
+            data={segments}
+            segmentsShift={
+              segments.length > 1
+                ? (i) => (i === selected ? selectedSegmentOffset : 0)
+                : undefined
+            }
+            segmentsStyle={
+              !isEmpty
+                ? {
+                    cursor: "pointer",
+                  }
+                : undefined
+            }
+            onClick={onClick && ((_, i) => onClick(i))}
+          />
+        </div>
       </div>
       {isEmpty && (
-        <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
-          <div className="w-1/2 text-center text-lg">
-            Please add stocks to your portfolio.
-          </div>
+        <div className="text-center text-2xl font-light mt-4">
+          Tap the plus button to add a new stock.
         </div>
       )}
     </div>
