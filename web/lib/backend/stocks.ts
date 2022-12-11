@@ -100,7 +100,7 @@ async function updateLocalHolding(holding: StockHolding) {
 
   if (holding.amount) holdings.push(holding);
 
-  holdings = holdings.sort((a, b) => b.value - a.value);
+  holdings = holdings.sort((a, b) => a.stock.name.localeCompare(b.stock.name));
 
   localStorage.setItem(STOCK_HOLDINGS_KEY, JSON.stringify(holdings));
 }
