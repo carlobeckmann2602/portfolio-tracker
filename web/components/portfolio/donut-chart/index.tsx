@@ -1,6 +1,7 @@
 import React from "react";
 import { PieChart, pieChartDefaultProps } from "react-minimal-pie-chart";
-import { StockHolding } from "../../lib/backend";
+import { StockHolding } from "../../../lib/backend";
+import { useDonutChartSegmentColors } from "./colors";
 
 export type DonutChartProps = {
   items: StockHolding[];
@@ -13,36 +14,21 @@ type DonutChartItem = {
   color: string;
 };
 
-const colors = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
+const colorScheme = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
 const selectedSegmentOffset = 5;
 
 export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
-  const segments = React.useMemo<DonutChartItem[]>(() => {
-    if (!items.length) return [{ value: 1, color: "#efefef" }];
-
-    let getColorId = (id: number) => id % colors.length;
-
-    if (items.length > colors.length) {
-      const excessItemCount = items.length % colors.length;
-      if (excessItemCount) {
-        const excessIdOffset = Math.floor(excessItemCount / 2);
-        const excessStartId =
-          colors.length * Math.floor(items.length / colors.length);
-        const midColorId = Math.floor(colors.length / 2);
-
-        const getColorIdBase = getColorId;
-        getColorId = (id: number) =>
-          id < excessStartId
-            ? getColorIdBase(id)
-            : midColorId - excessIdOffset - excessStartId + id;
-      }
-    }
-
-    return items.map((item, i) => ({
-      value: item.value,
-      color: colors[getColorId(i)],
-    }));
-  }, [items]);
+  const segmentColors = useDonutChartSegmentColors(colorScheme, items.length);
+  const segments = React.useMemo<DonutChartItem[]>(
+    () =>
+      items.length
+        ? items.map((item, i) => ({
+            value: item.value,
+            color: segmentColors[i],
+          }))
+        : [{ value: 1, color: "#efefef" }],
+    [items, segmentColors]
+  );
 
   const isEmpty = !items.length;
 
