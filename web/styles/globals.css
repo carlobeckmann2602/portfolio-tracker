@@ -2,22 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #180A44;
-}
-
-* {
-  color: #FFFFFF;
-}
-
-h1 {
-  font-family: 'Roboto Serif', serif;
-  font-weight: 700;
-  font-size: 45px;
-}
-
-h2,
-h4,
-p {
-  font-family: 'Roboto', sans-serif;
+@layer base {
+  body {
+    @apply bg-back text-front;
+  }
 }
