@@ -64,10 +64,10 @@ const Portfolio = () => {
 
   return (
     <>
-      <div className="relative flex flex-col gap-6 z-0">
+      <div className="relative flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div
           onClick={() => setModalIsOpen(true)}
-          className="absolute right-0 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
+          className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
         >
           <FiPlus />
         </div>

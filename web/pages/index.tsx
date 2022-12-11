@@ -24,10 +24,14 @@ const Home: NextPage = () => {
   return (
     <>
       <Helmet title="My portfolio" />
-      <CenterSection>
-        <PageHeading>My portfolio</PageHeading>
-        <Portfolio />
-      </CenterSection>
+      <div className="mb-16">
+        <CenterSection>
+          <PageHeading>My portfolio</PageHeading>
+          <div className="-mx-6">
+            <Portfolio />
+          </div>
+        </CenterSection>
+      </div>
     </>
   );
 };

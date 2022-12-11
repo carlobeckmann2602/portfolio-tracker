@@ -68,7 +68,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
-    <div className="px-6 flex flex-col gap-6">
+    <div className="xs:px-4 sm:px-6 flex flex-col gap-6">
       <div className="flex items-center gap-4">
         <TrendIcon trend={0} />
         <div>
@@ -76,7 +76,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
           <p>{stringifyCurrencyValue(holding.value)}</p>
         </div>
       </div>
-      <div className="flex flex-col text-lg gap-2">
+      <div className="flex flex-col xs:text-lg gap-2">
         <TableRow>
           <div>Symbol:</div>
           <div>{symbol}</div>

@@ -7,6 +7,10 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "380px",
+        ...defaultTheme.screens,
+      },
       colors: {
         highlight1: {
           // Green
@@ -36,6 +40,10 @@ module.exports = {
       },
       maxHeight: {
         128: "32rem",
+      },
+      backgroundImage: {
+        "falloff-soft":
+          "linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.143371) 38.02%, rgba(255, 255, 255, 0) 100%)",
       },
     },
   },
