@@ -25,8 +25,8 @@ export const Checkbox = ({ name, label, text }: CheckboxProps) => {
           <div
             className={`mr-2 rounded-sm w-4 h-4 border-2 border-solid border-white outline ${
               active
-                ? "bg-main-400 outline-main-400"
-                : "outline-main-400/50 hover:outline-main-400"
+                ? "bg-highlight1 outline-highlight1"
+                : "outline-highlight1/50 hover:outline-highlight1"
             }`}
           ></div>
           <div className="select-none">{text}</div>

@@ -19,7 +19,7 @@ const CounterButton = (
 ) => (
   <button
     {...props}
-    className="rounded-md border border-black w-8 select-none transition disabled:opacity-0"
+    className="rounded-md border border-front w-8 select-none transition disabled:opacity-0"
   />
 );
 
@@ -91,7 +91,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
         </TableRow>
       </div>
       <button
-        className="text-lg rounded-md border border-black w-full p-4"
+        className="text-lg rounded-md border border-front w-full p-4"
         onClick={removeHolding}
       >
         Remove stock
