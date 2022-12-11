@@ -38,7 +38,7 @@ export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
         <PieChart
           startAngle={-90}
           animate
-          lineWidth={35}
+          lineWidth={50}
           radius={pieChartDefaultProps.radius - selectedSegmentOffset}
           data={segments}
           segmentsShift={
