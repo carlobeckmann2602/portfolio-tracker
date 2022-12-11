@@ -14,7 +14,7 @@ type DonutChartItem = {
   color: string;
 };
 
-const colorScheme = ["#4666A2", "#547ECD", "#90AFE5", "#ACBEDE", "#C5D5EE"];
+const colorScheme = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 const selectedSegmentOffset = 5;
 
 export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
