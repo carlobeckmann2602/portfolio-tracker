@@ -115,21 +115,18 @@ export function useStockSearch(searchTerm: string) {
   );
 }
 
-  /* will be removed when filter is implemented in backend */
-  const tempFilterStocksByName = (stocks: StockDTO[], searchTerm: string) => {
-    const filteredStocks: StockDTO[] = [];
-    stocks.forEach((stock) => {
-      if (
-        stock.name
-          .toLocaleLowerCase()
-          .startsWith(searchTerm.toLocaleLowerCase())
-      ) {
-        filteredStocks.push(stock);
-      }
-    });
-    return filteredStocks;
-  };
-
+/* will be removed when filter is implemented in backend */
+const tempFilterStocksByName = (stocks: StockDTO[], searchTerm: string) => {
+  const filteredStocks: StockDTO[] = [];
+  stocks.forEach((stock) => {
+    if (
+      stock.name.toLocaleLowerCase().startsWith(searchTerm.toLocaleLowerCase())
+    ) {
+      filteredStocks.push(stock);
+    }
+  });
+  return filteredStocks;
+};
 
 export function useStockHoldingMutation() {
   const client = useQueryClient();
