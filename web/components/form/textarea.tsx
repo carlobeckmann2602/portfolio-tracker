@@ -17,7 +17,7 @@ export const TextArea = ({ name, label, placeholder }: TextAreaProps) => {
         <textarea
           name={name}
           placeholder={placeholder}
-          className="border outline-none border-solid border-main-400/50 focus:border-main-400 p-1 rounded-sm"
+          className="border outline-none border-solid border-highlight1/50 focus:border-highlight1 p-1 rounded-sm"
         />
       </label>
     </div>

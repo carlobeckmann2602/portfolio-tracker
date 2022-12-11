@@ -21,8 +21,8 @@ export const RadioSet = ({ name, label, options }: RadioSetProps) => {
           <div
             className={`mr-2 rounded-full w-4 h-4 border-2 border-solid border-white outline ${
               active === index
-                ? "bg-main-400 outline-main-400"
-                : "outline-main-400/50 hover:outline-main-400"
+                ? "bg-highlight1 outline-highlight1"
+                : "outline-highlight1/50 hover:outline-highlight1"
             }`}
           ></div>
           <input
