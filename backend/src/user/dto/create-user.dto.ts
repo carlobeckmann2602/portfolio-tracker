@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsNotEmpty, isString, IsString } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 //Defines shape of request body of user
 //Useage for requests from registration form
@@ -16,13 +16,7 @@ export class CreateUserDto {
   password: string;
 
   @IsString()
+  @IsNotEmpty()
   @ApiProperty()
-  firstName: string;
-
-  @IsString()
-  @ApiProperty()
-  lastName: string;
-
-  //weitere Felder aus Registration form
-  //.... abhaengig von Design/Marketing
+  password2: string;
 }
