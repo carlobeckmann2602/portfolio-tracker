@@ -44,6 +44,8 @@ module.exports = {
       backgroundImage: {
         "falloff-soft":
           "linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.143371) 38.02%, rgba(255, 255, 255, 0) 100%)",
+        "falloff-highlight-mix":
+          "linear-gradient(87.54deg, #A410FF 15.44%, #6472D8 57.36%, #11F1A6 100.38%)",
       },
     },
   },

@@ -5,6 +5,7 @@ import {
   stringifyCurrencyValue,
   useStockHoldingMutation,
 } from "../../lib/backend";
+import { Button } from "../button";
 import { TrendIcon } from "../stock/trend_icon";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
@@ -68,34 +69,36 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
-    <div className="xs:px-4 sm:px-6 flex flex-col gap-6">
-      <div className="flex items-center gap-4">
-        <TrendIcon trend={0} />
-        <div>
-          <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
-          <p>{stringifyCurrencyValue(holding.value)}</p>
+    <div className="xs:px-4 sm:px-6 flex flex-col gap-12">
+      <div className="flex flex-col gap-6">
+        <div className="flex items-center gap-4">
+          <TrendIcon trend={0} />
+          <div>
+            <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
+            <p>{stringifyCurrencyValue(holding.value)}</p>
+          </div>
+        </div>
+        <div className="flex flex-col xs:text-lg gap-2">
+          <TableRow>
+            <div>Symbol:</div>
+            <div>{symbol}</div>
+          </TableRow>
+          <TableRow>
+            <div>Current price:</div>
+            <div>{stringifyCurrencyValue(price)}</div>
+          </TableRow>
+          <TableRow>
+            <div>Count:</div>
+            <CounterInput value={count} onChange={setAmount} min={1} />
+          </TableRow>
         </div>
       </div>
-      <div className="flex flex-col xs:text-lg gap-2">
-        <TableRow>
-          <div>Symbol:</div>
-          <div>{symbol}</div>
-        </TableRow>
-        <TableRow>
-          <div>Current price:</div>
-          <div>{stringifyCurrencyValue(price)}</div>
-        </TableRow>
-        <TableRow>
-          <div>Count:</div>
-          <CounterInput value={count} onChange={setAmount} min={1} />
-        </TableRow>
+      <div className="flex flex-col gap-4">
+        <Button onClick={removeHolding}>Remove stock</Button>
+        <Button href="/settings" look={1}>
+          Personal settings
+        </Button>
       </div>
-      <button
-        className="text-lg rounded-md border border-front w-full p-4"
-        onClick={removeHolding}
-      >
-        Remove stock
-      </button>
     </div>
   );
 }

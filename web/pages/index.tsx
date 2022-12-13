@@ -1,7 +1,6 @@
 import type { NextPage } from "next";
 import { Helmet } from "../components/helmet";
 import { CenterSection } from "../components/center-section";
-import { PageHeading } from "../components/page-heading";
 import Portfolio from "../components/portfolio";
 import { useEffect } from "react";
 import { useRouter } from "next/router";

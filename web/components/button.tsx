@@ -1,27 +1,79 @@
 import React from "react";
+import cn from "classnames";
+import Link from "next/link";
 
-export type ButtonProps = {
-  style?: string;
-  type?: "button" | "submit" | "reset";
+type HtmlButtonProps = React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+>;
+type LinkProps = React.PropsWithChildren<{ href: string; className?: string }>;
+
+type BaseButtonProps = HtmlButtonProps | LinkProps;
+
+const isLinkProps = (props: any): props is LinkProps => !!props.href;
+
+const ButtonBase: React.FC<BaseButtonProps> = (props) => {
+  const className = cn(
+    "text-center text-lg font-semibold rounded-lg w-full p-3 hover:underline",
+    props.className
+  );
+
+  return isLinkProps(props) ? (
+    <Link {...props} className={className} />
+  ) : (
+    <button {...props} className={className} />
+  );
 };
 
-export const Button = ({
-  style = "primary",
-  type = "button",
-  children,
-}: React.PropsWithChildren<ButtonProps>) => {
-  const primaryStyles =
-    "bg-highlight1 text-back hover:bg-back hover:text-highlight1";
-  const secondaryStyles =
-    "bg-white text-highlight1 hover:bg-highlight1 hover:text-white";
+const DefaultButton: React.FC<BaseButtonProps> = (props) => (
+  <ButtonBase
+    {...props}
+    className={cn("border-2 border-front", props.className)}
+  />
+);
 
-  return (
-    <button
-      type={type}
-      className={`relative my-2 px-3 py-1 rounded-sm text-base font-bold border-2 border-solid border-highlight1 
-        ${style === "primary" ? primaryStyles : secondaryStyles}`}
-    >
-      {children}
-    </button>
-  );
+const Highlight1Button: React.FC<BaseButtonProps> = (props) => (
+  <ButtonBase
+    {...props}
+    className={cn(
+      "bg-gradient-to-r from-highlight1-offset to-highlight1-offset via-highlight1 text-back",
+      props.className
+    )}
+  />
+);
+
+const Highlight2Button: React.FC<BaseButtonProps> = (props) => (
+  <ButtonBase
+    {...props}
+    className={cn(
+      "bg-gradient-to-r from-highlight2-offset to-highlight2-offset via-highlight2",
+      props.className
+    )}
+  />
+);
+
+const HighlightMixButton: React.FC<BaseButtonProps> = (props) => (
+  <ButtonBase
+    {...props}
+    className={cn(
+      // "bg-gradient-to-r from-highlight2 to-highlight1",
+      "bg-falloff-highlight-mix",
+      props.className
+    )}
+  />
+);
+
+export type ButtonProps = BaseButtonProps & { look?: number };
+
+export const Button: React.FC<ButtonProps> = ({ look, ...props }) => {
+  switch (look) {
+    case 1:
+      return <Highlight1Button {...props} />;
+    case 2:
+      return <Highlight2Button {...props} />;
+    case 3:
+      return <HighlightMixButton {...props} />;
+    default:
+      return <DefaultButton {...props} />;
+  }
 };

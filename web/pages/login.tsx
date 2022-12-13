@@ -31,7 +31,9 @@ const Login: NextPage = () => {
         >
           <Input type="email" name="email" label="Email" />
           <Input type="password" name="password" label="Password" />
-          <Button type="submit">Login</Button>
+          <Button type="submit" look={3}>
+            Login
+          </Button>
         </form>
         <Link href="/register">No account yet? Register here.</Link>
       </CenterSection>
