@@ -12,9 +12,11 @@ const Login: NextPage = () => {
 
   return (
     <>
-      <Helmet title="Login" />
+      <Helmet title="Log-In" />
+      <PageHeading description="Please log in to your GoFundYourself Account.">
+        Welcome back!
+      </PageHeading>
       <CenterSection>
-        <PageHeading>Login</PageHeading>
         <form
           onSubmit={async (event) => {
             event.preventDefault();
@@ -31,7 +33,9 @@ const Login: NextPage = () => {
         >
           <Input type="email" name="email" label="Email" />
           <Input type="password" name="password" label="Password" />
-          <Button type="submit">Login</Button>
+          <Button type="submit" look={3}>
+            Log-In
+          </Button>
         </form>
         <Link href="/register">No account yet? Register here.</Link>
       </CenterSection>

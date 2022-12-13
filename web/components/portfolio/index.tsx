@@ -1,35 +1,21 @@
 import React from "react";
-import { StockHolding, useStockHoldings } from "../../lib/backend";
+import {
+  StockHolding,
+  stringifyCurrencyValue,
+  useStockHoldings,
+} from "../../lib/backend";
 import { Modal } from "../modal";
-import { PieChart } from "./pie-chart";
+import { DonutChart } from "./donut-chart";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
 import { FiPlus } from "react-icons/fi";
+import { Button } from "../button";
 
-/**
- * Manages the ID of the currently selected holding.
- *
- * This hook is so annoyingly complicated because when
- * the user updates a holding, it is possible that the
- * holding changes its position in the `holdings` list.
- * When this happens we need to make sure that the
- * selection does not suddenly change from one stock
- * to another.
- */
+/** Manages the ID of the currently selected holding. */
 function useSelectedId(
   holdings?: StockHolding[]
 ): [number, (value: number) => void] {
   const [id, setId] = React.useState(0);
-  const [stockId, setStockId] = React.useState(-1);
-  const holdingsRef = React.useRef(holdings);
-  holdingsRef.current = holdings;
-
-  const setIdAction = React.useCallback((newId: number) => {
-    setId(newId);
-    const holdings = holdingsRef.current;
-    if (holdings && newId <= holdings.length - 1)
-      setStockId(holdings[newId].stock.id);
-  }, []);
 
   const cappedId = React.useMemo(
     () => (holdings?.length ? Math.min(holdings.length - 1, id) : 0),
@@ -37,21 +23,10 @@ function useSelectedId(
   );
 
   React.useEffect(() => {
-    if (id == cappedId) return;
-    setIdAction(cappedId);
-  }, [id, cappedId, setIdAction]);
+    if (id != cappedId) setId(cappedId);
+  }, [id, cappedId]);
 
-  React.useEffect(() => {
-    if (!holdings?.length) return;
-    if (stockId < 0) {
-      setStockId(holdings[0].stock.id);
-    } else {
-      const id = holdings.findIndex((holding) => holding.stock.id == stockId);
-      if (id > -1) setId(id);
-    }
-  }, [stockId, holdings]);
-
-  return [cappedId, setIdAction];
+  return [cappedId, setId];
 }
 
 /**
@@ -87,26 +62,57 @@ const Portfolio = () => {
   const { data: holdings } = useStockHoldings();
   const [selectedId, setSelectedId] = useSelectedId(holdings);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const currentBalance = React.useMemo<number | null>(
+    () =>
+      holdings
+        ?.map((holding) => holding.value)
+        .reduce((prev, curr) => prev + curr, 0) ?? null,
+    [holdings]
+  );
 
   useHoldingAddedEffect(holdings, setSelectedId);
 
   if (!holdings) return <span>Loading...</span>;
 
   return (
-    <>
-      <div className="relative flex flex-col gap-6 z-0">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
+        <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
+          {currentBalance != null ? (
+            stringifyCurrencyValue(currentBalance)
+          ) : (
+            <>&nbsp;</>
+          )}
+        </p>
+      </div>
+      <div className="relative -mx-6 flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div
           onClick={() => setModalIsOpen(true)}
-          className="absolute right-0 z-10 rounded-full border-2 border-black border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
+          className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
         >
           <FiPlus />
         </div>
-        <PieChart
+        <DonutChart
           items={holdings}
           onClick={setSelectedId}
           selected={selectedId}
         />
-        {holdings.length > 0 && <StockDetails holding={holdings[selectedId]} />}
+        <div className="xs:px-4 sm:px-6">
+          {holdings.length > 0 ? (
+            <StockDetails holding={holdings[selectedId]} />
+          ) : (
+            <p
+              className="text-center text-2xl font-light mx-auto mb-12"
+              style={{ maxWidth: "16rem" }}
+            >
+              Tap the plus button to add a new stock.
+            </p>
+          )}
+          <Button href="/settings" look={1} className="mt-4">
+            Personal settings
+          </Button>
+        </div>
       </div>
       <Modal
         title="Add stocks"
@@ -117,7 +123,7 @@ const Portfolio = () => {
       >
         <Search />
       </Modal>
-    </>
+    </div>
   );
 };
 

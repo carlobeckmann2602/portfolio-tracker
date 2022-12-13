@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 module.exports = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx}",
@@ -5,15 +7,30 @@ module.exports = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "380px",
+        ...defaultTheme.screens,
+      },
       colors: {
-        white: "#FFFFFF",
-        main: {
-          100: "#C5D5EE",
-          200: "#ACBEDE",
-          300: "#90AFE5",
-          400: "#547ECD",
-          500: "#4666A2",
+        highlight1: {
+          // Green
+          DEFAULT: "#11F1A6",
+          offset: "#3BBD92",
         },
+        highlight2: {
+          // Purple
+          DEFAULT: "#A410FF",
+          offset: "#7523A7",
+        },
+        back: {
+          DEFAULT: "#180A44",
+          offset: "#6F00B2",
+        },
+        front: "white",
+      },
+      fontFamily: {
+        sans: ["Roboto", ...defaultTheme.fontFamily.sans],
+        serif: ["Roboto Serif", ...defaultTheme.fontFamily.serif],
       },
       borderWidth: {
         DEFAULT: "1px",
@@ -23,6 +40,12 @@ module.exports = {
       },
       maxHeight: {
         128: "32rem",
+      },
+      backgroundImage: {
+        "falloff-soft":
+          "linear-gradient(180deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0.143371) 38.02%, rgba(255, 255, 255, 0) 100%)",
+        "falloff-highlight-mix":
+          "linear-gradient(87.54deg, #A410FF 15.44%, #6472D8 57.36%, #11F1A6 100.38%)",
       },
     },
   },

@@ -11,13 +11,15 @@ import { PageHeading } from "../components/page-heading";
 import { useRegistration } from "../lib/backend";
 
 const Register: NextPage = () => {
-  const registration = useRegistration()
+  const registration = useRegistration();
 
   return (
     <>
-      <Helmet title="User registration" />
+      <Helmet title="Registration" />
+      <PageHeading description="Please create an Account to join GoFundYourself.">
+        Welcome!
+      </PageHeading>
       <CenterSection>
-        <PageHeading>Register</PageHeading>
         <form
           onSubmit={(event) => {
             event.preventDefault();
@@ -33,7 +35,7 @@ const Register: NextPage = () => {
               password,
               firstName,
               lastName,
-            })
+            });
           }}
         >
           <RadioSet
@@ -48,12 +50,33 @@ const Register: NextPage = () => {
             nullable
           />
           <Input type="email" name="email" label="Email" placeholder="Email" />
-          <Input type="password" name="password" label="Password" placeholder="Password" />
-          <Input type="text" name="firstname" label="Firstname" placeholder="Firstname" />
-          <Input type="text" name="lastname" label="Lastname" placeholder="Lastname"/>
-          <TextArea name="description" label="Description" placeholder="Description" />
+          <Input
+            type="password"
+            name="password"
+            label="Password"
+            placeholder="Password"
+          />
+          <Input
+            type="text"
+            name="firstname"
+            label="Firstname"
+            placeholder="Firstname"
+          />
+          <Input
+            type="text"
+            name="lastname"
+            label="Lastname"
+            placeholder="Lastname"
+          />
+          <TextArea
+            name="description"
+            label="Description"
+            placeholder="Description"
+          />
           <Checkbox name="agb" label="AGB" text="AGBs akzeptieren."></Checkbox>
-          <Button type="submit">Register</Button>
+          <Button type="submit" look={3}>
+            Register
+          </Button>
         </form>
       </CenterSection>
     </>
