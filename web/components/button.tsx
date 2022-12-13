@@ -55,11 +55,7 @@ const Highlight2Button: React.FC<BaseButtonProps> = (props) => (
 const HighlightMixButton: React.FC<BaseButtonProps> = (props) => (
   <ButtonBase
     {...props}
-    className={cn(
-      // "bg-gradient-to-r from-highlight2 to-highlight1",
-      "bg-falloff-highlight-mix",
-      props.className
-    )}
+    className={cn("bg-falloff-highlight-mix", props.className)}
   />
 );
 
