@@ -14,7 +14,7 @@ const isLinkProps = (props: any): props is LinkProps => !!props.href;
 
 const ButtonBase: React.FC<BaseButtonProps> = (props) => {
   const className = cn(
-    "text-center text-lg font-semibold rounded-lg w-full p-3 hover:underline",
+    "block text-center text-lg font-semibold rounded-lg w-full p-3 hover:underline",
     props.className
   );
 
