@@ -1,5 +1,9 @@
 import React from "react";
-import { StockHolding, useStockHoldings } from "../../lib/backend";
+import {
+  StockHolding,
+  stringifyCurrencyValue,
+  useStockHoldings,
+} from "../../lib/backend";
 import { Modal } from "../modal";
 import { DonutChart } from "./donut-chart";
 import { StockDetails } from "./stock-details";
@@ -57,14 +61,31 @@ const Portfolio = () => {
   const { data: holdings } = useStockHoldings();
   const [selectedId, setSelectedId] = useSelectedId(holdings);
   const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const currentBalance = React.useMemo<number | null>(
+    () =>
+      holdings
+        ?.map((holding) => holding.value)
+        .reduce((prev, curr) => prev + curr, 0) ?? null,
+    [holdings]
+  );
 
   useHoldingAddedEffect(holdings, setSelectedId);
 
   if (!holdings) return <span>Loading...</span>;
 
   return (
-    <>
-      <div className="relative flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
+    <div className="flex flex-col gap-8">
+      <div className="flex flex-col gap-2">
+        <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
+        <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
+          {currentBalance != null ? (
+            stringifyCurrencyValue(currentBalance)
+          ) : (
+            <>&nbsp;</>
+          )}
+        </p>
+      </div>
+      <div className="relative -mx-6 flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div
           onClick={() => setModalIsOpen(true)}
           className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
@@ -87,7 +108,7 @@ const Portfolio = () => {
       >
         <Search />
       </Modal>
-    </>
+    </div>
   );
 };
 
