@@ -70,12 +70,19 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
 
   return (
     <div className="flex flex-col gap-12">
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col gap-8">
+        <div className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20">
           <TrendIcon trend={0} />
-          <div>
-            <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
-            <p>{stringifyCurrencyValue(holding.value)}</p>
+          <div className="flex justify-between items-center flex-1">
+            <div className="flex-1">
+              <h3 className="text-2xl">{name}</h3>
+              <p className="font-light">+ 0,00 %</p>
+            </div>
+            <div>
+              <p className="font-light">
+                {stringifyCurrencyValue(holding.value)}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex flex-col xs:text-lg gap-2">
