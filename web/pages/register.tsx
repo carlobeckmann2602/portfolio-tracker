@@ -15,9 +15,11 @@ const Register: NextPage = () => {
 
   return (
     <>
-      <Helmet title="User registration" />
+      <Helmet title="Registration" />
+      <PageHeading description="Please create an Account to join GoFundYourself.">
+        Welcome!
+      </PageHeading>
       <CenterSection>
-        <PageHeading>Register</PageHeading>
         <form
           onSubmit={(event) => {
             event.preventDefault();
