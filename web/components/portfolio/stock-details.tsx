@@ -20,7 +20,7 @@ const CounterButton = (
 ) => (
   <button
     {...props}
-    className="rounded-md border border-front w-8 select-none transition disabled:opacity-0"
+    className="rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-0"
   />
 );
 
