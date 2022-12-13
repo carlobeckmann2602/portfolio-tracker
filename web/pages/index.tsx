@@ -23,7 +23,7 @@ const Home: NextPage = () => {
   return (
     <>
       <Helmet title="My portfolio" />
-      <div className="my-16">
+      <div className="mt-16">
         <CenterSection>
           <Portfolio />
         </CenterSection>
