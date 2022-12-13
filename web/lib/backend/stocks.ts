@@ -40,7 +40,7 @@ export type StockHolding = {
 
 /** Converts a monetary value to a localized string with currency. */
 export function stringifyCurrencyValue(value: number) {
-  return `${value.toFixed(2)}€`;
+  return `${value.toFixed(2).replace(".", ",")} €`;
 }
 
 export function createStockHolding(stock: Stock, amount = 1): StockHolding {
