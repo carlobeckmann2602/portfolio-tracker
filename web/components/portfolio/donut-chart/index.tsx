@@ -30,8 +30,6 @@ export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
     [items, segmentColors]
   );
 
-  const isEmpty = !items.length;
-
   return (
     <div>
       <div className="relative pt-full text-base">
@@ -48,7 +46,7 @@ export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
                 : undefined
             }
             segmentsStyle={
-              !isEmpty
+              items.length
                 ? {
                     cursor: "pointer",
                   }
@@ -58,11 +56,6 @@ export const DonutChart = ({ items, selected, onClick }: DonutChartProps) => {
           />
         </div>
       </div>
-      {isEmpty && (
-        <div className="text-center text-2xl font-light mt-4">
-          Tap the plus button to add a new stock.
-        </div>
-      )}
     </div>
   );
 };

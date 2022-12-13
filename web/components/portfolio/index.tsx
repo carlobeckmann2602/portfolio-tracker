@@ -9,6 +9,7 @@ import { DonutChart } from "./donut-chart";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
 import { FiPlus } from "react-icons/fi";
+import { Button } from "../button";
 
 /** Manages the ID of the currently selected holding. */
 function useSelectedId(
@@ -97,7 +98,21 @@ const Portfolio = () => {
           onClick={setSelectedId}
           selected={selectedId}
         />
-        {holdings.length > 0 && <StockDetails holding={holdings[selectedId]} />}
+        <div className="xs:px-4 sm:px-6">
+          {holdings.length > 0 ? (
+            <StockDetails holding={holdings[selectedId]} />
+          ) : (
+            <p
+              className="text-center text-2xl font-light mx-auto mb-12"
+              style={{ maxWidth: "16rem" }}
+            >
+              Tap the plus button to add a new stock.
+            </p>
+          )}
+          <Button href="/settings" look={1} className="mt-4">
+            Personal settings
+          </Button>
+        </div>
       </div>
       <Modal
         title="Add stocks"

@@ -20,7 +20,7 @@ const CounterButton = (
 ) => (
   <button
     {...props}
-    className="rounded-md border border-front w-8 select-none transition disabled:opacity-0"
+    className="rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-0"
   />
 );
 
@@ -69,23 +69,30 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
-    <div className="xs:px-4 sm:px-6 flex flex-col gap-12">
-      <div className="flex flex-col gap-6">
-        <div className="flex items-center gap-4">
+    <div className="flex flex-col gap-12">
+      <div className="flex flex-col gap-8">
+        <div className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20">
           <TrendIcon trend={0} />
-          <div>
-            <h2 className="text-2xl mb-0.5 font-medium">{name}</h2>
-            <p>{stringifyCurrencyValue(holding.value)}</p>
+          <div className="flex justify-between items-center flex-1">
+            <div className="flex-1">
+              <h3 className="text-2xl">{name}</h3>
+              <p className="font-light">+ 0,00 %</p>
+            </div>
+            <div>
+              <p className="font-light">
+                {stringifyCurrencyValue(holding.value)}
+              </p>
+            </div>
           </div>
         </div>
-        <div className="flex flex-col xs:text-lg gap-2">
-          <TableRow>
-            <div>Symbol:</div>
-            <div>{symbol}</div>
-          </TableRow>
+        <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
             <div>{stringifyCurrencyValue(price)}</div>
+          </TableRow>
+          <TableRow>
+            <div>Trend:</div>
+            <div>+ 0,00 %</div>
           </TableRow>
           <TableRow>
             <div>Count:</div>
@@ -93,12 +100,7 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
           </TableRow>
         </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <Button onClick={removeHolding}>Remove stock</Button>
-        <Button href="/settings" look={1}>
-          Personal settings
-        </Button>
-      </div>
+      <Button onClick={removeHolding}>Remove stock</Button>
     </div>
   );
 }
