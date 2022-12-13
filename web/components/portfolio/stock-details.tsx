@@ -85,14 +85,14 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
             </div>
           </div>
         </div>
-        <div className="flex flex-col xs:text-lg gap-2">
-          <TableRow>
-            <div>Symbol:</div>
-            <div>{symbol}</div>
-          </TableRow>
+        <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
             <div>{stringifyCurrencyValue(price)}</div>
+          </TableRow>
+          <TableRow>
+            <div>Trend:</div>
+            <div>+ 0,00 %</div>
           </TableRow>
           <TableRow>
             <div>Count:</div>
