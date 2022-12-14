@@ -1,23 +1,22 @@
 import { useMemo } from "react";
 
 /**
- * Generates colors for the segments of a donut chart,
- * making sure that the first and the last segment will
- * never have the same color.
+ * Generates colors for a list of items with length
+ * `itemCount`, making sure that the colors in the
+ * provided `colorScheme` will evenly be applied and
+ * the first item and last item will never have the
+ * same color.
  */
-export function useDonutChartSegmentColors(
-  colorScheme: string[],
-  segmentCount: number
-) {
+export function useColorDistribution(itemCount: number, colorScheme: string[]) {
   return useMemo(() => {
     let getColorId = (id: number) => id % colorScheme.length;
 
-    if (segmentCount > colorScheme.length) {
-      const excessItemCount = segmentCount % colorScheme.length;
+    if (itemCount > colorScheme.length) {
+      const excessItemCount = itemCount % colorScheme.length;
       if (excessItemCount) {
         const excessIdOffset = Math.floor(excessItemCount / 2);
         const excessStartId =
-          colorScheme.length * Math.floor(segmentCount / colorScheme.length);
+          colorScheme.length * Math.floor(itemCount / colorScheme.length);
         const midColorId = Math.floor(colorScheme.length / 2);
 
         const getColorIdBase = getColorId;
@@ -28,8 +27,8 @@ export function useDonutChartSegmentColors(
       }
     }
 
-    return new Array(segmentCount)
+    return new Array(itemCount)
       .fill(undefined)
       .map((_, i) => colorScheme[getColorId(i)]);
-  }, [segmentCount, colorScheme]);
+  }, [itemCount, colorScheme]);
 }
