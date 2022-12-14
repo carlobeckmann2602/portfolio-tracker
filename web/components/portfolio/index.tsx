@@ -5,11 +5,14 @@ import {
   useStockHoldings,
 } from "../../lib/backend";
 import { Modal } from "../modal";
-import { DonutChart } from "./donut-chart";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
 import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
+import { DonutChart, DonutChartSegment } from "./donut-chart";
+import { useColorDistribution } from "./colors";
+
+const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 
 /** Manages the ID of the currently selected holding. */
 function useSelectedId(
@@ -72,6 +75,19 @@ const Portfolio = () => {
 
   useHoldingAddedEffect(holdings, setSelectedId);
 
+  const colors = useColorDistribution(holdings?.length || 0, STOCK_COLORS);
+
+  const chartSegments = React.useMemo<DonutChartSegment[]>(
+    () =>
+      holdings?.length
+        ? holdings.map((holding, i) => ({
+            value: holding.value,
+            color: colors[i],
+          }))
+        : [{ value: 1, color: "#180A44" }],
+    [holdings, colors]
+  );
+
   if (!holdings) return <span>Loading...</span>;
 
   return (
@@ -94,13 +110,16 @@ const Portfolio = () => {
           <FiPlus />
         </div>
         <DonutChart
-          items={holdings}
+          segments={chartSegments}
           onClick={setSelectedId}
-          selected={selectedId}
+          disabled={!holdings.length}
         />
         <div className="xs:px-4 sm:px-6">
           {holdings.length > 0 ? (
-            <StockDetails holding={holdings[selectedId]} />
+            <StockDetails
+              holding={holdings[selectedId]}
+              selectionColor={colors[selectedId]}
+            />
           ) : (
             <p
               className="text-center text-2xl font-light mx-auto mb-12"
