@@ -112,7 +112,6 @@ const Portfolio = () => {
         <DonutChart
           segments={chartSegments}
           onClick={setSelectedId}
-          selected={selectedId}
           disabled={!holdings.length}
         />
         <div className="xs:px-4 sm:px-6">
