@@ -47,7 +47,13 @@ function CounterInput({
   );
 }
 
-export function StockDetails({ holding }: { holding: StockHolding }) {
+export function StockDetails({
+  holding,
+  selectionColor,
+}: {
+  holding: StockHolding;
+  selectionColor: string;
+}) {
   const { name, symbol, price } = holding.stock;
   const [count, setCount] = React.useState(holding.amount);
   const holdingMut = useStockHoldingMutation();
@@ -71,7 +77,10 @@ export function StockDetails({ holding }: { holding: StockHolding }) {
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
-        <div className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20">
+        <div
+          className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20 transition"
+          style={{ borderColor: selectionColor }}
+        >
           <TrendIcon trend={0} />
           <div className="flex justify-between items-center flex-1">
             <div className="flex-1">
