@@ -117,7 +117,10 @@ const Portfolio = () => {
         />
         <div className="xs:px-4 sm:px-6">
           {holdings.length > 0 ? (
-            <StockDetails holding={holdings[selectedId]} />
+            <StockDetails
+              holding={holdings[selectedId]}
+              selectionColor={colors[selectedId]}
+            />
           ) : (
             <p
               className="text-center text-2xl font-light mx-auto mb-12"
