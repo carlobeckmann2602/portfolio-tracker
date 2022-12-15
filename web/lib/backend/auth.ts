@@ -48,11 +48,14 @@ export function useAuthContext() {
 
 export function useRegistration() {
   const router = useRouter();
+  const [, setAuthToken] = useAuthContext();
 
   return useMutation(register, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.ok) {
-        router.push("/login");
+        const authToken = (await data.json()).access_token;
+        setAuthToken(authToken);
+        router.push("/");
       }
     },
   });
@@ -60,18 +63,15 @@ export function useRegistration() {
 
 export function useLogin() {
   const router = useRouter();
-  const [, setUserID] = useAuthContext();
+  const [, setAuthToken] = useAuthContext();
 
   return useMutation(login, {
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       if (data.ok) {
-        setUserID("1");
+        const authToken = (await data.json()).access_token;
+        setAuthToken(authToken);
         router.push("/");
       }
-    },
-    onSettled: () => {
-      setUserID("1");
-      router.push("/");
     },
   });
 }
