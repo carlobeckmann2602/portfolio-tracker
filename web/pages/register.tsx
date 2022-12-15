@@ -27,14 +27,11 @@ const Register: NextPage = () => {
 
             const email = formData.get("email") as string;
             const password = formData.get("password") as string;
-            const firstName = formData.get("firstname") as string;
-            const lastName = formData.get("lastname") as string;
 
             registration.mutate({
               email,
               password,
-              firstName,
-              lastName,
+              password2: password,
             });
           }}
         >

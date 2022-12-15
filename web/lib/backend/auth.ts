@@ -10,8 +10,7 @@ const AuthContext = createContext<
 type CreateUserDTO = {
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  password2: string;
 };
 
 type LoginDTO = {
