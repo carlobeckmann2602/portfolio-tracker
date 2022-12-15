@@ -1,7 +1,11 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { BackendApiProvider, AuthContextProvider } from "../lib/backend";
+import {
+  BackendApiProvider,
+  AuthContextProvider,
+  decodeJWToken,
+} from "../lib/backend";
 import { useEffect, useState } from "react";
 import { Footer } from "../components/footer";
 
@@ -15,6 +19,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     if (authToken) {
       localStorage.setItem("authToken", authToken);
+      console.log("authToken", decodeJWToken(authToken));
     }
   }, [authToken]);
 
