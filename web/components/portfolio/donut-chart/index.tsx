@@ -4,6 +4,7 @@ import { useRotationAngle } from "./rotation";
 export type DonutChartSegment = {
   value: number;
   color: string;
+  label: string;
 };
 
 export type DonutChartProps = {
@@ -49,6 +50,14 @@ export const DonutChart = ({
               : undefined
           }
           onClick={onClick && ((_, i) => onClick(i))}
+          label={({ dataEntry }) => dataEntry.label}
+          labelPosition={75}
+          labelStyle={(i) => ({
+            pointerEvents: "none",
+            transition: "0.2s ease opacity",
+            opacity: i == selectedId ? 1 : 0.5,
+            fontSize: "0.2rem",
+          })}
         />
       </div>
     </div>

@@ -82,9 +82,10 @@ const Portfolio = () => {
       holdings?.length
         ? holdings.map((holding, i) => ({
             value: holding.value,
+            label: holdings.length > 1 ? holding.stock.symbol : "",
             color: colors[i],
           }))
-        : [{ value: 1, color: "#180A44" }],
+        : [{ value: 1, color: "#180A44", label: "" }],
     [holdings, colors]
   );
 
