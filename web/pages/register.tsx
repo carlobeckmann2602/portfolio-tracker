@@ -1,4 +1,5 @@
 import type { NextPage } from "next";
+import Link from "next/link";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
 import { Checkbox } from "../components/form/checkbox";
@@ -27,53 +28,26 @@ const Register: NextPage = () => {
 
             const email = formData.get("email") as string;
             const password = formData.get("password") as string;
+            const password2 = formData.get("password2") as string;
 
             registration.mutate({
               email,
               password,
-              password2: password,
+              password2,
             });
           }}
         >
-          <RadioSet
-            name="salutation"
-            label="Salutation"
-            options={["Mrs.", "Mr."]}
-          />
-          <Select
-            name="title"
-            label="Title"
-            options={["Prof.", "Dr."]}
-            nullable
-          />
-          <Input type="email" name="email" label="Email" placeholder="Email" />
+          <Input type="email" name="email" placeholder="Email" />
+          <Input type="password" name="password" placeholder="Password" />
           <Input
             type="password"
-            name="password"
-            label="Password"
-            placeholder="Password"
+            name="password2"
+            placeholder="Repeat Password"
           />
-          <Input
-            type="text"
-            name="firstname"
-            label="Firstname"
-            placeholder="Firstname"
-          />
-          <Input
-            type="text"
-            name="lastname"
-            label="Lastname"
-            placeholder="Lastname"
-          />
-          <TextArea
-            name="description"
-            label="Description"
-            placeholder="Description"
-          />
-          <Checkbox name="agb" label="AGB" text="AGBs akzeptieren."></Checkbox>
           <Button type="submit" look={3}>
             Register
           </Button>
+          <Link href="/login">Already have an account? Log in</Link>
         </form>
       </CenterSection>
     </>

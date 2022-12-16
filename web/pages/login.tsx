@@ -31,8 +31,8 @@ const Login: NextPage = () => {
             });
           }}
         >
-          <Input type="email" name="email" label="Email" />
-          <Input type="password" name="password" label="Password" />
+          <Input type="email" name="email" placeholder="Email" />
+          <Input type="password" name="password" placeholder="Password" />
           <Button type="submit" look={3}>
             Log-In
           </Button>
