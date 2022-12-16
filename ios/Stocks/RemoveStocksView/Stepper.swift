@@ -32,8 +32,8 @@ struct StepperView: View {
         decrementStep()
       } label: {
         Image(systemName: "minus")
+          .frame(width: 50, height: 35)
       }
-      .frame(width: 50, height: 35)
       .foregroundColor(buttonColor)
       .background(AppColors.PRIMARY)
       .cornerRadius(8)
@@ -45,8 +45,8 @@ struct StepperView: View {
         incrementStep()
       } label: {
         Image(systemName: "plus")
+          .frame(width: 50, height: 35)
       }
-      .frame(width: 50, height: 35)
       .foregroundColor(Color.black)
       .background(AppColors.PRIMARY)
       .cornerRadius(8)

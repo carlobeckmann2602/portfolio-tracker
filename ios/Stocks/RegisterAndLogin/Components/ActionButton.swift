@@ -27,7 +27,8 @@ struct ActionButton: View {
             ]), startPoint: .leading,
             endPoint: .trailing
           ).frame(width: 300)
-            .cornerRadius(10))
+            .cornerRadius(10)
+        ).frame(width: 300)
     }
   }
 }
