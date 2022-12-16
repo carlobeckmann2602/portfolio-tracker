@@ -78,7 +78,7 @@ export function StockDetails({
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
         <div
-          className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20 transition"
+          className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
           style={{ borderColor: selectionColor }}
         >
           <TrendIcon trend={0} />
