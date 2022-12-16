@@ -103,36 +103,38 @@ const Portfolio = () => {
           )}
         </p>
       </div>
-      <div className="relative -mx-6 flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
+      <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div
           onClick={() => setModalIsOpen(true)}
           className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
         >
           <FiPlus />
         </div>
-        <DonutChart
-          segments={chartSegments}
-          selectedId={selectedId}
-          onClick={setSelectedId}
-          disabled={!holdings.length}
-        />
         <div className="xs:px-4 sm:px-6">
-          {holdings.length > 0 ? (
-            <StockDetails
-              holding={holdings[selectedId]}
-              selectionColor={colors[selectedId]}
-            />
-          ) : (
-            <p
-              className="text-center text-2xl font-light mx-auto mb-12"
-              style={{ maxWidth: "16rem" }}
-            >
-              Tap the plus button to add a new stock.
-            </p>
-          )}
-          <Button href="/settings" look={1} className="mt-4">
-            Personal settings
-          </Button>
+          <DonutChart
+            segments={chartSegments}
+            selectedId={selectedId}
+            onClick={setSelectedId}
+            disabled={!holdings.length}
+          />
+          <div>
+            {holdings.length > 0 ? (
+              <StockDetails
+                holding={holdings[selectedId]}
+                selectionColor={colors[selectedId]}
+              />
+            ) : (
+              <p
+                className="text-center text-2xl font-light mx-auto mb-12"
+                style={{ maxWidth: "16rem" }}
+              >
+                Tap the plus button to add a new stock.
+              </p>
+            )}
+            <Button href="/settings" look={1} className="mt-4">
+              Personal settings
+            </Button>
+          </div>
         </div>
       </div>
       <Modal

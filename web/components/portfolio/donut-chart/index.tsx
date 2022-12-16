@@ -1,5 +1,6 @@
 import { useMemo } from "react";
 import { PieChart } from "react-minimal-pie-chart";
+import cn from "classnames";
 import { DonutChartContextProvider, DonutChartState } from "./context";
 import { DonutChartLabel } from "./label";
 import { useRotationAngle } from "./rotation";
@@ -30,7 +31,7 @@ export const DonutChart = ({
   );
 
   return (
-    <div className="relative pt-full text-base select-none">
+    <div className="relative pt-full text-base select-none mb-6">
       {!disabled && !!segments.length && (
         <div
           className="pointer-events-none w-1 h-6 absolute top-full left-1/2 -ml-0.5 -mt-0.5 transition duration-500"
