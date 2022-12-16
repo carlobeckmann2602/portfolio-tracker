@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </BackendApiProvider>
       <div
         id="modal-portal"
-        className="absolute w-full h-full top-0 left-0 pointer-events-none"
+        className="fixed inset-0 pointer-events-none"
       ></div>
     </>
   );
