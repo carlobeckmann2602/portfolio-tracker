@@ -1,4 +1,7 @@
+import { useMemo } from "react";
 import { PieChart } from "react-minimal-pie-chart";
+import { DonutChartContextProvider, DonutChartState } from "./context";
+import { DonutChartLabel } from "./label";
 import { useRotationAngle } from "./rotation";
 
 export type DonutChartSegment = {
@@ -21,6 +24,10 @@ export const DonutChart = ({
   disabled,
 }: DonutChartProps) => {
   const angle = useRotationAngle(segments, selectedId);
+  const ctx = useMemo<DonutChartState>(
+    () => ({ selectedId, rotationAngle: angle }),
+    [selectedId, angle]
+  );
 
   return (
     <div className="relative pt-full text-base select-none">
@@ -37,28 +44,18 @@ export const DonutChart = ({
         className="absolute inset-0 transition duration-500"
         style={{ transform: `rotate(${-angle}deg)` }}
       >
-        <PieChart
-          startAngle={90}
-          animate
-          lineWidth={50}
-          data={segments}
-          segmentsStyle={
-            !disabled
-              ? {
-                  cursor: "pointer",
-                }
-              : undefined
-          }
-          onClick={onClick && ((_, i) => onClick(i))}
-          label={({ dataEntry }) => dataEntry.label}
-          labelPosition={75}
-          labelStyle={(i) => ({
-            pointerEvents: "none",
-            transition: "0.2s ease opacity",
-            opacity: i == selectedId ? 1 : 0.5,
-            fontSize: "0.2rem",
-          })}
-        />
+        <DonutChartContextProvider value={ctx}>
+          <PieChart
+            startAngle={90}
+            animate
+            lineWidth={50}
+            data={segments}
+            segmentsStyle={!disabled ? { cursor: "pointer" } : undefined}
+            onClick={onClick && ((_, i) => onClick(i))}
+            labelPosition={75}
+            label={DonutChartLabel}
+          />
+        </DonutChartContextProvider>
       </div>
     </div>
   );
