@@ -1,5 +1,6 @@
 import { random } from "cypress/types/lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FiSearch } from "react-icons/fi";
 import {
   createStockHolding,
   Stock,
@@ -52,20 +53,29 @@ const Search = () => {
   );
 
   return (
-    <div className="h-full flex flex-col gap-4">
-      <Input
-        name="searchTerm"
-        label="Search for a stock"
-        placeholder="Search for a stock"
-        innerRef={inputRef}
-      />
+    <div className="h-full flex flex-col">
+      <h2 className="text-3xl font-bold font-serif  mt-8">Add stocks</h2>
+      <div className="relative my-6 flex items-center justify-end rounded-md py-4 bg-white/10">
+        <input
+          ref={inputRef}
+          type="text"
+          name="searchTerm"
+          placeholder="Search for a stock"
+          className="absolute w-full outline-none bg-transparent p-4"
+        />
+        <FiSearch className="top-0 right-0 mr-4 text-[25px]" />
+      </div>
       <div className="relative h-full">
-        <div className="absolute inset-0 overflow-auto">
+        <div className="inset-0 overflow-auto">
           {results.map(({ stock, inPortfolio }, i) => (
             <button
               key={i}
-              className={`flex justify-between w-full px-4 py-2 ${
-                inPortfolio ? "opacity-25" : "rounded-md hover:bg-gray-100"
+              className={`flex justify-between w-full mb-4 ${
+                inPortfolio && searchTerm == ""
+                  ? "hidden"
+                  : inPortfolio
+                  ? "opacity-25"
+                  : "rounded-md hover:bg-gray-100"
               }`}
               onClick={
                 !inPortfolio

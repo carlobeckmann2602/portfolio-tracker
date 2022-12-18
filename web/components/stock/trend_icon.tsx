@@ -35,7 +35,7 @@ export const TrendIcon = ({ trend }: TrendIconProps) => {
   };
 
   return (
-    <div className="w-12 h-12 p-2 bg-front text-back rounded-full flex items-center justify-center">
+    <div className="w-8 h-8 p-2 border border-white text-white rounded-full flex items-center justify-center">
       {getTrendArrow()}
     </div>
   );

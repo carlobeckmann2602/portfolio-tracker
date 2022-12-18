@@ -21,15 +21,17 @@ export const SearchItem = ({ trend, name, price }: SearchItemProps) => {
   }).format(price);
 
   return (
-    <div className="w-full flex items-center justify-between px-4 py-2 bg-highlight1 rounded-md">
+    <div className="w-full flex items-center justify-between px-4 py-2 bg-white/10 rounded-md">
       <div className="flex items-center">
         <TrendIcon trend={trend} />
-        <div>
+        <div className="ml-4 text-left">
           <p>{name}</p>
-          <p>{trend}%</p>
+          <p className="font-light">
+            {trend > 0 ? "+" : "-"} {trend}%
+          </p>
         </div>
       </div>
-      <div>{formatedStockValue}</div>
+      <div className="font-light">{formatedStockValue}</div>
     </div>
   );
 };

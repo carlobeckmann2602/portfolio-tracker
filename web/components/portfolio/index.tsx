@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StockHolding,
   stringifyCurrencyValue,
@@ -7,7 +7,7 @@ import {
 import { Modal } from "../modal";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
-import { FiPlus } from "react-icons/fi";
+import { FiPlus, FiX } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
@@ -29,6 +29,7 @@ function useSelectedId(
     if (id != cappedId) setId(cappedId);
   }, [id, cappedId]);
 
+  console.log("HI");
   return [cappedId, setId];
 }
 
@@ -64,7 +65,7 @@ function useHoldingAddedEffect(
 const Portfolio = () => {
   const { data: holdings } = useStockHoldings();
   const [selectedId, setSelectedId] = useSelectedId(holdings);
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
+  const [searchActive, setSearchActive] = useState(false);
   const currentBalance = React.useMemo<number | null>(
     () =>
       holdings
@@ -89,11 +90,43 @@ const Portfolio = () => {
     [holdings, colors]
   );
 
+  let content = <Search />;
+  if (!searchActive && holdings) {
+    content = (
+      <div>
+        <DonutChart
+          segments={chartSegments}
+          selectedId={selectedId}
+          onClick={setSelectedId}
+          disabled={!holdings.length}
+        />
+        <div>
+          {holdings.length > 0 ? (
+            <StockDetails
+              holding={holdings[selectedId]}
+              selectionColor={colors[selectedId]}
+            />
+          ) : (
+            <p
+              className="text-center text-2xl font-light mx-auto mb-12"
+              style={{ maxWidth: "16rem" }}
+            >
+              Tap the plus button to add a new stock.
+            </p>
+          )}
+          <Button href="/settings" look={1} className="mt-4">
+            Personal settings
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
   if (!holdings) return <span>Loading...</span>;
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-2 relative">
         <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
         <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
           {currentBalance != null ? (
@@ -102,50 +135,21 @@ const Portfolio = () => {
             <>&nbsp;</>
           )}
         </p>
+        <div
+          onClick={() => setSearchActive(!searchActive)}
+          className="absolute bottom-0 right-4 z-10 rounded-full border border-highlight1 text-highlight1 
+          border-solid w-10 h-10 flex justify-center items-center cursor-pointer text-[30px]"
+        >
+          <FiPlus
+            className={`transition-transform ${
+              searchActive ? "rotate-[135deg]" : null
+            }`}
+          />
+        </div>
       </div>
       <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
-        <div
-          onClick={() => setModalIsOpen(true)}
-          className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
-        >
-          <FiPlus />
-        </div>
-        <div className="xs:px-4 sm:px-6">
-          <DonutChart
-            segments={chartSegments}
-            selectedId={selectedId}
-            onClick={setSelectedId}
-            disabled={!holdings.length}
-          />
-          <div>
-            {holdings.length > 0 ? (
-              <StockDetails
-                holding={holdings[selectedId]}
-                selectionColor={colors[selectedId]}
-              />
-            ) : (
-              <p
-                className="text-center text-2xl font-light mx-auto mb-12"
-                style={{ maxWidth: "16rem" }}
-              >
-                Tap the plus button to add a new stock.
-              </p>
-            )}
-            <Button href="/settings" look={1} className="mt-4">
-              Personal settings
-            </Button>
-          </div>
-        </div>
+        <div className="xs:px-4 sm:px-6">{content}</div>
       </div>
-      <Modal
-        title="Add stocks"
-        open={modalIsOpen}
-        onClose={() => {
-          setModalIsOpen(false);
-        }}
-      >
-        <Search />
-      </Modal>
     </div>
   );
 };
