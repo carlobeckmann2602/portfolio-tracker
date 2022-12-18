@@ -6,58 +6,62 @@ import { StockOnUserDto } from 'src/user/dto/stock-on-user.dto.';
 export class StockService {
   constructor(private prisma: PrismaService) {}
   async addStockToUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
-    // try {
-    //   //set relation between stock and user and updates stock in db
-    //   await this.prisma.stocksOnUsers.upsert({
-    //     where: {
-    //       userId_stockId: {
-    //         userId: id,
-    //         stockId: sid,
-    //       },
-    //     },
-    //     update: {
-    //       amount: {
-    //         increment: +stockTOnUserDto.amount, // amtomic number operation: Adds given amount to current amount
-    //       },
-    //     },
-    //     create: {
-    //       userId: id,
-    //       stockId: sid,
-    //       amount: +stockTOnUserDto.amount,
-    //     },
-    //   });
-    //   return `This action updates a user with id #${id} with the transmitted stock data`;
-    // } catch (error) {
-    //   //caching prismas notFound error P2025/P2003
-    //   if (error instanceof PrismaClientKnownRequestError) {
-    //     if (error.code === 'P2025' || error.code === 'P2003') {
-    //       throw new NotFoundException('Stock not found');
-    //     }
-    //   }
-    //   if (error instanceof PrismaClientValidationError) {
-    //     throw new BadRequestException('Invalid parameter');
-    //   }
-    //   throw error;
-    // }
-    return null;
+    try {
+      const stock = await this.findOne(sid);
+      console.log(stock);
+
+      //set relation between stock and user and updates stock in db
+      await this.prisma.transactions.create({
+        data: {
+          userId: id,
+          stockId: sid,
+          amount: +stockTOnUserDto.amount,
+          price: stock.histories[0].high,
+          time: stock.histories[0].time,
+          buy: true,
+        },
+      });
+      return `User with id #${id} bought stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
+    } catch (error) {
+      //caching prismas notFound error P2025/P2003
+      if (error instanceof PrismaClientKnownRequestError) {
+        if (error.code === 'P2025' || error.code === 'P2003') {
+          throw new NotFoundException('Not found');
+        }
+      }
+      if (error instanceof PrismaClientValidationError) {
+        throw new BadRequestException('Invalid parameter');
+      }
+      throw error;
+    }
   }
 
   async findOne(id: number) {
-    // try {
-    //   const stock = await this.prisma.stock.findUnique({
-    //     where: {
-    //       id: id,
-    //     },
-    //   });
+    try {
+      const stock = await this.prisma.stock.findUnique({
+        where: {
+          id: id,
+        },
+        include: {
+          histories: {
+            where: {
+              stockId: id,
+            },
+            orderBy: {
+              time: 'desc',
+            },
+            take: 1,
+          },
+        },
+      });
 
-    //   return stock;
-    // } catch (error) {
-    //   if (error instanceof PrismaClientValidationError) {
-    //     throw new BadRequestException('Invalid parameter');
-    //   }
-    //   throw error;
-    // }
-    return null;
+      return stock;
+    } catch (error) {
+      if (error instanceof PrismaClientValidationError) {
+        throw new BadRequestException('Invalid parameter');
+      }
+      throw error;
+    }
   }
 
   async removeStockFromUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
