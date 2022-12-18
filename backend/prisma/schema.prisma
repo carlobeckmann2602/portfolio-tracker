@@ -27,7 +27,7 @@ model Stock {
 }
 
 model StockHistory {
-  id      Int      @id
+  id      Int      @id @default(autoincrement())
   stockId Int
   split   Float
   open    Float
