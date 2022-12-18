@@ -17,14 +17,14 @@ export class AuthService {
     });
 
     //Guard condition. If user not exists throw error
-    if (!user) throw new ForbiddenException('No user registered with this email adress');
+    if (!user) throw new ForbiddenException('Wrong credentials');
 
     //compare pw
     const pwMatches = await argon.verify(user.hash, authDto.password);
 
     //Guard condition. If password is not matching throw error
     if (!pwMatches) {
-      throw new ForbiddenException('Password is wrong');
+      throw new ForbiddenException('Wrong credentials');
     }
 
     //Return JWT Token
