@@ -27,6 +27,7 @@ export class UserService {
         data: {
           email: createUserDto.email,
           hash,
+          portfoliovalue: 0.0
         },
       });
 

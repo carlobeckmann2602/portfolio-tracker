@@ -1,8 +1,8 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { TasksService } from 'src/tasks/tasks.service';
-import { Stock } from '@prisma/client';
+import { Stock, StockHistory } from '@prisma/client';
+import { StockAPITasks } from 'src/stockAPITasks/stockAPITasks.service';
 @ApiTags('stocks')
 @Controller('stocks')
 export class StockController {
@@ -128,27 +128,26 @@ export class StockController {
   ];
 
   constructor(private readonly stockService: StockService,
-    private readonly taskServie: TasksService) {}
+    private readonly taskService: StockAPITasks) {}
 
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
   // ----------------------------------------- //
   @Get('/test/:name')
   async testAPI(@Param('name') stockName: string) {
-    const testStock : Stock = {
-      id: 8,
-      symbol: stockName,
-      name: 'APPLE',
-      open: '125.0000',
-      close: '122.1000',
-      high: '127.2000',
-      low: '122.3000',
-      trend: '-12.00',
-      description: 'asdf',
-      time: new Date('2022-10-11T14:37:10.000Z'),
-      };
+    // const testStock : StockHistory = {
+    //   id: 8,
+    //   stockId: 0,
+    //   split: 1.0,
+    //   open: 125.0000,
+    //   close: 122.1000,
+    //   high: 127.2000,
+    //   low: 122.3000,
+    //   trend: -12.00,
+    //   time: new Date('2022-10-11T14:37:10.000Z'),
+    //   };
 
-    const testResponse = await this.taskServie.requestStockAPI(testStock);
+    const testResponse = await this.taskService.requestStockAPI(stockName);
     return testResponse;
   }
   // ----------------------------------------- //
