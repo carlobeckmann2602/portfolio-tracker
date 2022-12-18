@@ -43,9 +43,9 @@ export class AuthService {
       sub: userId,
       email,
     };
-    //creates token with secret, token expires after 15 min
+    //creates token with secret, token expires after 30 days
     const token = await this.jwt.signAsync(payload, {
-      expiresIn: '60m',
+      expiresIn: '30d',
       secret: jwtConstants.secret,
     });
     return {
