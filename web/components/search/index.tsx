@@ -75,7 +75,7 @@ const Search = () => {
                   ? "hidden"
                   : inPortfolio
                   ? "opacity-25"
-                  : "rounded-md hover:bg-gray-100"
+                  : "rounded-md hover:bg-white/10"
               }`}
               onClick={
                 !inPortfolio
