@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Stock, StockHistory } from '@prisma/client';
-import { StockAPITasks } from 'src/stockAPITasks/stockAPITasks.service';
+import { StockAPITasksService } from 'src/stockAPITasks/stockAPITasks.service';
 @ApiTags('stocks')
 @Controller('stocks')
 export class StockController {
@@ -127,8 +127,7 @@ export class StockController {
     },
   ];
 
-  constructor(private readonly stockService: StockService,
-    private readonly taskService: StockAPITasks) {}
+  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService) {}
 
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //

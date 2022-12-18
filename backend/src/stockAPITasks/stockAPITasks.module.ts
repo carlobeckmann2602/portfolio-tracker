@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { StockAPITasksService } from './stockAPITasks.service';
 
 @Module({
-  providers: [StockAPITasks],
+  providers: [StockAPITasksService],
 })
 export class StockAPITasks {}
