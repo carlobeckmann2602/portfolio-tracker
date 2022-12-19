@@ -2,24 +2,39 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { StockOnUserDto } from 'src/user/dto/stock-on-user.dto.';
+import { UserService } from 'src/user/user.service';
 @Injectable()
 export class StockService {
-  constructor(private prisma: PrismaService) {}
-  async addStockToUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
+  constructor(private prisma: PrismaService, private userService: UserService) {}
+
+  async addStockToUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
     try {
+      //adding stock to transactions
       const stock = await this.findOne(sid);
 
       await this.prisma.transactions.create({
         data: {
-          userId: id,
+          userId: uid,
           stockId: sid,
-          amount: +stockTOnUserDto.amount,
+          amount: stockTOnUserDto.amount,
           price: stock.histories[0].high,
           time: stock.histories[0].time,
           buy: true,
         },
       });
-      return `User with id #${id} bought stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
+
+      //update the users portfolio value
+      const user = await this.userService.findOne(uid);
+      const new_portfoliovalue = user.portfoliovalue + stockTOnUserDto.amount * stock.histories[0].high;
+      await this.prisma.user.update({
+        where: {
+          id: uid,
+        },
+        data: {
+          portfoliovalue: new_portfoliovalue,
+        },
+      });
+      return `User with id #${uid} bought stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
     } catch (error) {
       //caching prismas notFound error P2025/P2003
       if (error instanceof PrismaClientKnownRequestError) {
@@ -34,16 +49,16 @@ export class StockService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(sid: number) {
     try {
       const stock = await this.prisma.stock.findUnique({
         where: {
-          id: id,
+          id: sid,
         },
         include: {
           histories: {
             where: {
-              stockId: id,
+              stockId: sid,
             },
             orderBy: {
               time: 'desc',
@@ -52,6 +67,10 @@ export class StockService {
           },
         },
       });
+
+      if (stock === null) {
+        throw new NotFoundException('Stock not found');
+      }
 
       return stock;
     } catch (error) {
@@ -62,15 +81,15 @@ export class StockService {
     }
   }
 
-  async removeStockFromUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
+  async removeStockFromUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
     try {
       const stock = await this.findOne(sid);
-      const amountOfStock = await this.countStockAmount(id, sid);
+      const amountOfStock = await this.countStockAmount(uid, sid);
       //check if user has enough stocks for selling
       if (amountOfStock - stockTOnUserDto.amount >= 0) {
         await this.prisma.transactions.create({
           data: {
-            userId: id,
+            userId: uid,
             stockId: sid,
             amount: +stockTOnUserDto.amount,
             price: stock.histories[0].high,
@@ -79,7 +98,19 @@ export class StockService {
           },
         });
 
-        return `User with id #${id} sold stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
+        //update the users portfolio value
+        const user = await this.userService.findOne(uid);
+        const new_portfoliovalue = user.portfoliovalue - stockTOnUserDto.amount * stock.histories[0].high;
+        await this.prisma.user.update({
+          where: {
+            id: uid,
+          },
+          data: {
+            portfoliovalue: new_portfoliovalue,
+          },
+        });
+
+        return `User with id #${uid} sold stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
       }
 
       throw new BadRequestException(
@@ -126,12 +157,12 @@ export class StockService {
     return stock;
   }
 
-  async countStockAmount(userID, stockID) {
+  async countStockAmount(uid: number, sid: number): Promise<number> {
     let stockAmount = 0;
     const userTransactions = await this.prisma.transactions.findMany({
       where: {
-        userId: userID,
-        stockId: stockID,
+        userId: uid,
+        stockId: sid,
       },
     });
 
@@ -140,5 +171,63 @@ export class StockService {
       else stockAmount -= userTransactions[index].amount;
     }
     return stockAmount;
+  }
+
+  async findAllStocksOnUser(uid: number) {
+    const user = await this.userService.findOne(uid);
+    const transactions = user.stocks;
+    const stocksOnUser = [];
+
+    //Sort transactions with sid
+    const sortedTransactions = transactions.sort((n1, n2) => {
+      if (n1.stockId > n2.stockId) {
+        return 1;
+      }
+
+      if (n1.stockId < n2.stockId) {
+        return -1;
+      }
+
+      return 0;
+    });
+
+    const transactionsGroupsByStocks = [];
+    let stockGroups = [];
+    stockGroups.push(sortedTransactions[0]);
+    for (let index = 1; index < sortedTransactions.length; index++) {
+      if (sortedTransactions[index].stockId == sortedTransactions[index - 1].stockId) {
+        stockGroups.push(sortedTransactions[index]);
+      } else {
+        transactionsGroupsByStocks.push(stockGroups);
+        stockGroups = [];
+        stockGroups.push(sortedTransactions[index]);
+      }
+      if (index == sortedTransactions.length - 1) {
+        transactionsGroupsByStocks.push(stockGroups);
+      }
+    }
+
+    for (let i = 0; i < transactionsGroupsByStocks.length; i++) {
+      const stockCombined = {
+        id: transactionsGroupsByStocks[i][0].stockId,
+        symbol: (await this.findOne(transactionsGroupsByStocks[i][0].stockId)).symbol,
+        name: (await this.findOne(transactionsGroupsByStocks[i][0].stockId)).name,
+        description: (await this.findOne(transactionsGroupsByStocks[i][0].stockId)).description,
+        totalValue: 0,
+        totalAmount: 0,
+      };
+      for (let j = 0; j < transactionsGroupsByStocks[i].length; j++) {
+        if (transactionsGroupsByStocks[i][j].buy) {
+          stockCombined.totalAmount += transactionsGroupsByStocks[i][j].amount;
+          stockCombined.totalValue += transactionsGroupsByStocks[i][j].price * transactionsGroupsByStocks[i][j].amount;
+        } else {
+          stockCombined.totalAmount -= transactionsGroupsByStocks[i][j].amount;
+          stockCombined.totalValue -= transactionsGroupsByStocks[i][j].price * transactionsGroupsByStocks[i][j].amount;
+        }
+      }
+      stocksOnUser.push(stockCombined);
+    }
+
+    return stocksOnUser;
   }
 }
