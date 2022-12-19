@@ -13,7 +13,7 @@ type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: holdings } = useStockHoldings();
+  const { data: holdings, isLoading } = useStockHoldings();
   const { data: foundStocks } = useStockSearch(searchTerm);
   const holdingMut = useStockHoldingMutation();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -81,26 +81,39 @@ const Search = () => {
         </button>
       </div>
       <div style={{ minHeight: "8rem" }}>
-        {results.map(({ stock, inPortfolio }, i) => (
-          <button
-            key={i}
-            className={`flex justify-between w-full mb-4 ${
-              inPortfolio && !searchTerm
-                ? "hidden"
-                : inPortfolio
-                ? "opacity-25"
-                : "rounded-md hover:bg-white/10"
-            }`}
-            onClick={
-              !inPortfolio
-                ? () => holdingMut.mutate(createStockHolding(stock))
-                : undefined
-            }
-            disabled={inPortfolio}
+        {!searchTerm || isLoading || results.length ? (
+          results.map(({ stock, inPortfolio }, i) => (
+            <button
+              key={i}
+              className={`flex justify-between w-full mb-4 ${
+                inPortfolio && !searchTerm
+                  ? "hidden"
+                  : inPortfolio
+                  ? "opacity-25"
+                  : "rounded-md hover:bg-white/10"
+              }`}
+              onClick={
+                !inPortfolio
+                  ? () => holdingMut.mutate(createStockHolding(stock))
+                  : undefined
+              }
+              disabled={inPortfolio}
+            >
+              <SearchItem trend={2.5} name={stock.name} price={stock.price} />
+            </button>
+          ))
+        ) : (
+          <p
+            className="font-light text-center mx-auto"
+            style={{ maxWidth: "10rem" }}
           >
-            <SearchItem trend={2.5} name={stock.name} price={stock.price} />
-          </button>
-        ))}
+            No stocks found with name &quot;
+            {searchTerm.length < 12
+              ? searchTerm
+              : `${searchTerm.substring(0, 9)}...`}
+            &quot;.
+          </p>
+        )}
       </div>
     </div>
   );
