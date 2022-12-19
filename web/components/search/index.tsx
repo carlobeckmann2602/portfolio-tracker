@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { FiSearch } from "react-icons/fi";
+import { FiPlus, FiSearch } from "react-icons/fi";
 import {
   createStockHolding,
   Stock,
@@ -52,15 +52,33 @@ const Search = () => {
   return (
     <div>
       <h2 className="text-3xl font-bold font-serif  mt-8">Add stocks</h2>
-      <div className="relative my-6 flex items-center justify-end rounded-md py-4 bg-white/10">
+      <div className="flex my-6 rounded-md bg-front/10">
         <input
           ref={inputRef}
           type="text"
           name="searchTerm"
           placeholder="Search for a stock"
-          className="absolute w-full outline-none bg-transparent p-4"
+          className="w-full outline-none bg-transparent py-4 pl-4"
         />
-        <FiSearch className="top-0 right-0 mr-4 text-2xl" />
+        <button
+          className="w-14 flex-shrink-0 text-2xl flex justify-center items-center"
+          onClick={() => {
+            const input = inputRef.current!;
+            if (searchTerm) {
+              setSearchTerm("");
+              input.value = "";
+            }
+            input.focus();
+          }}
+        >
+          <div className="pointer-events-none">
+            {searchTerm.length ? (
+              <FiPlus className="rotate-45" />
+            ) : (
+              <FiSearch />
+            )}
+          </div>
+        </button>
       </div>
       <div style={{ minHeight: "8rem" }}>
         {results.map(({ stock, inPortfolio }, i) => (
