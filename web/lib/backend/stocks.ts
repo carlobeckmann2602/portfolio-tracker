@@ -38,9 +38,13 @@ export type StockHolding = {
   value: number;
 };
 
+const intlNum = new Intl.NumberFormat("de-DE", {
+  style: "currency",
+  currency: "EUR",
+});
 /** Converts a monetary value to a localized string with currency. */
 export function stringifyCurrencyValue(value: number) {
-  return `${value.toFixed(2).replace(".", ",")} €`;
+  return intlNum.format(value);
 }
 
 export function createStockHolding(stock: Stock, amount = 1): StockHolding {
