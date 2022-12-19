@@ -1,21 +1,19 @@
-import { random } from "cypress/types/lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
+import { FiPlus, FiSearch } from "react-icons/fi";
 import {
   createStockHolding,
   Stock,
-  stringifyCurrencyValue,
   useStockHoldingMutation,
   useStockHoldings,
   useStockSearch,
 } from "../../lib/backend";
-import { Input } from "../form/input";
 import { SearchItem } from "./search_item";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: holdings } = useStockHoldings();
+  const { data: holdings, isLoading } = useStockHoldings();
   const { data: foundStocks } = useStockSearch(searchTerm);
   const holdingMut = useStockHoldingMutation();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,20 +50,47 @@ const Search = () => {
   );
 
   return (
-    <div className="h-full flex flex-col gap-4">
-      <Input
-        name="searchTerm"
-        label="Search for a stock"
-        placeholder="Search for a stock"
-        innerRef={inputRef}
-      />
-      <div className="relative h-full">
-        <div className="absolute inset-0 overflow-auto">
-          {results.map(({ stock, inPortfolio }, i) => (
+    <div>
+      <h2 className="text-3xl font-bold font-serif  mt-8">Add stocks</h2>
+      <div className="flex my-6 rounded-md bg-front/10">
+        <input
+          ref={inputRef}
+          type="text"
+          name="searchTerm"
+          placeholder="Search for a stock"
+          className="w-full outline-none bg-transparent py-4 pl-4"
+        />
+        <button
+          className="w-14 flex-shrink-0 text-2xl flex justify-center items-center"
+          onClick={() => {
+            const input = inputRef.current!;
+            if (searchTerm) {
+              setSearchTerm("");
+              input.value = "";
+            }
+            input.focus();
+          }}
+        >
+          <div className="pointer-events-none">
+            {searchTerm.length ? (
+              <FiPlus className="rotate-45" />
+            ) : (
+              <FiSearch />
+            )}
+          </div>
+        </button>
+      </div>
+      <div style={{ minHeight: "8rem" }}>
+        {!searchTerm || isLoading || results.length ? (
+          results.map(({ stock, inPortfolio }, i) => (
             <button
               key={i}
-              className={`flex justify-between w-full px-4 py-2 ${
-                inPortfolio ? "opacity-25" : "rounded-md hover:bg-gray-100"
+              className={`flex justify-between w-full mb-4 ${
+                inPortfolio && !searchTerm
+                  ? "hidden"
+                  : inPortfolio
+                  ? "opacity-25"
+                  : "rounded-md hover:bg-white/10"
               }`}
               onClick={
                 !inPortfolio
@@ -76,8 +101,19 @@ const Search = () => {
             >
               <SearchItem trend={2.5} name={stock.name} price={stock.price} />
             </button>
-          ))}
-        </div>
+          ))
+        ) : (
+          <p
+            className="font-light text-center mx-auto"
+            style={{ maxWidth: "10rem" }}
+          >
+            No stocks found with name &quot;
+            {searchTerm.length < 12
+              ? searchTerm
+              : `${searchTerm.substring(0, 9)}...`}
+            &quot;.
+          </p>
+        )}
       </div>
     </div>
   );
