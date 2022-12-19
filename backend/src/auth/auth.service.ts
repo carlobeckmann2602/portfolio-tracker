@@ -4,6 +4,7 @@ import * as argon from 'argon2';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { jwtConstants } from './constants';
+import { response } from 'express';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
@@ -31,11 +32,20 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
-  // not necessary with jwt
-  // security issue! Blacklist token after logout
-  // logout() {
-  //   return 'User logged out';
-  // }
+  //logout 
+  logout(headers: Headers) {
+
+    if (headers['authorization'] == undefined) {
+      return response.status(404)
+    } else {
+      this.prisma.tokens.create({
+        data: {
+          token: headers['authorization']
+        }
+      })
+      return response.status(200)
+    }
+  }
 
   // function which creates a JWT Token
   async signToken(userId: number, email: string): Promise<{ access_token: string }> {
