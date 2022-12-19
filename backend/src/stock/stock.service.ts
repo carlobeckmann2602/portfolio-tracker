@@ -8,9 +8,7 @@ export class StockService {
   async addStockToUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
     try {
       const stock = await this.findOne(sid);
-      console.log(stock);
 
-      //set relation between stock and user and updates stock in db
       await this.prisma.transactions.create({
         data: {
           userId: id,
@@ -65,65 +63,82 @@ export class StockService {
   }
 
   async removeStockFromUser(id: number, sid: number, stockTOnUserDto: StockOnUserDto) {
-    // try {
-    //   //decrements the amount of stock in a user modelif user sells some of his stocks
-    //   const stocksOnUser = await this.prisma.stocksOnUsers.update({
-    //     where: {
-    //       userId_stockId: {
-    //         userId: id,
-    //         stockId: sid,
-    //       },
-    //     },
-    //     data: {
-    //       amount: {
-    //         decrement: +stockTOnUserDto.amount,
-    //       },
-    //     },
-    //   });
-    //   //if the amount of stocks the user owns is smaller or equal zero the stock will be removed from the portfolio
-    //   if (stocksOnUser.amount <= 0) {
-    //     await this.prisma.stocksOnUsers.delete({
-    //       where: {
-    //         userId_stockId: {
-    //           userId: id,
-    //           stockId: sid,
-    //         },
-    //       },
-    //     });
-    //   }
-    //   return `This action updates a user with id #${id} with the transmitted stock data`;
-    // } catch (error) {
-    //   if (error instanceof PrismaClientValidationError) {
-    //     throw new BadRequestException('Invalid parameter');
-    //   }
-    //   throw error;
-    // }
-    return null;
+    try {
+      const stock = await this.findOne(sid);
+      const amountOfStock = await this.countStockAmount(id, sid);
+      //check if user has enough stocks for selling
+      if (amountOfStock - stockTOnUserDto.amount >= 0) {
+        await this.prisma.transactions.create({
+          data: {
+            userId: id,
+            stockId: sid,
+            amount: +stockTOnUserDto.amount,
+            price: stock.histories[0].high,
+            time: stock.histories[0].time,
+            buy: false,
+          },
+        });
+
+        return `User with id #${id} sold stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
+      }
+
+      throw new BadRequestException(
+        `User can not sell more then his available amount of stocks. Available amount of stock ${stock.name}: ${amountOfStock}`,
+      );
+    } catch (error) {
+      if (error instanceof PrismaClientValidationError) {
+        throw new BadRequestException('Invalid parameter');
+      }
+      throw error;
+    }
   }
 
   async searchStocks(stockName: string) {
     //searchs stock with name or symbol
-    // const stock = await this.prisma.stock.findMany({
-    //   where: {
-    //     OR: [
-    //       {
-    //         name: {
-    //           contains: stockName,
-    //           mode: 'insensitive',
-    //         },
-    //       },
-    //       {
-    //         AND: {
-    //           symbol: {
-    //             contains: stockName,
-    //             mode: 'insensitive',
-    //           },
-    //         },
-    //       },
-    //     ],
-    //   },
-    // });
-    // return stock;
-    return null;
+    const stock = await this.prisma.stock.findMany({
+      where: {
+        OR: [
+          {
+            name: {
+              contains: stockName,
+              mode: 'insensitive',
+            },
+          },
+          {
+            AND: {
+              symbol: {
+                contains: stockName,
+                mode: 'insensitive',
+              },
+            },
+          },
+        ],
+      },
+      include: {
+        histories: {
+          orderBy: {
+            time: 'desc',
+          },
+          take: 1,
+        },
+      },
+    });
+    return stock;
+  }
+
+  async countStockAmount(userID, stockID) {
+    let stockAmount = 0;
+    const userTransactions = await this.prisma.transactions.findMany({
+      where: {
+        userId: userID,
+        stockId: stockID,
+      },
+    });
+
+    for (let index = 0; index < userTransactions.length; index++) {
+      if (userTransactions[index].buy) stockAmount += userTransactions[index].amount;
+      else stockAmount -= userTransactions[index].amount;
+    }
+    return stockAmount;
   }
 }
