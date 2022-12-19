@@ -1,13 +1,12 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { StockService } from './stock.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { Stock, StockHistory } from '@prisma/client';
 import { StockAPITasksService } from 'src/stockAPITasks/stockAPITasks.service';
 import { ApiFunctions } from 'src/stockAPITasks/ApiFunctions';
 @ApiTags('stocks')
 @Controller('stocks')
 export class StockController {
-  mockMode = true;
+  mockMode = false;
   mockStocks = [
     {
       id: 0,
@@ -148,7 +147,7 @@ export class StockController {
   // ----------------------------------------- //
 
   @Get()
-  @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name' })
+  @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name or symbol' })
   @ApiResponse({ status: 200, description: 'Returns all found stocks as an array of json-objects' })
   async findAll(@Query('name') stockName: string) {
     if (this.mockMode) {
@@ -169,6 +168,6 @@ export class StockController {
         return [];
       }
     }
-    return this.stockService.findOne(+id); // !!!!we have to check that sid is of type number
+    return this.stockService.findOne(+id);
   }
 }
