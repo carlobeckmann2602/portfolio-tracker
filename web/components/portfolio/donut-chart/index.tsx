@@ -41,22 +41,24 @@ export const DonutChart = ({
           }}
         />
       )}
-      <div
-        className="absolute inset-0 transition duration-500"
-        style={{ transform: `rotate(${-angle}deg)` }}
-      >
-        <DonutChartContextProvider value={ctx}>
-          <PieChart
-            startAngle={90}
-            animate
-            lineWidth={50}
-            data={segments}
-            segmentsStyle={!disabled ? { cursor: "pointer" } : undefined}
-            onClick={onClick && ((_, i) => onClick(i))}
-            labelPosition={75}
-            label={DonutChartLabel}
-          />
-        </DonutChartContextProvider>
+      <div className="absolute inset-0 overflow-hidden">
+        <div
+          className="h-full transition duration-500"
+          style={{ transform: `rotate(${-angle}deg)` }}
+        >
+          <DonutChartContextProvider value={ctx}>
+            <PieChart
+              startAngle={90}
+              animate
+              lineWidth={50}
+              data={segments}
+              segmentsStyle={!disabled ? { cursor: "pointer" } : undefined}
+              onClick={onClick && ((_, i) => onClick(i))}
+              labelPosition={75}
+              label={DonutChartLabel}
+            />
+          </DonutChartContextProvider>
+        </div>
       </div>
     </div>
   );

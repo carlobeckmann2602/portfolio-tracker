@@ -54,7 +54,7 @@ export function StockDetails({
   holding: StockHolding;
   selectionColor: string;
 }) {
-  const { name, symbol, price } = holding.stock;
+  const { name, price } = holding.stock;
   const [count, setCount] = React.useState(holding.amount);
   const holdingMut = useStockHoldingMutation();
 
@@ -78,16 +78,16 @@ export function StockDetails({
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
         <div
-          className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
+          className="flex items-center gap-3 xs:gap-4 rounded-xl px-3 xs:px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
           style={{ borderColor: selectionColor }}
         >
           <TrendIcon trend={0} />
-          <div className="flex justify-between items-center flex-1">
+          <div className="flex justify-between items-center flex-1 text-sm xs:text-base">
             <div className="flex-1">
-              <h3 className="text-2xl">{name}</h3>
+              <h3 className="text-xl xs:text-2xl">{name}</h3>
               <p className="font-light">+ 0,00 %</p>
             </div>
-            <div>
+            <div className="flex-shrink-0">
               <p className="font-light">
                 {stringifyCurrencyValue(holding.value)}
               </p>
