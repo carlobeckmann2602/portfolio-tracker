@@ -27,7 +27,7 @@ export class UserService {
         data: {
           email: createUserDto.email,
           hash,
-          portfoliovalue: 0.0
+          portfoliovalue: 0.0,
         },
       });
 
@@ -44,22 +44,25 @@ export class UserService {
     }
   }
 
-  async findOne(id: number) {
+  async findOne(uid: number) {
     //search in db with unique id
     const user = await this.prisma.user.findUnique({
       where: {
-        id: id,
+        id: uid,
+      },
+      include: {
+        stocks: true,
       },
     });
 
     if (user === null) {
-      throw new NotFoundException();
+      throw new NotFoundException('User not found');
     }
     delete user.hash; //deletes hash field, because frontend dont need the pw
     return user;
   }
 
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(uid: number, updateUserDto: UpdateUserDto) {
     if (updateUserDto.password !== updateUserDto.password2) {
       throw new ForbiddenException('Passwords are not the same');
     }
@@ -67,7 +70,7 @@ export class UserService {
       const hash = await argon.hash(updateUserDto.password);
       const user = await this.prisma.user.update({
         where: {
-          id: id,
+          id: uid,
         },
         data: {
           email: updateUserDto.email,
@@ -86,12 +89,12 @@ export class UserService {
     }
   }
 
-  async remove(id: number) {
+  async remove(uid: number) {
     try {
       //disconnects the stocks in the mapper table
       await this.prisma.user.update({
         where: {
-          id: id,
+          id: uid,
         },
         data: {
           stocks: {
@@ -105,10 +108,10 @@ export class UserService {
       //deletes user
       await this.prisma.user.delete({
         where: {
-          id: id,
+          id: uid,
         },
       });
-      return `This action removed a user with ID:${id}`;
+      return `This action removed a user with ID:${uid}`;
     } catch (error) {
       if (error instanceof PrismaClientKnownRequestError) {
         if (error.code === 'P2025') {
@@ -117,22 +120,5 @@ export class UserService {
       }
       throw error;
     }
-  }
-
-  async findStocksOnUser(id: number) {
-    const stocksOnUser = await this.prisma.user.findUnique({
-      where: {
-        id: id,
-      },
-      select: {
-        stocks: {
-          select: {
-            stock: true,
-            amount: true,
-          },
-        },
-      },
-    });
-    return stocksOnUser;
   }
 }
