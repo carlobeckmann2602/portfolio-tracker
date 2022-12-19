@@ -139,7 +139,7 @@ export class StockController {
     //   0,
     //   await this.taskService.requestStockAPI('AAPL', ApiFunctions.AV_DAILY),
     // );
-    this.taskService.addDailyStockEntries();
+    this.taskService.insertCompanyDataCron();
     return '';
   }
   // ----------------------------------------- //
