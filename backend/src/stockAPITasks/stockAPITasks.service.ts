@@ -10,13 +10,53 @@ export class StockAPITasksService {
 
   constructor(private prisma: PrismaService) {}
 
-  @Cron('0 0-5 8 * * *')
-  handleCron() {
-    this.logger.debug('Started Cron-Task');
-    this.addDailyStockEntries();
-  }
+  public stockSymbols: String[] = [
+    'ADS.DEX', //	Adidas
+    'AIR.DEX', //	Airbus
+    'ALV.DEX', //	Allianz
+    'BAS.DEX', //	BASF
+    'BAYN.DEX', //	Bayer
+    'BEI.DEX', //	Beiersdorf
+    'BMW.DEX', //	BMW
+    'BNR.DEX', //	Brenntag
+    'CON.DEX', //	Continental
+    '1COV.DEX', //	Covestro
+    'DTG.DEX', //	Daimler Truck
+    'DBK.DEX', //	Deutsche Bank
+    'DB1.DEX', //	Deutsche Börse
+    'DPW.DEX', //	Deutsche Post
+    'DTE.DEX', //	Deutsche Telekom
+    'EOAN.DEX', //	E.ON
+    'FRE.DEX', //	Fresenius
+    'FME.DEX', //	Fresenius Medical Care
+    'HNR1.DEX', //	Hannover Rück
+    'HEI.DEX', //	HeidelbergCement (Heidelberg Materials)
+    'HEN3.DEX', //	Henkel
+    'IFX.DEX', //	Infineon
+    'LIN.DEX', //	Linde
+    'MBG.DEX', //	Mercedes-Benz Group
+    'MRK.DEX', //	Merck
+    'MTX.DEX', //	MTU Aero Engines
+    'MUV2.DEX', //	Münchener Rück
+    'PAG911.DEX', //	Porsche AG
+    'PAH3.DEX', //	Porsche SE
+    'QIA.DEX', //	Qiagen
+    'RWE.DEX', //	RWE
+    'SAP.DEX', //	SAP
+    'SRT3.DEX', //	Sartorius
+    'SIE.DEX', //	Siemens
+    'ENR.DEX', //	Siemens Energy
+    'SHL.DEX', //	Siemens Healthineers
+    'SY1.DEX', //	Symrise
+    'VOW3.DEX', //	Volkswagen
+    'VNA.DEX', //	Vonovia
+    'ZAL.DEX', //	Zalando
+  ];
 
-  async addDailyStockEntries() {
+  @Cron('0 0-5 8 * * *')
+  async dailyStockUpdateCron() {
+    this.logger.debug('Started Cron-Task: DAILY STOCK UPDATE');
+
     const stocks = await this.prisma.stock.findMany();
 
     for (const currentStock of stocks) {
