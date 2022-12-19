@@ -62,17 +62,8 @@ function useHoldingAddedEffect(
   }, [holdings, setSelectedId]);
 }
 
-const Portfolio = () => {
-  const { data: holdings } = useStockHoldings();
+const PortfolioContent = ({ holdings }: { holdings?: StockHolding[] }) => {
   const [selectedId, setSelectedId] = useSelectedId(holdings);
-  const [searchActive, setSearchActive] = useState(false);
-  const currentBalance = React.useMemo<number | null>(
-    () =>
-      holdings
-        ?.map((holding) => holding.value)
-        .reduce((prev, curr) => prev + curr, 0) ?? null,
-    [holdings]
-  );
 
   useHoldingAddedEffect(holdings, setSelectedId);
 
@@ -90,39 +81,46 @@ const Portfolio = () => {
     [holdings, colors]
   );
 
-  let content = <Search />;
-  if (!searchActive && holdings) {
-    content = (
+  return (
+    <div>
+      <DonutChart
+        segments={chartSegments}
+        selectedId={selectedId}
+        onClick={setSelectedId}
+        disabled={!holdings?.length}
+      />
       <div>
-        <DonutChart
-          segments={chartSegments}
-          selectedId={selectedId}
-          onClick={setSelectedId}
-          disabled={!holdings.length}
-        />
-        <div>
-          {holdings.length > 0 ? (
-            <StockDetails
-              holding={holdings[selectedId]}
-              selectionColor={colors[selectedId]}
-            />
-          ) : (
-            <p
-              className="text-center text-2xl font-light mx-auto mb-12"
-              style={{ maxWidth: "16rem" }}
-            >
-              Tap the plus button to add a new stock.
-            </p>
-          )}
-          <Button href="/settings" look={1} className="mt-4">
-            Personal settings
-          </Button>
-        </div>
+        {holdings?.length ? (
+          <StockDetails
+            holding={holdings[selectedId]}
+            selectionColor={colors[selectedId]}
+          />
+        ) : (
+          <p
+            className="text-center text-2xl font-light mx-auto mb-12"
+            style={{ maxWidth: "16rem" }}
+          >
+            Tap the plus button to add a new stock.
+          </p>
+        )}
+        <Button href="/settings" look={1} className="mt-4">
+          Personal settings
+        </Button>
       </div>
-    );
-  }
+    </div>
+  );
+};
 
-  if (!holdings) return <span>Loading...</span>;
+const Portfolio = () => {
+  const { data: holdings } = useStockHoldings();
+  const currentBalance = React.useMemo<number | null>(
+    () =>
+      holdings
+        ?.map((holding) => holding.value)
+        .reduce((prev, curr) => prev + curr, 0) ?? null,
+    [holdings]
+  );
+  const [searchActive, setSearchActive] = useState(false);
 
   return (
     <div className="flex flex-col gap-8">
@@ -141,14 +139,16 @@ const Portfolio = () => {
           border-solid w-10 h-10 flex justify-center items-center cursor-pointer text-[30px]"
         >
           <FiPlus
-            className={`transition-transform ${
+            className={`transition-transform duration-500 select-none ${
               searchActive ? "rotate-[135deg]" : null
             }`}
           />
         </div>
       </div>
       <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
-        <div className="xs:px-4 sm:px-6">{content}</div>
+        <div className="xs:px-4 sm:px-6">
+          {searchActive ? <Search /> : <PortfolioContent holdings={holdings} />}
+        </div>
       </div>
     </div>
   );

@@ -1,15 +1,12 @@
-import { random } from "cypress/types/lodash";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { FiSearch } from "react-icons/fi";
 import {
   createStockHolding,
   Stock,
-  stringifyCurrencyValue,
   useStockHoldingMutation,
   useStockHoldings,
   useStockSearch,
 } from "../../lib/backend";
-import { Input } from "../form/input";
 import { SearchItem } from "./search_item";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
@@ -53,7 +50,7 @@ const Search = () => {
   );
 
   return (
-    <div className="h-full flex flex-col">
+    <div>
       <h2 className="text-3xl font-bold font-serif  mt-8">Add stocks</h2>
       <div className="relative my-6 flex items-center justify-end rounded-md py-4 bg-white/10">
         <input
@@ -63,31 +60,29 @@ const Search = () => {
           placeholder="Search for a stock"
           className="absolute w-full outline-none bg-transparent p-4"
         />
-        <FiSearch className="top-0 right-0 mr-4 text-[25px]" />
+        <FiSearch className="top-0 right-0 mr-4 text-2xl" />
       </div>
-      <div className="relative h-full">
-        <div className="inset-0 overflow-auto">
-          {results.map(({ stock, inPortfolio }, i) => (
-            <button
-              key={i}
-              className={`flex justify-between w-full mb-4 ${
-                inPortfolio && searchTerm == ""
-                  ? "hidden"
-                  : inPortfolio
-                  ? "opacity-25"
-                  : "rounded-md hover:bg-white/10"
-              }`}
-              onClick={
-                !inPortfolio
-                  ? () => holdingMut.mutate(createStockHolding(stock))
-                  : undefined
-              }
-              disabled={inPortfolio}
-            >
-              <SearchItem trend={2.5} name={stock.name} price={stock.price} />
-            </button>
-          ))}
-        </div>
+      <div style={{ minHeight: "8rem" }}>
+        {results.map(({ stock, inPortfolio }, i) => (
+          <button
+            key={i}
+            className={`flex justify-between w-full mb-4 ${
+              inPortfolio && !searchTerm
+                ? "hidden"
+                : inPortfolio
+                ? "opacity-25"
+                : "rounded-md hover:bg-white/10"
+            }`}
+            onClick={
+              !inPortfolio
+                ? () => holdingMut.mutate(createStockHolding(stock))
+                : undefined
+            }
+            disabled={inPortfolio}
+          >
+            <SearchItem trend={2.5} name={stock.name} price={stock.price} />
+          </button>
+        ))}
       </div>
     </div>
   );
