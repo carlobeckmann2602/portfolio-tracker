@@ -157,109 +157,86 @@ export class UserController {
       },
     ],
   };
-  mockMode = true;
+  mockMode = false;
   constructor(private readonly userService: UserService, private readonly stockService: StockService) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
-  @ApiResponse({ status: 200, description: 'Returns userdata of the created user' })
+  @ApiResponse({ status: 201, description: 'Returns JWT' })
   @ApiResponse({ status: 400, description: 'The given userdata has a wrong format. No user was created' })
   @ApiResponse({ status: 403, description: 'Credentials already taken' })
   create(@Body() createUserDto: CreateUserDto) {
-    // if (this.mockMode) {
-    //   return this.mockUser;
-    // }
     return this.userService.create(createUserDto);
   }
 
   @UseGuards(JwtGuard) //Set custom guard. This route is protected
-  @Get(':id')
+  @Get('me')
   @ApiOperation({ summary: 'Get userdata of a specific user' })
-  @ApiResponse({ status: 200, description: 'Returns the userdata for the user with the given uid' })
+  @ApiResponse({ status: 200, description: 'Returns the userdata' })
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   @ApiBearerAuth('JWT-auth')
-  findOne(@Param('id') id: number, @Req() req: Request) {
-    // if (this.mockMode) {
-    //   return this.mockUser;
-    // }
-
+  findOne(@Req() req: Request) {
     //validate user ID and path Id
     return this.userService.findOne(req.user['userId']);
   }
 
   @UseGuards(JwtGuard)
-  @Patch(':id')
+  @Patch('me')
   @ApiOperation({ summary: 'Update the userdata of a specific user' })
   @ApiResponse({ status: 200, description: 'Returns the (updated) userdata' })
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No data is returned' })
   @ApiBearerAuth('JWT-auth')
-  update(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
-    // if (this.mockMode) {
-    //   return this.mockUserEdited;
-    // }
+  update(@Body() updateUserDto: UpdateUserDto, @Req() req: Request) {
     return this.userService.update(req.user['userId'], updateUserDto);
   }
 
   @UseGuards(JwtGuard)
-  @Delete(':id')
+  @Delete('me')
   @ApiOperation({ summary: 'Delete the user with the given uid' })
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No user is deleted' })
   @ApiResponse({ status: 200, description: 'User deleted' })
   @ApiBearerAuth('JWT-auth')
-  removeUser(@Param('id') id: number, @Req() req: Request) {
-    // if (this.mockMode) {
-    //   return 'This action removed a user with ID:1';
-    // }
+  removeUser(@Req() req: Request) {
     return this.userService.remove(req.user['userId']);
   }
 
   @UseGuards(JwtGuard)
-  @Get(':id/stocks')
+  @Get('me/stocks')
   @ApiOperation({ summary: "Returns all stocks in the users' portfolio" })
   @ApiResponse({ status: 200, description: "Returns a json-objekt containing all stocks of the users' portfolio" })
   @ApiResponse({ status: 400, description: "There was a fatal error fetching the users' portfolio" })
   @ApiBearerAuth('JWT-auth')
-  getStocksFromUser(@Param('id') id: number, @Req() req: Request) {
+  getStocksFromUser(@Req() req: Request) {
     if (this.mockMode) {
       return this.mockStocksOnUser;
     }
-    return this.userService.findStocksOnUser(req.user['userId']);
+    return this.stockService.findAllStocksOnUser(req.user['userId']);
   }
 
   //CRUD Stocks
   @UseGuards(JwtGuard)
-  @Delete(':id/stocks/:sid')
+  @Delete('me/stocks/:sid')
   @ApiOperation({ summary: "Delete the stock with the given sid and amount from the users' portfolio" })
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   @ApiResponse({ status: 200, description: 'Return success message' })
   @ApiBearerAuth('JWT-auth')
-  removeStockFromUser(
-    @Param('id') id: number,
-    @Param('sid') sid: number,
-    @Body() stockOnUserDto: StockOnUserDto,
-    @Req() req: Request,
-  ) {
+  removeStockFromUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
     if (this.mockMode) {
-      return `This action updates a user with id #${id} with the transmitted stock data`;
+      return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.stockService.removeStockFromUser(req.user['userId'], +sid, stockOnUserDto); // !!!!we have to check that sid is of type number
+    return this.stockService.removeStockFromUser(req.user['userId'], +sid, stockOnUserDto);
   }
 
   @UseGuards(JwtGuard)
-  @Post(':id/stocks/:sid')
+  @Post('me/stocks/:sid')
   @ApiOperation({ summary: "Add a stock with the given sid and amount to the users' portfolio" })
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   @ApiResponse({ status: 201, description: 'Return success message' })
   @ApiBearerAuth('JWT-auth')
-  addStockToUser(
-    @Param('id') id: number,
-    @Param('sid') sid: number,
-    @Body() stockOnUserDto: StockOnUserDto,
-    @Req() req: Request,
-  ) {
+  addStockToUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
     if (this.mockMode) {
-      return `This action updates a user with id #${id} with the transmitted stock data`;
+      return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.stockService.addStockToUser(req.user['userId'], +sid, stockOnUserDto); // !!!!we have to check that sid is of type number
+    return this.stockService.addStockToUser(req.user['userId'], +sid, stockOnUserDto);
   }
 }
