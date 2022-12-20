@@ -8,15 +8,15 @@ import { useAuthContext } from "../lib/backend";
 
 const Home: NextPage = () => {
   const router = useRouter();
-  const [userID] = useAuthContext();
+  const [authToken] = useAuthContext();
 
   useEffect(() => {
-    if (!localStorage.getItem("userID")) {
+    if (!localStorage.getItem("authToken")) {
       router.push("/login");
     }
   });
 
-  if (!userID) {
+  if (!authToken) {
     return null;
   }
 

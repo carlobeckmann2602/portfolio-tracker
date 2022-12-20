@@ -1,22 +1,27 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { BackendApiProvider, AuthContextProvider } from "../lib/backend";
+import {
+  BackendApiProvider,
+  AuthContextProvider,
+  decodeJWToken,
+} from "../lib/backend";
 import { useEffect, useState } from "react";
 import { Footer } from "../components/footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [userID, setUserID] = useState<string | null>(null);
+  const [authToken, setAuthToken] = useState<string | null>(null);
 
   useEffect(() => {
-    setUserID(localStorage.getItem("userID"));
+    setAuthToken(localStorage.getItem("authToken"));
   }, []);
 
   useEffect(() => {
-    if (userID) {
-      localStorage.setItem("userID", userID);
+    if (authToken) {
+      localStorage.setItem("authToken", authToken);
+      console.log("authToken", decodeJWToken(authToken));
     }
-  }, [userID]);
+  }, [authToken]);
 
   return (
     <>
@@ -38,7 +43,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
-        <AuthContextProvider value={[userID, setUserID]}>
+        <AuthContextProvider value={[authToken, setAuthToken]}>
           <Component {...pageProps} />
           <Footer />
         </AuthContextProvider>
