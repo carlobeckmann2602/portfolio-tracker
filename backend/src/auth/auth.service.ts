@@ -33,12 +33,11 @@ export class AuthService {
   }
 
   //logout 
-  logout(headers: Headers) {
-
+  async logout(headers: Headers) {
     if (headers['authorization'] == undefined) {
       return response.status(404)
     } else {
-      this.prisma.tokens.create({
+      await this.prisma.tokens.create({
         data: {
           token: headers['authorization']
         }

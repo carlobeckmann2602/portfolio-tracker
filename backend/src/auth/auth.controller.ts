@@ -1,5 +1,6 @@
-import { Body, Controller, Get, Post, Headers } from '@nestjs/common';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Headers, UseGuards } from '@nestjs/common';
+import { JwtGuard } from 'src/auth/guard';
+import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dto/auth.dto';
 @ApiTags('auth')
@@ -16,10 +17,12 @@ export class AuthController {
     return this.authService.login(authDto);
   }
 
+  @UseGuards(JwtGuard)
   @Get('/logout')
   @ApiOperation({ summary: 'Logout current user' })
   @ApiResponse({ status: 200, description: 'The logout was successfull' })
   @ApiResponse({ status: 404, description: 'There was no active user-session which could be terminated' })
+  @ApiBearerAuth('JWT-auth')
   logout(@Headers() headers) {
     return this.authService.logout(headers);
   }
