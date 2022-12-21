@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Headers } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -7,6 +7,7 @@ import { StockService } from 'src/stock/stock.service';
 import { StockOnUserDto } from './dto/stock-on-user.dto.';
 import { Request } from 'express';
 import { JwtGuard } from 'src/auth/guard';
+import { AuthService } from 'src/auth/auth.service';
 
 @ApiTags('users')
 @Controller('users')
@@ -158,7 +159,11 @@ export class UserController {
     ],
   };
   mockMode = false;
-  constructor(private readonly userService: UserService, private readonly stockService: StockService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly stockService: StockService,
+    private readonly authService: AuthService,
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
@@ -192,11 +197,12 @@ export class UserController {
 
   @UseGuards(JwtGuard)
   @Delete('me')
-  @ApiOperation({ summary: 'Delete the user with the given uid' })
+  @ApiOperation({ summary: 'Deletes the currently logged in user' })
   @ApiResponse({ status: 404, description: 'There was no user with the given uid. No user is deleted' })
   @ApiResponse({ status: 200, description: 'User deleted' })
   @ApiBearerAuth('JWT-auth')
-  removeUser(@Req() req: Request) {
+  removeUser(@Req() req: Request, @Headers() headers) {
+    this.authService.logout(headers);
     return this.userService.remove(req.user['userId']);
   }
 
