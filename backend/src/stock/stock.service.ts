@@ -194,6 +194,9 @@ export class StockService {
     const transactionsGroupsByStocks = [];
     let stockGroups = [];
     stockGroups.push(sortedTransactions[0]);
+    if (sortedTransactions.length === 1) {
+      transactionsGroupsByStocks.push(stockGroups);
+    }
     for (let index = 1; index < sortedTransactions.length; index++) {
       if (sortedTransactions[index].stockId == sortedTransactions[index - 1].stockId) {
         stockGroups.push(sortedTransactions[index]);
@@ -227,7 +230,11 @@ export class StockService {
       }
       stocksOnUser.push(stockCombined);
     }
+    const portfolio = {
+      portfoliovalue: user.portfoliovalue,
+      stocksOnUser,
+    };
 
-    return stocksOnUser;
+    return portfolio;
   }
 }
