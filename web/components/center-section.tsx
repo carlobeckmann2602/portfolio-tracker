@@ -5,5 +5,7 @@ import React from "react";
  * using sensible values for horizontal padding and max width.
  */
 export function CenterSection({ children }: React.PropsWithChildren) {
-  return <div className="mx-auto px-6 box-content max-w-md">{children}</div>;
+  return (
+    <div className="relative mx-auto px-6 box-content max-w-sm">{children}</div>
+  );
 }

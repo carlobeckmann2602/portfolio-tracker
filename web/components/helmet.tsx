@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React from "react";
 
-const siteTitle = "Stonks";
+const siteTitle = "GoFundYourself";
 
 export function Helmet({ title }: { title?: string }) {
   return (

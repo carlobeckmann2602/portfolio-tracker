@@ -28,15 +28,16 @@ export const Modal = ({
           onClick={(evt) => {
             if (evt.target === evt.currentTarget) onClose();
           }}
-          className="bg-gray-500/50 w-full h-screen flex items-center justify-center pointer-events-auto md:p-8"
+          className="bg-back/50 w-full h-screen flex items-center justify-center pointer-events-auto md:p-8"
+          style={{ backdropFilter: "blur(6px)" }}
         >
-          <div className="flex flex-col items-stretch bg-white md:rounded-md w-full h-full md:w-2/3 md:max-h-full p-6">
+          <div className="flex flex-col items-stretch bg-front/30 md:rounded-md w-full h-full md:w-2/3 md:max-h-full p-6">
             <div className="flex items-center justify-between">
               <h2 className="text-lg font-medium">{title}</h2>
               {closeButton && (
                 <div
                   onClick={onClose}
-                  className="flex items-center justify-center rounded-full border-2 border-black border-solid w-8 h-8 cursor-pointer"
+                  className="flex items-center justify-center rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 cursor-pointer"
                 >
                   <FiX />
                 </div>
