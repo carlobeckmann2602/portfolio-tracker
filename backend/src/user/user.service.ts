@@ -19,13 +19,13 @@ export class UserService {
 
     //generate password haswith argon
     const hash = await argon.hash(createUserDto.password);
-
+    const lowerCaseEmail = createUserDto.email.toLowerCase();
     //check if user is already in db (email should be unique)
     try {
       //save user in db
       const user = await this.prisma.user.create({
         data: {
-          email: createUserDto.email,
+          email: lowerCaseEmail,
           hash,
           portfoliovalue: 0.0,
         },
