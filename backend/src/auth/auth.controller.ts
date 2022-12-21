@@ -6,13 +6,13 @@ import { AuthDto } from './dto/auth.dto';
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService) {}
 
   @Post('/login')
   @ApiOperation({ summary: 'Log in user with given credentials (email + password)' })
-  @ApiResponse({ status: 200, description: 'User login was successfull' })
+  @ApiResponse({ status: 201, description: 'User login was successfull' })
   @ApiResponse({ status: 400, description: 'User credentials are not in correct format' })
-  @ApiResponse({ status: 404, description: 'There is no user with the given credentials; The login was unsuccessfull' })
+  @ApiResponse({ status: 403, description: 'There is no user with the given credentials; The login was unsuccessfull' })
   login(@Body() authDto: AuthDto) {
     return this.authService.login(authDto);
   }

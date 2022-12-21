@@ -10,10 +10,11 @@ export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
 
   async login(authDto: AuthDto) {
+    const lowerCaseEmail = authDto.email.toLowerCase();
     //find user by email
     const user = await this.prisma.user.findUnique({
       where: {
-        email: authDto.email,
+        email: lowerCaseEmail,
       },
     });
 
@@ -35,14 +36,14 @@ export class AuthService {
   //logout 
   async logout(headers: Headers) {
     if (headers['authorization'] == undefined) {
-      return response.status(404)
+      return response.status(404);
     } else {
       await this.prisma.tokens.create({
         data: {
-          token: headers['authorization']
-        }
-      })
-      return response.status(200)
+          token: headers['authorization'],
+        },
+      });
+      return response.status(200);
     }
   }
 
