@@ -132,16 +132,16 @@ export class StockController {
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
   // ----------------------------------------- //
-  @Get('/test/:name')
-  async testAPI(@Param('name') stockName: string) {
-    // const testResponse = await this.taskService.requestStockAPI(stockName, ApiFunctions.AV_DAILY);
-    // const testResponse = this.taskService.insertUpdatedStock(
-    //   0,
-    //   await this.taskService.requestStockAPI('AAPL', ApiFunctions.AV_DAILY),
-    // );
-    this.taskService.insertCompanyDataCron();
-    return '';
-  }
+  // @Get('/test/:name')
+  // async testAPI(@Param('name') stockName: string) {
+  //   // const testResponse = await this.taskService.requestStockAPI(stockName, ApiFunctions.AV_DAILY);
+  //   // const testResponse = this.taskService.insertUpdatedStock(
+  //   //   0,
+  //   //   await this.taskService.requestStockAPI('AAPL', ApiFunctions.AV_DAILY),
+  //   // );
+  //   this.taskService.insertHistoricDataCron();
+  //   return '';
+  // }
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
   // ----------------------------------------- //
