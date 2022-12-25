@@ -117,7 +117,6 @@ async function fetchStockHoldingAmountMut({
   amountOffset,
 }: StockHoldingAmountMutVars) {
   if (!amountOffset) return;
-  console.log("amountOffset", amountOffset);
   await authFetch(`${BACKEND_REST_URL}/users/me/stocks/${stockId}`, {
     method: amountOffset > 0 ? "POST" : "DELETE",
     headers: { "Content-Type": "application/json" },

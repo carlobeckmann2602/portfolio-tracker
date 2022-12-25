@@ -28,7 +28,6 @@ function useSelectedId(
     if (id != cappedId) setId(cappedId);
   }, [id, cappedId]);
 
-  console.log("HI");
   return [cappedId, setId];
 }
 
