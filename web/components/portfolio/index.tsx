@@ -58,7 +58,10 @@ function useHoldingAddedEffect(
   }, [holdings, setSelectedId]);
 }
 
-const PortfolioContent = ({ holdings }: { holdings?: StockHolding[] }) => {
+const PortfolioContent = () => {
+  const { data: portfolio, isFetching } = usePortfolioData();
+  const holdings = portfolio?.holdings;
+
   const [selectedId, setSelectedId] = useSelectedId(holdings);
 
   useHoldingAddedEffect(holdings, setSelectedId);
@@ -90,6 +93,7 @@ const PortfolioContent = ({ holdings }: { holdings?: StockHolding[] }) => {
           <StockDetails
             holding={holdings[selectedId]}
             selectionColor={colors[selectedId]}
+            isLoading={isFetching}
           />
         ) : (
           <p
@@ -132,11 +136,7 @@ const Portfolio = () => {
       </div>
       <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div className="xs:px-4 sm:px-6">
-          {searchActive ? (
-            <Search />
-          ) : (
-            <PortfolioContent holdings={portfolio?.holdings} />
-          )}
+          {searchActive ? <Search /> : <PortfolioContent />}
         </div>
       </div>
     </div>

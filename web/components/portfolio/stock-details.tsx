@@ -1,4 +1,5 @@
 import React from "react";
+import cn from "classnames";
 import {
   StockHolding,
   stringifyCurrencyValue,
@@ -11,37 +12,48 @@ const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
 );
 
-const CounterButton = (
-  props: React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  >
-) => (
+const CounterButton = ({
+  hidden,
+  ...props
+}: React.DetailedHTMLProps<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  HTMLButtonElement
+> & { hidden?: boolean }) => (
   <button
     {...props}
-    className="rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-0"
+    className={cn(
+      "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-50",
+      hidden ? "opacity-0" : props.disabled ? "opacity-50" : null
+    )}
   />
 );
 
 function CounterInput({
   value,
-  onChange,
+  onDecrement,
+  onIncrement,
   min,
+  disabled,
 }: {
   value: number;
-  onChange: (value: number) => void;
+  onDecrement?: () => void;
+  onIncrement?: () => void;
   min?: number;
+  disabled?: boolean;
 }) {
   return (
     <div className="flex items-center">
       <CounterButton
-        onClick={() => onChange(value - 1)}
-        disabled={min != undefined && min >= value}
+        onClick={() => onDecrement?.()}
+        hidden={min != undefined && min >= value}
+        disabled={disabled}
       >
         -
       </CounterButton>
       <div className="w-20 text-center">{value}</div>
-      <CounterButton onClick={() => onChange(value + 1)}>+</CounterButton>
+      <CounterButton onClick={() => onIncrement?.()} disabled={disabled}>
+        +
+      </CounterButton>
     </div>
   );
 }
@@ -49,20 +61,19 @@ function CounterInput({
 export function StockDetails({
   holding,
   selectionColor,
+  isLoading,
 }: {
   holding: StockHolding;
   selectionColor: string;
+  isLoading?: boolean;
 }) {
-  const [count, setCount] = React.useState(holding.amount);
   const holdingAmountMut = useStockHoldingAmountMut();
 
-  const setAmount = React.useCallback(
-    (amount: number) => {
-      setCount(amount);
-      // Overwrite the current holding with the correct number of shares
+  const updateAmount = React.useCallback(
+    (amountOffset: number) => () => {
       holdingAmountMut.mutate({
         stockId: holding.id,
-        amountOffset: amount - holding.amount,
+        amountOffset,
       });
     },
     [holding, holdingAmountMut]
@@ -75,8 +86,6 @@ export function StockDetails({
       amountOffset: -holding.amount,
     });
   }, [holding, holdingAmountMut]);
-
-  React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
     <div className="flex flex-col gap-12">
@@ -109,7 +118,13 @@ export function StockDetails({
           </TableRow>
           <TableRow>
             <div>Count:</div>
-            <CounterInput value={count} onChange={setAmount} min={1} />
+            <CounterInput
+              value={holding.amount}
+              onIncrement={updateAmount(1)}
+              onDecrement={updateAmount(-1)}
+              min={1}
+              disabled={isLoading || holdingAmountMut.isLoading}
+            />
           </TableRow>
         </div>
       </div>
