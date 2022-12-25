@@ -1,28 +1,10 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import {
-  BackendApiProvider,
-  AuthContextProvider,
-  decodeJWToken,
-} from "../lib/backend";
-import { useEffect, useState } from "react";
+import { BackendApiProvider } from "../lib/backend";
 import { Footer } from "../components/footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [authToken, setAuthToken] = useState<string | null>(null);
-
-  useEffect(() => {
-    setAuthToken(localStorage.getItem("authToken"));
-  }, []);
-
-  useEffect(() => {
-    if (authToken) {
-      localStorage.setItem("authToken", authToken);
-      console.log("authToken", decodeJWToken(authToken));
-    }
-  }, [authToken]);
-
   return (
     <>
       <Head>
@@ -43,10 +25,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
-        <AuthContextProvider value={[authToken, setAuthToken]}>
-          <Component {...pageProps} />
-          <Footer />
-        </AuthContextProvider>
+        <Component {...pageProps} />
+        <Footer />
       </BackendApiProvider>
       <div
         id="modal-portal"
