@@ -64,6 +64,7 @@ struct OnboardingStep1: View {
           }
           HStack {
             Button {
+              UserDefaults.standard.set(true, forKey: "didLaunchBefore")
               goToLogin()
             } label: {
               Text("Skip onboarding")
