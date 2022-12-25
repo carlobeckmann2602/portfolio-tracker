@@ -16,32 +16,11 @@ class SearchState: ObservableObject {
 struct SearchStocksList: View {
   var portfolio: Portfolio
 
-  var oftenAddedStocksLoader = OftenAddedStocksLoader()
-
   @Environment(\.isSearching)
   private var isSearching: Bool
 
   var body: some View {
-    if isSearching {
-      SearchResultsList(portfolio: portfolio)
-    } else {
-      AsyncContentView(
-        loadable: oftenAddedStocksLoader, loadingView: ProgressView()
-      ) { stocks in
-        OftenAddedStocksList(portfolio: portfolio)
-      }
-    }
-  }
-}
-
-class OftenAddedStocksLoader: LoadableObject {
-  @Published private(set) var state = LoadingState<[Stock]>.idle
-
-  func load() {
-    state = .loading
-    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-      self.state = .loaded([Stock(id: 1, name: "DemoStock", value: 1)])
-    }
+    SearchResultsList(portfolio: portfolio)
   }
 }
 
