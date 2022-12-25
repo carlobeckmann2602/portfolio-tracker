@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  createStockHolding,
   Stock,
   stringifyCurrencyValue,
-  useStockHoldingMutation,
-  useStockHoldings,
+  useStockHoldingAmountMut,
+  usePortfolioData,
   useStockSearch,
 } from "../lib/backend";
 import { Input } from "./form/input";
@@ -13,9 +12,9 @@ type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
 const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: holdings } = useStockHoldings();
+  const { data: portfolio } = usePortfolioData();
   const { data: foundStocks } = useStockSearch(searchTerm);
-  const holdingMut = useStockHoldingMutation();
+  const holdingAmountMut = useStockHoldingAmountMut();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -44,9 +43,10 @@ const Search = () => {
       foundStocks?.map((stock) => ({
         stock,
         inPortfolio:
-          holdings?.some((holding) => holding.stock.id == stock.id) || false,
+          portfolio?.holdings.some((holding) => holding.id == stock.id) ||
+          false,
       })) || [],
-    [foundStocks, holdings]
+    [foundStocks, portfolio]
   );
 
   return (
@@ -62,7 +62,11 @@ const Search = () => {
               }`}
               onClick={
                 !inPortfolio
-                  ? () => holdingMut.mutate(createStockHolding(stock))
+                  ? () =>
+                      holdingAmountMut.mutate({
+                        stockId: stock.id,
+                        amountOffset: 1,
+                      })
                   : undefined
               }
               disabled={inPortfolio}

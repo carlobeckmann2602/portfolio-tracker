@@ -2,9 +2,8 @@ import React, { useState } from "react";
 import {
   StockHolding,
   stringifyCurrencyValue,
-  useStockHoldings,
+  usePortfolioData,
 } from "../../lib/backend";
-import { Modal } from "../modal";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
 import { FiPlus, FiX } from "react-icons/fi";
@@ -50,9 +49,7 @@ function useHoldingAddedEffect(
     if (prevHoldings) {
       const newHolding = holdings.find(
         (holding) =>
-          !prevHoldings.find(
-            (prevHolding) => holding.stock.id == prevHolding.stock.id
-          )
+          !prevHoldings.find((prevHolding) => holding.id == prevHolding.id)
       );
 
       if (newHolding) setSelectedId(holdings.indexOf(newHolding));
@@ -74,7 +71,7 @@ const PortfolioContent = ({ holdings }: { holdings?: StockHolding[] }) => {
       holdings?.length
         ? holdings.map((holding, i) => ({
             value: holding.value,
-            label: holdings.length > 1 ? holding.stock.symbol : "",
+            label: holdings.length > 1 ? holding.symbol : "",
             color: colors[i],
           }))
         : [{ value: 1, color: "#180A44", label: "" }],
@@ -112,14 +109,7 @@ const PortfolioContent = ({ holdings }: { holdings?: StockHolding[] }) => {
 };
 
 const Portfolio = () => {
-  const { data: holdings } = useStockHoldings();
-  const currentBalance = React.useMemo<number | null>(
-    () =>
-      holdings
-        ?.map((holding) => holding.value)
-        .reduce((prev, curr) => prev + curr, 0) ?? null,
-    [holdings]
-  );
+  const { data: portfolio } = usePortfolioData();
   const [searchActive, setSearchActive] = useState(false);
 
   return (
@@ -127,11 +117,7 @@ const Portfolio = () => {
       <div className="flex flex-col gap-2 relative">
         <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
         <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
-          {currentBalance != null ? (
-            stringifyCurrencyValue(currentBalance)
-          ) : (
-            <>&nbsp;</>
-          )}
+          {portfolio ? stringifyCurrencyValue(portfolio.value) : <>&nbsp;</>}
         </p>
         <div
           onClick={() => setSearchActive(!searchActive)}
@@ -147,7 +133,11 @@ const Portfolio = () => {
       </div>
       <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
         <div className="xs:px-4 sm:px-6">
-          {searchActive ? <Search /> : <PortfolioContent holdings={holdings} />}
+          {searchActive ? (
+            <Search />
+          ) : (
+            <PortfolioContent holdings={portfolio?.holdings} />
+          )}
         </div>
       </div>
     </div>

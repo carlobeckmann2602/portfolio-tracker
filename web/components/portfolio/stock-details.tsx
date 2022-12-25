@@ -1,9 +1,8 @@
 import React from "react";
 import {
-  createStockHolding,
   StockHolding,
   stringifyCurrencyValue,
-  useStockHoldingMutation,
+  useStockHoldingAmountMut,
 } from "../../lib/backend";
 import { Button } from "../button";
 import { TrendIcon } from "../stock/trend_icon";
@@ -54,23 +53,28 @@ export function StockDetails({
   holding: StockHolding;
   selectionColor: string;
 }) {
-  const { name, price } = holding.stock;
   const [count, setCount] = React.useState(holding.amount);
-  const holdingMut = useStockHoldingMutation();
+  const holdingAmountMut = useStockHoldingAmountMut();
 
   const setAmount = React.useCallback(
     (amount: number) => {
       setCount(amount);
       // Overwrite the current holding with the correct number of shares
-      holdingMut.mutate(createStockHolding(holding.stock, amount));
+      holdingAmountMut.mutate({
+        stockId: holding.id,
+        amountOffset: amount - holding.amount,
+      });
     },
-    [holding, holdingMut]
+    [holding, holdingAmountMut]
   );
 
   const removeHolding = React.useCallback(() => {
     // Set the number of shares of the current holding to 0
-    holdingMut.mutate(createStockHolding(holding.stock, 0));
-  }, [holding, holdingMut]);
+    holdingAmountMut.mutate({
+      stockId: holding.id,
+      amountOffset: -holding.amount,
+    });
+  }, [holding, holdingAmountMut]);
 
   React.useEffect(() => setCount(holding.amount), [holding]);
 
@@ -84,7 +88,7 @@ export function StockDetails({
           <TrendIcon trend={0} />
           <div className="flex justify-between items-center flex-1 text-sm xs:text-base">
             <div className="flex-1">
-              <h3 className="text-xl xs:text-2xl">{name}</h3>
+              <h3 className="text-xl xs:text-2xl">{holding.name}</h3>
               <p className="font-light">+ 0,00 %</p>
             </div>
             <div className="flex-shrink-0">
@@ -97,7 +101,7 @@ export function StockDetails({
         <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
-            <div>{stringifyCurrencyValue(price)}</div>
+            <div>{stringifyCurrencyValue(0)}</div>
           </TableRow>
           <TableRow>
             <div>Trend:</div>
