@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { formatCurrencyValue } from "../../lib/util";
 import { StockHolding, usePortfolioData } from "../../lib/backend";
 import { StockDetails } from "./stock-details";
-import Search from "../search/index";
+import { Search } from "../search";
 import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";

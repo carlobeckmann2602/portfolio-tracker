@@ -10,7 +10,7 @@ import { SearchItem } from "./search_item";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
-const Search = () => {
+export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: portfolio, isLoading } = usePortfolioData();
   const { data: foundStocks } = useStockSearch(searchTerm);
@@ -122,5 +122,3 @@ const Search = () => {
     </div>
   );
 };
-
-export default Search;
