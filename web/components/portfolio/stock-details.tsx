@@ -1,7 +1,11 @@
-import React from "react";
+import { useCallback, useEffect, useState } from "react";
 import cn from "classnames";
 import { formatCurrencyValue } from "../../lib/util";
-import { StockHolding, useStockHoldingAmountMut } from "../../lib/backend";
+import {
+  StockHolding,
+  usePortfolioData,
+  useStockHoldingAmountMut,
+} from "../../lib/backend";
 import { Button } from "../button";
 import { TrendIcon } from "../stock/trend_icon";
 
@@ -58,31 +62,36 @@ function CounterInput({
 export function StockDetails({
   holding,
   selectionColor,
-  isLoading,
 }: {
   holding: StockHolding;
   selectionColor: string;
-  isLoading?: boolean;
 }) {
-  const holdingAmountMut = useStockHoldingAmountMut();
+  const { mutate: mutateHoldingAmount, isLoading: mutationIsLoading } =
+    useStockHoldingAmountMut();
+  const portfolioIsLoading = usePortfolioData().isFetching;
+  const isLoading = mutationIsLoading || portfolioIsLoading;
 
-  const updateAmount = React.useCallback(
+  const [tempAmount, setTempAmount] = useState(holding.amount);
+  useEffect(() => setTempAmount(holding.amount), [holding]);
+
+  const updateAmount = useCallback(
     (amountOffset: number) => () => {
-      holdingAmountMut.mutate({
+      setTempAmount(tempAmount + amountOffset);
+      mutateHoldingAmount({
         stockId: holding.id,
         amountOffset,
       });
     },
-    [holding, holdingAmountMut]
+    [tempAmount, holding, mutateHoldingAmount]
   );
 
-  const removeHolding = React.useCallback(() => {
+  const removeHolding = useCallback(() => {
     // Set the number of shares of the current holding to 0
-    holdingAmountMut.mutate({
+    mutateHoldingAmount({
       stockId: holding.id,
       amountOffset: -holding.amount,
     });
-  }, [holding, holdingAmountMut]);
+  }, [holding, mutateHoldingAmount]);
 
   return (
     <div className="flex flex-col gap-12">
@@ -114,11 +123,11 @@ export function StockDetails({
           <TableRow>
             <div>Count:</div>
             <CounterInput
-              value={holding.amount}
+              value={tempAmount}
               onIncrement={updateAmount(1)}
               onDecrement={updateAmount(-1)}
               min={1}
-              disabled={isLoading || holdingAmountMut.isLoading}
+              disabled={isLoading}
             />
           </TableRow>
         </div>

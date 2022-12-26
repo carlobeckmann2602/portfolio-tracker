@@ -56,7 +56,7 @@ function useHoldingAddedEffect(
 }
 
 const PortfolioContent = () => {
-  const { data: portfolio, isFetching } = usePortfolioData();
+  const { data: portfolio } = usePortfolioData();
   const holdings = portfolio?.holdings;
 
   const [selectedId, setSelectedId] = useSelectedId(holdings);
@@ -90,7 +90,6 @@ const PortfolioContent = () => {
           <StockDetails
             holding={holdings[selectedId]}
             selectionColor={colors[selectedId]}
-            isLoading={isFetching}
           />
         ) : (
           <p
