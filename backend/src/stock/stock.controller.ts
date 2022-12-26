@@ -1,8 +1,9 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { StockService } from './stock.service';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { AuthService } from 'src/auth/auth.service';
 import { StockAPITasksService } from 'src/stockAPITasks/stockAPITasks.service';
-import { ApiFunctions } from 'src/stockAPITasks/ApiFunctions';
+import { Splitservice } from './split.service';
+import { StockService } from './stock.service';
 @ApiTags('stocks')
 @Controller('stocks')
 export class StockController {
@@ -127,7 +128,7 @@ export class StockController {
     },
   ];
 
-  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService) {}
+  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService, private readonly splitService: Splitservice, private readonly authService: AuthService) { }
 
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
@@ -145,6 +146,8 @@ export class StockController {
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
   // ----------------------------------------- //
+
+
 
   @Get()
   @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name or symbol' })
@@ -168,6 +171,6 @@ export class StockController {
         return [];
       }
     }
-    return this.stockService.findOne(+id);
+    return this.stockService.getStockWithHistory(+id);
   }
 }

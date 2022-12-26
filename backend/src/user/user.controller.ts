@@ -1,13 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, Headers } from '@nestjs/common';
-import { UserService } from './user.service';
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { Body, Controller, Delete, Get, Headers, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { StockService } from 'src/stock/stock.service';
-import { StockOnUserDto } from './dto/stock-on-user.dto.';
 import { Request } from 'express';
-import { JwtGuard } from 'src/auth/guard';
 import { AuthService } from 'src/auth/auth.service';
+import { JwtGuard } from 'src/auth/guard';
+import { PortFolioService } from 'src/stock/portfolio.service';
+import { StockService } from 'src/stock/stock.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { StockOnUserDto } from './dto/stock-on-user.dto.';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserService } from './user.service';
 
 @ApiTags('users')
 @Controller('users')
@@ -163,7 +164,10 @@ export class UserController {
     private readonly userService: UserService,
     private readonly stockService: StockService,
     private readonly authService: AuthService,
-  ) {}
+    private readonly portfolioService: PortFolioService
+  ) { }
+
+
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
@@ -216,7 +220,7 @@ export class UserController {
     if (this.mockMode) {
       return this.mockStocksOnUser;
     }
-    return this.stockService.findAllStocksOnUser(req.user['userId']);
+    return this.portfolioService.getPortfolioData(req.user['userId']);
   }
 
   //CRUD Stocks

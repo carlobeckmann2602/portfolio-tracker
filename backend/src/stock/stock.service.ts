@@ -3,14 +3,15 @@ import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@pri
 import { PrismaService } from 'src/prisma/prisma.service';
 import { StockOnUserDto } from 'src/user/dto/stock-on-user.dto.';
 import { UserService } from 'src/user/user.service';
+
 @Injectable()
 export class StockService {
-  constructor(private prisma: PrismaService, private userService: UserService) {}
+  constructor(private prisma: PrismaService, private userService: UserService) { }
 
   async addStockToUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
     try {
       //adding stock to transactions
-      const stock = await this.findOne(sid);
+      const stock = await this.getStockWithHistory(sid);
 
       await this.prisma.transactions.create({
         data: {
@@ -49,7 +50,7 @@ export class StockService {
     }
   }
 
-  async findOne(sid: number) {
+  async getStockWithHistory(sid: number, lastNumberOfDays: number = 1) {
     try {
       const stock = await this.prisma.stock.findUnique({
         where: {
@@ -63,7 +64,7 @@ export class StockService {
             orderBy: {
               time: 'desc',
             },
-            take: 1,
+            take: lastNumberOfDays,
           },
         },
       });
@@ -83,7 +84,7 @@ export class StockService {
 
   async removeStockFromUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
     try {
-      const stock = await this.findOne(sid);
+      const stock = await this.getStockWithHistory(sid);
       const amountOfStock = await this.countStockAmount(uid, sid);
       //check if user has enough stocks for selling
       if (amountOfStock - stockTOnUserDto.amount >= 0) {
@@ -173,7 +174,8 @@ export class StockService {
     return stockAmount;
   }
 
-  async findAllStocksOnUser(uid: number) {
+
+  /* async findAllStocksOnUser(uid: number) {
     const user = await this.userService.findOne(uid);
     const transactions = user.stocks;
     const stocksOnUser = [];
@@ -236,5 +238,5 @@ export class StockService {
     };
 
     return portfolio;
-  }
+  } */
 }
