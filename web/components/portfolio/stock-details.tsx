@@ -1,10 +1,7 @@
 import React from "react";
 import cn from "classnames";
-import {
-  StockHolding,
-  stringifyCurrencyValue,
-  useStockHoldingAmountMut,
-} from "../../lib/backend";
+import { formatCurrencyValue } from "../../lib/util";
+import { StockHolding, useStockHoldingAmountMut } from "../../lib/backend";
 import { Button } from "../button";
 import { TrendIcon } from "../stock/trend_icon";
 
@@ -101,16 +98,14 @@ export function StockDetails({
               <p className="font-light">+ 0,00 %</p>
             </div>
             <div className="flex-shrink-0">
-              <p className="font-light">
-                {stringifyCurrencyValue(holding.value)}
-              </p>
+              <p className="font-light">{formatCurrencyValue(holding.value)}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
-            <div>{stringifyCurrencyValue(0)}</div>
+            <div>{formatCurrencyValue(0)}</div>
           </TableRow>
           <TableRow>
             <div>Trend:</div>

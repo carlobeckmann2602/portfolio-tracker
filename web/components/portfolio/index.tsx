@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import {
-  StockHolding,
-  stringifyCurrencyValue,
-  usePortfolioData,
-} from "../../lib/backend";
+import { formatCurrencyValue } from "../../lib/util";
+import { StockHolding, usePortfolioData } from "../../lib/backend";
 import { StockDetails } from "./stock-details";
 import Search from "../search/index";
-import { FiPlus, FiX } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
@@ -120,7 +117,7 @@ const Portfolio = () => {
       <div className="flex flex-col gap-2 relative">
         <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
         <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
-          {portfolio ? stringifyCurrencyValue(portfolio.value) : <>&nbsp;</>}
+          {portfolio ? formatCurrencyValue(portfolio.value) : <>&nbsp;</>}
         </p>
         <div
           onClick={() => setSearchActive(!searchActive)}

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { formatCurrencyValue } from "../lib/util";
 import {
   Stock,
-  stringifyCurrencyValue,
   useStockHoldingAmountMut,
   usePortfolioData,
   useStockSearch,
@@ -75,9 +75,7 @@ const Search = () => {
                 {stock.name}{" "}
                 <span className="text-gray-400">({stock.symbol})</span>
               </span>
-              <span className="block">
-                {stringifyCurrencyValue(stock.price)}
-              </span>
+              <span className="block">{formatCurrencyValue(stock.price)}</span>
             </button>
           ))}
         </div>
