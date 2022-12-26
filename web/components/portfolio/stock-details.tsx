@@ -123,7 +123,9 @@ export function StockDetails({
           </TableRow>
         </div>
       </div>
-      <Button onClick={removeHolding}>Remove stock</Button>
+      <Button onClick={removeHolding} disabled={isLoading}>
+        Remove stock
+      </Button>
     </div>
   );
 }
