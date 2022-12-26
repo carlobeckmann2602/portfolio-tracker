@@ -19,7 +19,7 @@ const CounterButton = ({
   <button
     {...props}
     className={cn(
-      "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-50",
+      "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition",
       hidden ? "opacity-0" : props.disabled ? "opacity-50" : null
     )}
   />
