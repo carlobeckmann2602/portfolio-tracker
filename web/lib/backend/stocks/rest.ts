@@ -89,8 +89,7 @@ export async function fetchStock(stockId: number) {
 export async function fetchStockSearch(searchTerm: string) {
   const res = await fetch(`${BACKEND_REST_URL}/stocks?name=${searchTerm}`);
   const dtos: StockDTO[] = await res.json();
-  const filteredDtos = tempFilterStocksByName(dtos, searchTerm);
-  return filteredDtos
+  return dtos
     .filter((dto) => !!dto.histories.length)
     .map((dto) => createStockFromDTO(dto));
 }
@@ -106,16 +105,3 @@ export async function fetchStockHoldingAmountMut({
     body: JSON.stringify({ amount: Math.abs(amountOffset) }),
   });
 }
-
-/* will be removed when filter is implemented in backend */
-const tempFilterStocksByName = (stocks: StockDTO[], searchTerm: string) => {
-  const filteredStocks: StockDTO[] = [];
-  stocks.forEach((stock) => {
-    if (
-      stock.name.toLocaleLowerCase().startsWith(searchTerm.toLocaleLowerCase())
-    ) {
-      filteredStocks.push(stock);
-    }
-  });
-  return filteredStocks;
-};
