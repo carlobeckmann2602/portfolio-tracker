@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import cn from "classnames";
 import { formatCurrencyValue } from "../../lib/util";
 import { StockHolding, usePortfolioData } from "../../lib/backend";
 import { StockDetails } from "./stock-details";
@@ -7,6 +8,7 @@ import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
+import BounceLoader from "react-spinners/BounceLoader";
 
 const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 
@@ -14,14 +16,14 @@ const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 function useSelectedId(
   holdings?: StockHolding[]
 ): [number, (value: number) => void] {
-  const [id, setId] = React.useState(0);
+  const [id, setId] = useState(0);
 
-  const cappedId = React.useMemo(
+  const cappedId = useMemo(
     () => (holdings?.length ? Math.min(holdings.length - 1, id) : 0),
     [id, holdings]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id != cappedId) setId(cappedId);
   }, [id, cappedId]);
 
@@ -36,9 +38,9 @@ function useHoldingAddedEffect(
   holdings: StockHolding[] | undefined,
   setSelectedId: (id: number) => void
 ) {
-  const prevHoldingsRef = React.useRef(holdings);
+  const prevHoldingsRef = useRef(holdings);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!holdings) return;
 
     const prevHoldings = prevHoldingsRef.current;
@@ -56,7 +58,7 @@ function useHoldingAddedEffect(
 }
 
 const PortfolioContent = () => {
-  const { data: portfolio } = usePortfolioData();
+  const { data: portfolio, isLoading, isFetching } = usePortfolioData();
   const holdings = portfolio?.holdings;
 
   const [selectedId, setSelectedId] = useSelectedId(holdings);
@@ -65,7 +67,7 @@ const PortfolioContent = () => {
 
   const colors = useColorDistribution(holdings?.length || 0, STOCK_COLORS);
 
-  const chartSegments = React.useMemo<DonutChartSegment[]>(
+  const chartSegments = useMemo<DonutChartSegment[]>(
     () =>
       holdings?.length
         ? holdings.map((holding, i) => ({
@@ -79,12 +81,26 @@ const PortfolioContent = () => {
 
   return (
     <div>
-      <DonutChart
-        segments={chartSegments}
-        selectedId={selectedId}
-        onClick={setSelectedId}
-        disabled={!holdings?.length}
-      />
+      <div className="relative">
+        <div className="relative">
+          <DonutChart
+            segments={chartSegments}
+            selectedId={selectedId}
+            onClick={setSelectedId}
+            disabled={!holdings?.length}
+          />
+          <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
+            <div
+              className={cn(
+                "transition-transform duration-500",
+                isFetching && !isLoading ? "transform" : "scale-0"
+              )}
+            >
+              <BounceLoader color="#180A44" />
+            </div>
+          </div>
+        </div>
+      </div>
       <div>
         {holdings?.length ? (
           <StockDetails
@@ -96,7 +112,9 @@ const PortfolioContent = () => {
             className="text-center text-2xl font-light mx-auto mb-12"
             style={{ maxWidth: "16rem" }}
           >
-            Tap the plus button to add a new stock.
+            {isLoading
+              ? "Loading..."
+              : "Tap the plus button to add a new stock."}
           </p>
         )}
         <Button href="/settings" look={1} className="mt-4">
