@@ -1,7 +1,7 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { BackendApiProvider } from "../lib/backend";
+import { AuthProvider, BackendApiProvider } from "../lib/backend";
 import { Footer } from "../components/footer";
 
 function MyApp({ Component, pageProps }: AppProps) {
@@ -25,8 +25,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
-        <Component {...pageProps} />
-        <Footer />
+        <AuthProvider>
+          <Component {...pageProps} />
+          <Footer />
+        </AuthProvider>
       </BackendApiProvider>
       <div
         id="modal-portal"
