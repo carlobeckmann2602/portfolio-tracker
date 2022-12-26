@@ -68,5 +68,4 @@ export function AuthProvider({ children }: PropsWithChildren) {
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
 }
 
-export const useLogout = () => useAuth().logout;
 export const useUser = () => useAuth().user;

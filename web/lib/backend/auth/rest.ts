@@ -9,63 +9,7 @@ import { useCallback } from "react";
 import { getAuthToken, useAuth } from "./context";
 import { BACKEND_REST_URL } from "..";
 
-type CreateUserDTO = {
-  email: string;
-  password: string;
-  password2: string;
-};
-
-type LoginDTO = {
-  email: string;
-  password: string;
-};
-
-function register(createUserDTO: CreateUserDTO) {
-  return fetch(`${BACKEND_REST_URL}/users`, {
-    method: "POST",
-    body: JSON.stringify(createUserDTO),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-function login(loginDTO: LoginDTO) {
-  return fetch(`${BACKEND_REST_URL}/auth/login`, {
-    method: "POST",
-    body: JSON.stringify(loginDTO),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
-}
-
-function useTokenHandler() {
-  const { login } = useAuth();
-
-  return useCallback(
-    async (resp: Response) => {
-      if (!resp.ok) return;
-      const token: string = (await resp.json()).access_token;
-      login(token);
-    },
-    [login]
-  );
-}
-
-export function useRegistration() {
-  const handleToken = useTokenHandler();
-  return useMutation(register, { onSuccess: handleToken });
-}
-
-export function useLogin() {
-  const handleToken = useTokenHandler();
-  return useMutation(login, { onSuccess: handleToken });
-}
-
-export type BackendError = { statusCode: number; message: string };
+type BackendError = { statusCode: number; message: string };
 
 export async function authFetch(...[input, options]: Parameters<typeof fetch>) {
   const token = getAuthToken();
@@ -131,4 +75,69 @@ export function useAuthMutation<
       if (options.onError) options.onError(err, ...args);
     },
   });
+}
+
+type CreateUserDTO = {
+  email: string;
+  password: string;
+  password2: string;
+};
+
+type LoginDTO = {
+  email: string;
+  password: string;
+};
+
+function fetchRegister(createUserDTO: CreateUserDTO) {
+  return fetch(`${BACKEND_REST_URL}/users`, {
+    method: "POST",
+    body: JSON.stringify(createUserDTO),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+function fetchLogin(loginDTO: LoginDTO) {
+  return fetch(`${BACKEND_REST_URL}/auth/login`, {
+    method: "POST",
+    body: JSON.stringify(loginDTO),
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  });
+}
+
+async function fetchLogout() {
+  await authFetch(`${BACKEND_REST_URL}/auth/logout`);
+}
+
+function useTokenHandler() {
+  const { login } = useAuth();
+
+  return useCallback(
+    async (resp: Response) => {
+      if (!resp.ok) return;
+      const token: string = (await resp.json()).access_token;
+      login(token);
+    },
+    [login]
+  );
+}
+
+export function useRegistration() {
+  const handleToken = useTokenHandler();
+  return useMutation({ mutationFn: fetchRegister, onSuccess: handleToken });
+}
+
+export function useLogin() {
+  const handleToken = useTokenHandler();
+  return useMutation({ mutationFn: fetchLogin, onSuccess: handleToken });
+}
+
+export function useLogout() {
+  const { logout } = useAuth();
+  return useAuthMutation({ mutationFn: fetchLogout, onSuccess: logout });
 }

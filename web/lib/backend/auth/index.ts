@@ -1,7 +1,8 @@
-export { AuthProvider, useUser, useLogout } from "./context";
+export { AuthProvider, useUser } from "./context";
 export {
   useLogin,
   useRegistration,
+  useLogout,
   useAuthQuery,
   useAuthMutation,
   authFetch,
