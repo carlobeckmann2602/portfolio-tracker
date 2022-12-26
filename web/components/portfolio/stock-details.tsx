@@ -4,6 +4,7 @@ import { formatCurrencyValue } from "../../lib/util";
 import {
   StockHolding,
   usePortfolioData,
+  useStock,
   useStockHoldingAmountMut,
 } from "../../lib/backend";
 import { Button } from "../button";
@@ -74,6 +75,8 @@ export function StockDetails({
   const [tempAmount, setTempAmount] = useState(holding.amount);
   useEffect(() => setTempAmount(holding.amount), [holding]);
 
+  const { data: stock } = useStock(holding.id);
+
   const updateAmount = useCallback(
     (amountOffset: number) => () => {
       setTempAmount(tempAmount + amountOffset);
@@ -93,6 +96,8 @@ export function StockDetails({
     });
   }, [holding, mutateHoldingAmount]);
 
+  const trendElem: JSX.Element = stock ? <>{stock.trend}%</> : <>&nbsp;</>;
+
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
@@ -100,11 +105,11 @@ export function StockDetails({
           className="flex items-center gap-3 xs:gap-4 rounded-xl px-3 xs:px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
           style={{ borderColor: selectionColor }}
         >
-          <TrendIcon trend={0} />
+          <TrendIcon trend={stock?.trend} />
           <div className="flex justify-between items-center flex-1 text-sm xs:text-base">
             <div className="flex-1">
               <h3 className="text-xl xs:text-2xl">{holding.name}</h3>
-              <p className="font-light">+ 0,00 %</p>
+              <p className="font-light">{trendElem}</p>
             </div>
             <div className="flex-shrink-0">
               <p className="font-light">{formatCurrencyValue(holding.value)}</p>
@@ -114,11 +119,11 @@ export function StockDetails({
         <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
-            <div>{formatCurrencyValue(0)}</div>
+            <div>{stock ? formatCurrencyValue(stock.price) : <>&nbsp;</>}</div>
           </TableRow>
           <TableRow>
             <div>Trend:</div>
-            <div>+ 0,00 %</div>
+            <div>{trendElem}</div>
           </TableRow>
           <TableRow>
             <div>Count:</div>

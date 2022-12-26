@@ -73,20 +73,26 @@ function createPortfolioFromDTO(dto: PortfolioDataDTO): PortfolioData {
   };
 }
 
+/** Fetch the user's stock holdings from REST API. */
+export async function fetchPortfolioData() {
+  const res = await authFetch(`${BACKEND_REST_URL}/users/me/stocks`);
+  return createPortfolioFromDTO(await res.json());
+}
+
+/** Fetch the user's stock holdings from REST API. */
+export async function fetchStock(stockId: number) {
+  const res = await fetch(`${BACKEND_REST_URL}/stocks/${stockId}`);
+  return createStockFromDTO(await res.json());
+}
+
 /** Search stocks by name in REST API. */
-export async function fetchStockSearch(searchTerm: string): Promise<Stock[]> {
+export async function fetchStockSearch(searchTerm: string) {
   const res = await fetch(`${BACKEND_REST_URL}/stocks?name=${searchTerm}`);
   const dtos: StockDTO[] = await res.json();
   const filteredDtos = tempFilterStocksByName(dtos, searchTerm);
   return filteredDtos
     .filter((dto) => !!dto.histories.length)
     .map((dto) => createStockFromDTO(dto));
-}
-
-/** Fetch the user's stock holdings from REST API. */
-export async function fetchPortfolioData(): Promise<PortfolioData> {
-  const res = await authFetch(`${BACKEND_REST_URL}/users/me/stocks`);
-  return createPortfolioFromDTO(await res.json());
 }
 
 export async function fetchStockHoldingAmountMut({

@@ -1,4 +1,3 @@
-import React from "react";
 import {
   FiArrowDownRight,
   FiArrowUpRight,
@@ -11,13 +10,7 @@ export type TrendIconProps = {
   trend: number;
 };
 
-// until trend is delivered by backend
-function randomIntFromInterval(min: number, max: number) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-}
-
-const TrendArrow = (_: TrendIconProps) => {
-  const trend = randomIntFromInterval(-0.25, 0.25);
+const TrendArrow = ({ trend }: { trend: number }) => {
   const abs = Math.abs(trend);
 
   if (abs > 2) {
@@ -29,8 +22,8 @@ const TrendArrow = (_: TrendIconProps) => {
   return <FiArrowRight />;
 };
 
-export const TrendIcon = ({ trend }: TrendIconProps) => (
+export const TrendIcon = ({ trend }: { trend?: number }) => (
   <div className="w-8 h-8 p-2 border border-front text-front rounded-full flex items-center justify-center">
-    <TrendArrow trend={trend} />
+    {trend != undefined && <TrendArrow trend={trend} />}
   </div>
 );
