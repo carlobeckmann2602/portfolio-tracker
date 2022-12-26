@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import cn from "classnames";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import {
   Stock,
@@ -7,15 +8,20 @@ import {
   useStockSearch,
 } from "../../lib/backend";
 import { SearchItem } from "./search_item";
+import BounceLoader from "react-spinners/BounceLoader";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
 export const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const { data: portfolio, isLoading } = usePortfolioData();
-  const { data: foundStocks } = useStockSearch(searchTerm);
+  const { data: portfolio, isFetching: portfolioIsFetching } =
+    usePortfolioData();
+  const { data: foundStocks, isFetching: searchIsFetching } =
+    useStockSearch(searchTerm);
   const holdingAmountMut = useStockHoldingAmountMut();
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const isFetching = searchIsFetching || portfolioIsFetching;
 
   useEffect(() => {
     const input = inputRef.current!;
@@ -50,9 +56,17 @@ export const Search = () => {
   );
 
   return (
-    <div>
-      <h2 className="text-3xl font-bold font-serif  mt-8">Add stocks</h2>
-      <div className="flex my-6 rounded-md bg-front/10">
+    <div className="relative">
+      <div
+        className={cn(
+          "absolute -top-2 right-0 pointer-events-none transition duration-500 rounded-full overflow-hidden opacity-25",
+          isFetching ? "scale-100" : "scale-0"
+        )}
+      >
+        <BounceLoader color="white" size="3rem" />
+      </div>
+      <h2 className="text-3xl font-bold font-serif mt-8 mb-6">Add stocks</h2>
+      <div className="flex mt-4 mb-6 rounded-md bg-front/10">
         <input
           ref={inputRef}
           type="text"
@@ -80,32 +94,37 @@ export const Search = () => {
           </div>
         </button>
       </div>
-      <div style={{ minHeight: "8rem" }}>
-        {!searchTerm || isLoading || results.length ? (
-          results.map(({ stock, inPortfolio }, i) => (
-            <button
-              key={i}
-              className={`flex justify-between w-full mb-4 ${
-                inPortfolio && !searchTerm
-                  ? "hidden"
-                  : inPortfolio
-                  ? "opacity-25"
-                  : "rounded-md hover:bg-white/10"
-              }`}
-              onClick={
-                !inPortfolio
-                  ? () =>
-                      holdingAmountMut.mutate({
-                        stockId: stock.id,
-                        amountOffset: 1,
-                      })
-                  : undefined
-              }
-              disabled={inPortfolio}
-            >
-              <SearchItem trend={2.5} name={stock.name} price={stock.price} />
-            </button>
-          ))
+      <div className="relative" style={{ minHeight: "8rem" }}>
+        {!searchTerm || searchIsFetching || results.length ? (
+          results.map(({ stock, inPortfolio }, i) => {
+            const disabled = portfolioIsFetching || inPortfolio;
+
+            return (
+              <button
+                key={i}
+                className={cn(
+                  "flex justify-between w-full mb-4",
+                  inPortfolio && !searchTerm
+                    ? "hidden"
+                    : disabled
+                    ? "opacity-25"
+                    : "rounded-md hover:bg-white/10"
+                )}
+                onClick={
+                  !inPortfolio
+                    ? () =>
+                        holdingAmountMut.mutate({
+                          stockId: stock.id,
+                          amountOffset: 1,
+                        })
+                    : undefined
+                }
+                disabled={disabled}
+              >
+                <SearchItem trend={2.5} name={stock.name} price={stock.price} />
+              </button>
+            );
+          })
         ) : (
           <p
             className="font-light text-center mx-auto"
