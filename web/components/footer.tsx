@@ -2,7 +2,7 @@ import { CenterSection } from "./center-section";
 
 export const Footer: React.FC = () => (
   <CenterSection>
-    <div className="pt-24 pb-8 w-16 mx-auto">
+    <div className="pt-9 pb-8 w-20 mx-auto">
       <svg
         width="257"
         height="304"
