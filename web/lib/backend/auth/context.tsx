@@ -56,7 +56,6 @@ export function AuthProvider({ children }: PropsWithChildren) {
         router.push("/");
       },
       logout() {
-        if (!user) return;
         setUser(null);
         unsetAuthToken();
         router.push("/login");
