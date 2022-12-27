@@ -36,8 +36,12 @@ function useAuthErrorHandler() {
 
   return useCallback(
     (error: BackendError) => {
-      if (error.statusCode != 401) return;
-      logout();
+      if (
+        error.statusCode == 401 ||
+        (error.statusCode == 404 && error.message == "User not found")
+      ) {
+        logout();
+      }
     },
     [logout]
   );
