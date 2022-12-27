@@ -96,7 +96,14 @@ export function StockDetails({
     });
   }, [holding, mutateHoldingAmount]);
 
-  const trendElem: JSX.Element = stock ? <>{stock.trend}%</> : <>&nbsp;</>;
+  const trendElem: JSX.Element = stock ? (
+    <>
+      {stock.trend < 0 ? "-" : "+"}
+      {Math.abs(stock.trend).toFixed(2).replace(".", ",")}%
+    </>
+  ) : (
+    <>&nbsp;</>
+  );
 
   return (
     <div className="flex flex-col gap-12">
