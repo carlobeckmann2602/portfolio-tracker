@@ -10,6 +10,7 @@ import { TextArea } from "../components/form/textarea";
 import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
 import { useRegistration } from "../lib/backend";
+import { FiMail, FiLock } from "react-icons/fi";
 
 const Register: NextPage = () => {
   const registration = useRegistration();
@@ -37,17 +38,20 @@ const Register: NextPage = () => {
             });
           }}
         >
-          <Input type="email" name="email" placeholder="Email" />
-          <Input type="password" name="password" placeholder="Password" />
+          <div className="mb-12">
+            <Input type="email" name="email" placeholder="Email" icon={<FiMail />} />
+          </div>
+          <Input type="password" name="password" placeholder="Password" icon={<FiLock />} />
           <Input
             type="password"
             name="password2"
             placeholder="Repeat Password"
+            icon={<FiLock />}
           />
-          <Button type="submit" look={3}>
+          <Button type="submit" look={3} className="mt-12">
             Register
           </Button>
-          <Link href="/login">Already have an account? Log in</Link>
+          <p className="text-lg font-light mt-5 text-center">Already have an account? <Link href="/login" className="text-lg text-highlight1 font-light">Login</Link></p>
         </form>
       </CenterSection>
     </>
