@@ -1,54 +1,9 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
-import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
+import { PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { StockOnUserDto } from 'src/user/dto/stock-on-user.dto.';
-import { UserService } from 'src/user/user.service';
-
 @Injectable()
 export class StockService {
-  constructor(private prisma: PrismaService, private userService: UserService) { }
-
-  async addStockToUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
-    try {
-      //adding stock to transactions
-      const stock = await this.getStockWithHistory(sid);
-
-      await this.prisma.transactions.create({
-        data: {
-          userId: uid,
-          stockId: sid,
-          amount: stockTOnUserDto.amount,
-          price: stock.histories[0].high,
-          time: stock.histories[0].time,
-          buy: true,
-        },
-      });
-
-      //update the users portfolio value
-      const user = await this.userService.findOne(uid);
-      const new_portfoliovalue = user.portfoliovalue + stockTOnUserDto.amount * stock.histories[0].high;
-      await this.prisma.user.update({
-        where: {
-          id: uid,
-        },
-        data: {
-          portfoliovalue: new_portfoliovalue,
-        },
-      });
-      return `User with id #${uid} bought stock with sid ${sid}. Price:${stock.histories[0].high}, Amount: ${stockTOnUserDto.amount}`;
-    } catch (error) {
-      //caching prismas notFound error P2025/P2003
-      if (error instanceof PrismaClientKnownRequestError) {
-        if (error.code === 'P2025' || error.code === 'P2003') {
-          throw new NotFoundException('Not found');
-        }
-      }
-      if (error instanceof PrismaClientValidationError) {
-        throw new BadRequestException('Invalid parameter');
-      }
-      throw error;
-    }
-  }
+  constructor(private prisma: PrismaService) { }
 
   async getStockWithHistory(sid: number, lastNumberOfDays: number = 1) {
     try {
@@ -82,7 +37,7 @@ export class StockService {
     }
   }
 
-  async removeStockFromUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto) {
+  /* async removeStockFromUser(uid: number, sid: number, stockTOnUserDto: StockOnUserDto, pricePerAmount: number, date: Date) {
     try {
       const stock = await this.getStockWithHistory(sid);
       const amountOfStock = await this.countStockAmount(uid, sid);
@@ -123,7 +78,7 @@ export class StockService {
       }
       throw error;
     }
-  }
+  } */
 
   async searchStocks(stockName: string) {
     //searchs stock with name or symbol

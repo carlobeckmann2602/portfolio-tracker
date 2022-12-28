@@ -1,6 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
-import { Prisma, PrismaClient } from '@prisma/client';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { ApiFunctions } from './ApiFunctions';
 
@@ -8,7 +7,7 @@ import { ApiFunctions } from './ApiFunctions';
 export class StockAPITasksService {
   private readonly logger = new Logger(StockAPITasksService.name);
 
-  constructor(private prisma: PrismaService) {}
+  constructor(private prisma: PrismaService) { }
 
   // Hardcoded stocks (i.e. their symbols) which are used to fill the DB
 
@@ -344,7 +343,7 @@ export class StockAPITasksService {
     if (historicData != null) {
       for (const currentEntry of historicData) {
         if (currentEntry.time < new Date(dateKey)) {
-          trend = (+stockData['1. open'] / currentEntry.open - 1) * 100;
+          trend = (+stockData['4. close'] / currentEntry.close - 1) * 100;
           // Round result to two decimal places
           trend = +trend.toFixed(2);
           break;

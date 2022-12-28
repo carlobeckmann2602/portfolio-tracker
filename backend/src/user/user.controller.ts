@@ -3,8 +3,8 @@ import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagg
 import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
 import { JwtGuard } from 'src/auth/guard';
-import { PortFolioService } from 'src/stock/portfolio.service';
-import { StockService } from 'src/stock/stock.service';
+import { PortfolioService } from 'src/stock/portfolio.service';
+import { TransactionService } from 'src/stock/transaction.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { StockOnUserDto } from './dto/stock-on-user.dto.';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -162,9 +162,9 @@ export class UserController {
   mockMode = false;
   constructor(
     private readonly userService: UserService,
-    private readonly stockService: StockService,
     private readonly authService: AuthService,
-    private readonly portfolioService: PortFolioService
+    private readonly transactionService: TransactionService,
+    private readonly portfolioService: PortfolioService,
   ) { }
 
 
@@ -234,7 +234,7 @@ export class UserController {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.stockService.removeStockFromUser(req.user['userId'], +sid, stockOnUserDto);
+    return this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, false, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
   }
 
   @UseGuards(JwtGuard)
@@ -247,6 +247,6 @@ export class UserController {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.stockService.addStockToUser(req.user['userId'], +sid, stockOnUserDto);
+    return this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, true, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
   }
 }
