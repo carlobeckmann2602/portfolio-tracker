@@ -46,7 +46,7 @@ const cleanupFloat = (num: number) => Math.round((num + 0.001) * 100) / 100;
 function createStockFromDTO({ histories, ...core }: StockDTO): Stock {
   return {
     ...core,
-    price: histories[0].high,
+    price: histories[0].close,
     trend: histories[0].trend,
   };
 }
