@@ -113,7 +113,7 @@ export function StockDetails({
           style={{ borderColor: selectionColor }}
         >
           <TrendIcon trend={stock?.trend} />
-          <div className="flex justify-between items-center flex-1 text-sm xs:text-base">
+          <div className="flex justify-between items-center flex-1 gap-4 text-sm xs:text-base">
             <div className="flex-1">
               <h3 className="text-xl xs:text-2xl">{holding.name}</h3>
               <p className="font-light">{trendElem}</p>

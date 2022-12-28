@@ -9,15 +9,13 @@ export type SearchItemProps = {
 };
 
 export const SearchItem = ({ trend, name, price }: SearchItemProps) => (
-  <div className="w-full flex items-center justify-between px-4 py-2 bg-front/10 rounded-md">
-    <div className="flex items-center">
-      <TrendIcon trend={trend} />
-      <div className="ml-4 text-left">
-        <p>{name}</p>
-        <p className="font-light">
-          {trend > 0 ? "+" : "-"} {trend}%
-        </p>
-      </div>
+  <div className="w-full px-4 py-2 bg-front/10 rounded-md flex items-center gap-4">
+    <TrendIcon trend={trend} />
+    <div className="text-left flex-1">
+      <p>{name}</p>
+      <p className="font-light">
+        {trend > 0 ? "+" : "-"} {trend}%
+      </p>
     </div>
     <div className="font-light">{formatCurrencyValue(price)}</div>
   </div>
