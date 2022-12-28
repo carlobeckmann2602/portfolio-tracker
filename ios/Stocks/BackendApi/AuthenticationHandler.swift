@@ -40,7 +40,11 @@ class AuthenticationHandler: ObservableObject {
   private var tokenStorage = TokenStorage()
 
   init() {
-    self.isLoggedIn = self.tokenStorage.loadToken() != nil
+    let loadedToken = self.tokenStorage.loadToken()
+    self.isLoggedIn = loadedToken != nil
+    if self.isLoggedIn {
+      jwtToken = loadedToken
+    }
   }
 
   func register(email: String, password: String, password2: String) {

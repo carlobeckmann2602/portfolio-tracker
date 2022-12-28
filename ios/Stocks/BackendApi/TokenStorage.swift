@@ -38,7 +38,7 @@ class TokenStorage {
     keychain["token"] = token.decodedToken.string
     print("saved token")
   }
-    
+
   func deleteToken() {
     do {
       try keychain.remove("token")
