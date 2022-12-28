@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
 import cn from "classnames";
 import { formatCurrencyValue } from "../../lib/util";
 import { StockHolding, usePortfolioData } from "../../lib/backend";
@@ -9,6 +9,7 @@ import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
 import BounceLoader from "react-spinners/BounceLoader";
+import { CardStack } from "../card-stack";
 
 const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 
@@ -125,6 +126,12 @@ const PortfolioContent = () => {
   );
 };
 
+const Slide = ({ children }: PropsWithChildren) => (
+  <div className="relative z-0 rounded-t-3xl p-6 bg-falloff-soft">
+    <div className="xs:px-4 sm:px-6">{children}</div>
+  </div>
+);
+
 const Portfolio = () => {
   const { data: portfolio } = usePortfolioData();
   const [searchActive, setSearchActive] = useState(false);
@@ -148,10 +155,20 @@ const Portfolio = () => {
           />
         </div>
       </div>
-      <div className="relative -mx-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
-        <div className="xs:px-4 sm:px-6">
-          {searchActive ? <Search /> : <PortfolioContent />}
-        </div>
+      <div className="-mx-6">
+        <CardStack
+          showFront={searchActive}
+          back={
+            <Slide>
+              <PortfolioContent />
+            </Slide>
+          }
+          front={
+            <Slide>
+              <Search />
+            </Slide>
+          }
+        />
       </div>
     </div>
   );

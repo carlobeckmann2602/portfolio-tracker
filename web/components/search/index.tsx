@@ -26,8 +26,6 @@ export const Search = () => {
   useEffect(() => {
     const input = inputRef.current!;
 
-    input.focus();
-
     let dampTimeout: NodeJS.Timeout | null = null;
 
     const handleChange = () => {
