@@ -7,6 +7,7 @@ import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
 import { useRegistration } from "../lib/backend";
 import { FiMail, FiLock } from "react-icons/fi";
+import { LoggedInRedirection } from "../components/logged-in-redirection";
 
 const Register: NextPage = () => {
   const registration = useRegistration();
@@ -14,6 +15,7 @@ const Register: NextPage = () => {
   return (
     <>
       <Helmet title="Registration" />
+      <LoggedInRedirection />
       <PageHeading description="Please create an Account to join GoFundYourself.">
         Welcome!
       </PageHeading>

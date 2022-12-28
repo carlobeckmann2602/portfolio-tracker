@@ -7,6 +7,7 @@ import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
 import { useLogin } from "../lib/backend";
 import { FiMail, FiLock } from "react-icons/fi";
+import { LoggedInRedirection } from "../components/logged-in-redirection";
 
 const Login: NextPage = () => {
   const login = useLogin();
@@ -14,6 +15,7 @@ const Login: NextPage = () => {
   return (
     <>
       <Helmet title="Log-In" />
+      <LoggedInRedirection />
       <PageHeading description="Please log in to your GoFundYourself Account.">
         Welcome back!
       </PageHeading>
