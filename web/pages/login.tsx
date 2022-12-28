@@ -32,15 +32,30 @@ const Login: NextPage = () => {
             });
           }}
         >
-          <div className="mt-[102px]">
-            <Input type="email" name="email" placeholder="Email" icon={<FiMail />} />
-            <Input type="password" name="password" placeholder="Password" icon={<FiLock />} />
+          <div className="mt-20 flex flex-col gap-5">
+            <Input
+              type="email"
+              name="email"
+              placeholder="Email"
+              icon={<FiMail />}
+            />
+            <Input
+              type="password"
+              name="password"
+              placeholder="Password"
+              icon={<FiLock />}
+            />
           </div>
           <Button type="submit" look={3} className="mt-12">
             Log-In
           </Button>
         </form>
-        <p className="text-lg font-light mt-5 text-center">Are you new here? <Link href="/register" className="text-lg text-highlight1 font-thin">Register</Link></p>
+        <p className="text-lg font-light mt-5 text-center">
+          Are you new here?{" "}
+          <Link href="/register" className="text-lg text-highlight1 font-thin">
+            Register
+          </Link>
+        </p>
       </CenterSection>
     </>
   );
