@@ -3,6 +3,7 @@ import type { AppProps } from "next/app";
 import Head from "next/head";
 import { BackendApiProvider } from "../lib/backend";
 import { Footer } from "../components/footer";
+import { LogoutButton } from "../components/logout-button";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -25,6 +26,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
+        <LogoutButton />
         <Component {...pageProps} />
         <Footer />
       </BackendApiProvider>
