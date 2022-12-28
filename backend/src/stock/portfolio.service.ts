@@ -72,8 +72,8 @@ export class PortfolioService {
 
             const stock = await this.prisma.stock.findFirst({ where: { id: Number(stockId) } })
 
-            const stockHistory = (await this.stockService.getStockWithHistory(Number(stockId))).histories[0];
-            const currentPrice = stockHistory.close
+            const stockHistory = (await this.stockService.getStockWithHistory(Number(stockId), 30)).histories;
+            const currentPrice = stockHistory[0].close
 
             const gainAbsolute = agregatedTransactionData.moneyRecievedFromSales - agregatedTransactionData.moneyInvestedInStock
                 + (agregatedTransactionData.amountAfterSplit * currentPrice);
@@ -84,9 +84,10 @@ export class PortfolioService {
                 ...stock,
                 amountAfterSplit: agregatedTransactionData.amountAfterSplit,
                 price: currentPrice,
-                trend: stockHistory.trend,
+                trend: stockHistory[0].trend,
                 gainAbsolute: gainAbsolute,
-                gainPercentage: gainPercentageRounded
+                gainPercentage: gainPercentageRounded,
+                histories: stockHistory
             })
 
             currentPortfolioValue += agregatedTransactionData.amountAfterSplit * currentPrice;

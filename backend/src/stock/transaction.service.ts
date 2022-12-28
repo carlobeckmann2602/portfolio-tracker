@@ -45,19 +45,20 @@ export class TransactionService {
         }
 
         const stock = await this.prisma.stock.findFirst({ where: { id: sid } });
-        const stockWithHistory = await this.stockService.getStockWithHistory(sid);
+        const stockWithHistory = (await this.stockService.getStockWithHistory(sid, 30)).histories;
         const amountAfterSplit = buy ? aggregatedStockData.amountAfterSplit + amount : aggregatedStockData.amountAfterSplit - amount;
         const gainAbsolute = (aggregatedStockData.moneyRecievedFromSales - aggregatedStockData.moneyInvestedInStock) / aggregatedStockData.moneyInvestedInStock +
-            stockWithHistory.histories[0].close * amountAfterSplit
+            stockWithHistory[0].close * amountAfterSplit
         const gainAbsoluteRounded = Math.round(gainAbsolute * 100) / 100
         const gainPercentageRounded = Math.round(gainAbsolute - aggregatedStockData.moneyInvestedInStock / aggregatedStockData.moneyInvestedInStock * 100) / 100
         return {
             ...stock,
             amountAfterSplit: buy ? aggregatedStockData.amountAfterSplit + amount : aggregatedStockData.amountAfterSplit - amount,
-            price: stockWithHistory.histories[0].close,
-            trend: stockWithHistory.histories[0].trend,
+            price: stockWithHistory[0].close,
+            trend: stockWithHistory[0].trend,
             gainAbsolute: gainAbsoluteRounded,
-            gainPercentage: gainPercentageRounded
+            gainPercentage: gainPercentageRounded,
+            histories: stockWithHistory
         }
     }
 }
