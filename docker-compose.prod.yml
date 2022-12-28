@@ -6,6 +6,7 @@ services:
     ports:
       - "80:80"
       - "443:443"
+      - "5555:5555"
       - "443:443/udp"
     volumes:
       - ./Caddyfile:/etc/caddy/Caddyfile
@@ -26,7 +27,7 @@ services:
     restart: unless-stopped
     environment:
       DATABASE_URL: postgresql://postgres:123@db:5432/postgres?schema=public
-    depends_on: [db]
+    depends_on: [ db ]
 
   pgadmin:
     image: dpage/pgadmin4
@@ -38,13 +39,13 @@ services:
       PGADMIN_DEFAULT_PASSWORD: GhtVjG4_0w_xQo+fHvo^47
     volumes:
       - pgadmin-data:/var/lib/pgadmin
-    depends_on: [db]
+    depends_on: [ db ]
 
   web:
     image: mobsys-frontend
     build: ./web
     restart: unless-stopped
-    depends_on: [backend]
+    depends_on: [ backend ]
 
 volumes:
   pgadmin-data:
