@@ -60,13 +60,13 @@ class AuthenticationHandler: ObservableObject {
           return
         }
         if r.statusCode == 403 {
-          let reponseError = self.readErrorFromReponse(reponse: r)
+          let reponseError = self.readErrorFromReponse(response: r)
           print("Error: \(reponseError!.message)")
           return
         }
         if r.statusCode == 201 {
           do {
-            try self.getJwtTokenFromResponse(text: r.text!)
+            try self.getJwtTokenFromResponse(r)
           } catch {
             print("Failed to decode JWT: \(error)")
             return
@@ -88,13 +88,13 @@ class AuthenticationHandler: ObservableObject {
           return
         }
         if r.statusCode == 403 {
-          let reponseError = self.readErrorFromReponse(reponse: r)
+          let reponseError = self.readErrorFromReponse(response: r)
           print("Error: \(reponseError!.message)")
           return
         }
         if r.statusCode == 201 {
           do {
-            try self.getJwtTokenFromResponse(text: r.text!)
+            try self.getJwtTokenFromResponse(r)
           } catch {
             print("Failed to decode JWT: \(error)")
             return
@@ -113,20 +113,17 @@ class AuthenticationHandler: ObservableObject {
     ]
   }
 
-  private func readErrorFromReponse(reponse: HTTPResult) -> ReponseError? {
-    let decoder = JSONDecoder()
+  private func readErrorFromReponse(response: HTTPResult) -> ReponseError? {
     do {
-      return try decoder.decode(ReponseError.self, from: reponse.text!.data(using: .utf8)!)
+      return try response.getEntity(ReponseError.self)
     } catch {
       print("Failed load error message: \(error)")
       return nil
     }
   }
 
-  private func getJwtTokenFromResponse(text: String) throws {
-    let decoder = JSONDecoder()
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
-    let authReponse = try decoder.decode(AuthResponse.self, from: text.data(using: .utf8)!)
+  private func getJwtTokenFromResponse(_ r: HTTPResult) throws {
+    let authReponse = try r.getEntity(AuthResponse.self, keyDecodingStrategy: .convertFromSnakeCase)
     let jwt = try decode(jwt: authReponse.accessToken)
     print("Loaded JWT: ", jwt)
     self.jwtToken = JwtToken(decodedToken: jwt)

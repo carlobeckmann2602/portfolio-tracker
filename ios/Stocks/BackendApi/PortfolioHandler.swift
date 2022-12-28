@@ -40,15 +40,13 @@ class NetworkAdapter {
           return
         }
         do {
-          let decoder = JSONDecoder()
-          let portfolioDto = try decoder.decode(
-            PortfolioDto.self, from: r.text!.data(using: .utf8)!)  // TODO create extension function
+          let portfolioDto = try r.getEntity(PortfolioDto.self)
 
           let portfolioStocks =
             try portfolioDto.stocksOnUser.map { stockOnUserDto in
               let stock = try self.loadStock(stockId: stockOnUserDto.id)
               return PortfolioEntry(stock: stock, amount: stockOnUserDto.totalAmount)
-            }
+            }  // TODO refactor into function to load portfolio entries
 
           let portfolio = Portfolio(stocks: portfolioStocks)
 
@@ -61,9 +59,8 @@ class NetworkAdapter {
   }
 
   private func loadStock(stockId: Int) throws -> Stock {
-    let decoder = JSONDecoder()
     let url = "\(ApiUtils.BASE_URL)/stocks/\(stockId)"
-    let r = JustOf<HTTP>().get(url, headers: self.authenticationHandler.getHeaders())
-    return try decoder.decode(Stock.self, from: r.text!.data(using: .utf8)!)
+    let response = JustOf<HTTP>().get(url, headers: self.authenticationHandler.getHeaders())
+    return try response.getEntity(Stock.self)
   }
 }
