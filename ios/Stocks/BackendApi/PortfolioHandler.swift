@@ -42,11 +42,7 @@ class NetworkAdapter {
         do {
           let portfolioDto = try r.getEntity(PortfolioDto.self)
 
-          let portfolioStocks =
-            try portfolioDto.stocksOnUser.map { stockOnUserDto in
-              let stock = try self.loadStock(stockId: stockOnUserDto.id)
-              return PortfolioEntry(stock: stock, amount: stockOnUserDto.totalAmount)
-            }  // TODO refactor into function to load portfolio entries
+          let portfolioStocks = try self.loadPortfolioEntries(portfolioDto)
 
           let portfolio = Portfolio(stocks: portfolioStocks)
 
@@ -56,6 +52,13 @@ class NetworkAdapter {
         }
       }
     )
+  }
+
+  private func loadPortfolioEntries(_ portfolioDto: PortfolioDto) throws -> [PortfolioEntry] {
+    return try portfolioDto.stocksOnUser.map { stockOnUserDto in
+      let stock = try self.loadStock(stockId: stockOnUserDto.id)
+      return PortfolioEntry(stock: stock, amount: stockOnUserDto.totalAmount)
+    }
   }
 
   private func loadStock(stockId: Int) throws -> Stock {
