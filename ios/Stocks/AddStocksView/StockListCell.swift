@@ -21,7 +21,7 @@ struct StockListCell: View {
           .font(.system(size: 12))
       }
       Spacer()
-      Text(String(format: "%.2f€", stock.value))
+      Text(String(format: "%.2f€", stock.getValue()))
     }
 
   }

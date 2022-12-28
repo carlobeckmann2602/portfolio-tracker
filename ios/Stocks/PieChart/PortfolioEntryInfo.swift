@@ -42,7 +42,7 @@ struct PortfolioEntryInfo: View {
         Text("Current price:")
           .roboto(size: 25)
         Spacer()
-        Text(String(format: "%.2f€", portfolioEntry.stock.value))
+        Text(String(format: "%.2f€", portfolioEntry.stock.getValue()))
           .roboto(size: 25)
       }
       HStack {

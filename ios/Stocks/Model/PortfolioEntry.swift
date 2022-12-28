@@ -13,7 +13,7 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
   var amount: Int
 
   func calculateStockValue() -> Double {
-    return (Double)(stock.value * Float(amount))
+    return (Double)(stock.getValue() * Float(amount))
   }
 
   func get_amount() -> Int {

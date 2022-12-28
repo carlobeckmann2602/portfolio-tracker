@@ -40,6 +40,6 @@ struct AddToPortfolioView: View {
     return Int(input) ?? 0
   }
   func amountSpend() -> Int {
-    return Int(stock.value) * (Int(input) ?? 0)
+    return Int(stock.getValue()) * (Int(input) ?? 0)
   }
 }

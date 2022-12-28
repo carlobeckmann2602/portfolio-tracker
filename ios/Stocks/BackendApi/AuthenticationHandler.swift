@@ -71,7 +71,6 @@ class AuthenticationHandler: ObservableObject {
             print("Failed to decode JWT: \(error)")
             return
           }
-          NetworkAdapter(authenticationHandler: self).loadUserPortfolio()
         }
         print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
@@ -100,7 +99,6 @@ class AuthenticationHandler: ObservableObject {
             print("Failed to decode JWT: \(error)")
             return
           }
-          NetworkAdapter(authenticationHandler: self).loadUserPortfolio()
         }
         print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })

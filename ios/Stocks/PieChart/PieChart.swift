@@ -56,7 +56,7 @@ struct PieChart: View {
                 isTouched: sliceIsTouched(index: i, inPie: geometry.frame(in: .local)),
                 accentColor: accentColors[i % accentColors.count], innerColor: innerColor,
                 separatorColor: separatorColor,
-                label: stock.stock.name.prefix(4).uppercased()
+                label: stock.stock.symbol.uppercased()
               )
             }
           }

@@ -60,14 +60,14 @@ struct PortfolioLoadedView: View {
 }
 
 struct PortfolioView: View {
-  var portfolioLoader = PortfolioLoader()
+  var networkAdapter: NetworkAdapter
 
   var body: some View {
     NavigationView {
       ZStack {
         AppColors.BACKGROUND.ignoresSafeArea()
         AsyncContentView(
-          loadable: portfolioLoader,
+          loadable: PortfolioLoader(networkAdapter: networkAdapter),
           loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
         ) { portfolio in
           PortfolioLoadedView(portfolio: portfolio)
@@ -77,10 +77,10 @@ struct PortfolioView: View {
     }
   }
 }
-
+/*
 struct PortfolioView_Previews: PreviewProvider {
   static var previews: some View {
     PortfolioView()
       .environmentObject(ModelData())
   }
-}
+}*/
