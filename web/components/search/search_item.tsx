@@ -1,5 +1,5 @@
 import React from "react";
-import { stringifyCurrencyValue } from "../../lib/backend";
+import { formatCurrencyValue } from "../../lib/util";
 import { TrendIcon } from "../stock/trend_icon";
 
 export type SearchItemProps = {
@@ -19,6 +19,6 @@ export const SearchItem = ({ trend, name, price }: SearchItemProps) => (
         </p>
       </div>
     </div>
-    <div className="font-light">{stringifyCurrencyValue(price)}</div>
+    <div className="font-light">{formatCurrencyValue(price)}</div>
   </div>
 );
