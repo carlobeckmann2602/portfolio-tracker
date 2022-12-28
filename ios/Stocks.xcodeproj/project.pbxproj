@@ -10,6 +10,8 @@
 		3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */; };
 		3D334D1429290DF000060649 /* StockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D1329290DF000060649 /* StockListCell.swift */; };
 		3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D15292915C100060649 /* AddToPortfolioView.swift */; };
+		3D4F5B5D295C647C00F4ECF0 /* TokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4F5B5C295C647C00F4ECF0 /* TokenStorage.swift */; };
+		3D4F5B60295C651100F4ECF0 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = 3D4F5B5F295C651100F4ECF0 /* KeychainAccess */; };
 		3D67B8F929262EF300DB3C8F /* Helper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F329262EF300DB3C8F /* Helper.swift */; };
 		3D67B8FC29262EF300DB3C8F /* PieChartSlice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */; };
 		3D67B8FD29262EF300DB3C8F /* PieChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D67B8F729262EF300DB3C8F /* PieChart.swift */; };
@@ -86,6 +88,7 @@
 		3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		3D334D1329290DF000060649 /* StockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListCell.swift; sourceTree = "<group>"; };
 		3D334D15292915C100060649 /* AddToPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPortfolioView.swift; sourceTree = "<group>"; };
+		3D4F5B5C295C647C00F4ECF0 /* TokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TokenStorage.swift; sourceTree = "<group>"; };
 		3D67B8F329262EF300DB3C8F /* Helper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Helper.swift; sourceTree = "<group>"; };
 		3D67B8F629262EF300DB3C8F /* PieChartSlice.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChartSlice.swift; sourceTree = "<group>"; };
 		3D67B8F729262EF300DB3C8F /* PieChart.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PieChart.swift; sourceTree = "<group>"; };
@@ -150,6 +153,7 @@
 			files = (
 				3D67E52F2943C896009F877D /* JWTDecode in Frameworks */,
 				3D67E5272943C441009F877D /* Just in Frameworks */,
+				3D4F5B60295C651100F4ECF0 /* KeychainAccess in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -357,6 +361,7 @@
 				3D67E5292943C67E009F877D /* PortfolioHandler.swift */,
 				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
 				3DE6A4CC2944B62F00F9944A /* ApiUtils.swift */,
+				3D4F5B5C295C647C00F4ECF0 /* TokenStorage.swift */,
 			);
 			path = BackendApi;
 			sourceTree = "<group>";
@@ -397,6 +402,7 @@
 			packageProductDependencies = (
 				3D67E5262943C441009F877D /* Just */,
 				3D67E52E2943C896009F877D /* JWTDecode */,
+				3D4F5B5F295C651100F4ECF0 /* KeychainAccess */,
 			);
 			productName = Stocks;
 			productReference = 3DA98E1829098A260091F88F /* Stocks.app */;
@@ -473,6 +479,7 @@
 			packageReferences = (
 				3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */,
 				3D67E52D2943C896009F877D /* XCRemoteSwiftPackageReference "JWTDecode.swift" */,
+				3D4F5B5E295C651100F4ECF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
 			);
 			productRefGroup = 3DA98E1929098A260091F88F /* Products */;
 			projectDirPath = "";
@@ -557,6 +564,7 @@
 				3D906FE4293B809F00E9AE5F /* AppColors.swift in Sources */,
 				3DA98E47290992670091F88F /* AddStocksView.swift in Sources */,
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,
+				3D4F5B5D295C647C00F4ECF0 /* TokenStorage.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
 				3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */,
 				3D67E52A2943C67E009F877D /* PortfolioHandler.swift in Sources */,
@@ -893,6 +901,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3D4F5B5E295C651100F4ECF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dduan/Just.git";
@@ -912,6 +928,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3D4F5B5F295C651100F4ECF0 /* KeychainAccess */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3D4F5B5E295C651100F4ECF0 /* XCRemoteSwiftPackageReference "KeychainAccess" */;
+			productName = KeychainAccess;
+		};
 		3D67E5262943C441009F877D /* Just */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3D67E5252943C441009F877D /* XCRemoteSwiftPackageReference "Just" */;

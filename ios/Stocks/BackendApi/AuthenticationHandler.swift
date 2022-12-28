@@ -37,6 +37,11 @@ class AuthenticationHandler: ObservableObject {
   @Published var isLoggedIn: Bool = false
 
   private var jwtToken: JwtToken? = nil
+  private var tokenStorage = TokenStorage()
+
+  init() {
+    self.isLoggedIn = self.tokenStorage.loadToken() != nil
+  }
 
   func register(email: String, password: String, password2: String) {
     Just.post(
@@ -124,5 +129,6 @@ class AuthenticationHandler: ObservableObject {
     print("Loaded JWT: ", jwt)
     self.jwtToken = JwtToken(decodedToken: jwt)
     self.isLoggedIn = true
+    self.tokenStorage.saveToken(token: self.jwtToken!)
   }
 }
