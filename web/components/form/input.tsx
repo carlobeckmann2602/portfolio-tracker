@@ -1,31 +1,47 @@
-import React from "react";
-import { InputLabel } from "./input_label";
+import { ReactNode, RefObject, useState } from "react";
+import cn from "classnames";
 
 export type InputProps = {
   type?: string;
   name: string;
-  label?: string;
   placeholder?: string;
-  innerRef?: React.RefObject<HTMLInputElement>;
+  innerRef?: RefObject<HTMLInputElement>;
+  icon?: ReactNode;
 };
 
 export const Input = ({
   type = "text",
   name,
-  label,
-  innerRef,
   placeholder,
+  icon,
+  innerRef,
 }: InputProps) => {
-  const labelElement = label ? <InputLabel>{label}</InputLabel> : null;
+  const [isFocused, setIsFocused] = useState(false);
+  const [hasContent, setHasContent] = useState(false);
+
   return (
-    <div className="relative text-base form-group my-2">
+    <div className="relative text-base form-group">
       <label className="flex flex-col">
-        {labelElement}
+        {icon && (
+          <div
+            className={cn(
+              "h-5 w-5 absolute box-border top-1/3 ml-5 pointer-events-none transition",
+              !isFocused && !hasContent && "opacity-60"
+            )}
+          >
+            {icon}
+          </div>
+        )}
         <input
           type={type}
           name={name}
           placeholder={placeholder}
-          className="border outline-none border-solid border-highlight1/50 focus:border-highlight1 p-1 rounded-sm bg-transparent"
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          onInput={(evt) =>
+            setHasContent(!!(evt.target as HTMLInputElement).value)
+          }
+          className="border border-transparent outline-none border-solid focus:border-highlight1 p-3 pl-14 rounded-[10px] bg-front/10 font-light text-lg"
           ref={innerRef}
         />
       </label>

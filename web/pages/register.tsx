@@ -2,14 +2,11 @@ import type { NextPage } from "next";
 import Link from "next/link";
 import { Button } from "../components/button";
 import { CenterSection } from "../components/center-section";
-import { Checkbox } from "../components/form/checkbox";
 import { Input } from "../components/form/input";
-import { RadioSet } from "../components/form/radioset";
-import { Select } from "../components/form/select";
-import { TextArea } from "../components/form/textarea";
 import { Helmet } from "../components/helmet";
 import { PageHeading } from "../components/page-heading";
 import { useRegistration } from "../lib/backend";
+import { FiMail, FiLock } from "react-icons/fi";
 
 const Register: NextPage = () => {
   const registration = useRegistration();
@@ -37,17 +34,37 @@ const Register: NextPage = () => {
             });
           }}
         >
-          <Input type="email" name="email" placeholder="Email" />
-          <Input type="password" name="password" placeholder="Password" />
-          <Input
-            type="password"
-            name="password2"
-            placeholder="Repeat Password"
-          />
-          <Button type="submit" look={3}>
-            Register
-          </Button>
-          <Link href="/login">Already have an account? Log in</Link>
+          <div className="flex flex-col gap-12">
+            <Input
+              type="email"
+              name="email"
+              placeholder="Email"
+              icon={<FiMail />}
+            />
+            <div className="flex flex-col gap-5">
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                icon={<FiLock />}
+              />
+              <Input
+                type="password"
+                name="password2"
+                placeholder="Repeat Password"
+                icon={<FiLock />}
+              />
+            </div>
+            <Button type="submit" look={3}>
+              Register
+            </Button>
+          </div>
+          <p className="text-lg font-light mt-5 text-center">
+            Already have an account?{" "}
+            <Link href="/login" className="text-lg text-highlight1 font-light">
+              Login
+            </Link>
+          </p>
         </form>
       </CenterSection>
     </>
