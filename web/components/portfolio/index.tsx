@@ -141,7 +141,7 @@ const Portfolio = () => {
       <div className="flex flex-col gap-2 relative">
         <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
         <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
-          {portfolio ? formatCurrencyValue(portfolio.value) : <>&nbsp;</>}
+          {formatCurrencyValue(portfolio?.value || 0)}
         </p>
         <div
           onClick={() => setSearchActive(!searchActive)}
