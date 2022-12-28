@@ -59,15 +59,15 @@ export class Splitservice {
                 const stock = await this.stockService.getStockWithHistory(splitAdjustedTransaction.stockId)
                 console.log(splitAdjustedTransactions, userId, stock)
 
-                const gainAbsolute = (stock.histories[0].open - splitAdjustedTransaction.priceAfterSplit) * splitAdjustedTransaction.amountAfterSplit
-                const gainPercentage = (stock.histories[0].open - splitAdjustedTransaction.priceAfterSplit) / splitAdjustedTransaction.priceAfterSplit * 100
+                const gainAbsolute = (stock.histories[0].close - splitAdjustedTransaction.priceAfterSplit) * splitAdjustedTransaction.amountAfterSplit
+                const gainPercentage = (stock.histories[0].close - splitAdjustedTransaction.priceAfterSplit) / splitAdjustedTransaction.priceAfterSplit * 100
                 const gainPercentageRounded = Math.round(gainPercentage * 100) / 100
                 const gainAndSplitadjustedTransaction: TransactionGainAndSplitAdjusted = {
                     ...splitAdjustedTransaction,
                     gainAbsolute: gainAbsolute,
                     gainPercentage: gainPercentageRounded
                 }
-                console.log(stock.histories[0].open, splitAdjustedTransaction)
+                console.log(stock.histories[0].close, splitAdjustedTransaction)
                 return gainAndSplitadjustedTransaction;
             })
 
