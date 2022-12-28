@@ -10,7 +10,7 @@ export const LogoutButton = () => {
   return (
     <div
       className={cn(
-        "pointer-events-none fixed top-4 inset-x-6 flex justify-end text-sm font-light transition duration-500",
+        "pointer-events-none absolute top-4 inset-x-6 flex justify-end text-sm font-light transition duration-500",
         disabled ? "opacity-0" : "opacity-75"
       )}
     >
