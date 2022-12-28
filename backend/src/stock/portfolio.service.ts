@@ -11,21 +11,26 @@ import { StockService } from "./stock.service";
 
 
 @Injectable()
-export class PortFolioService {
+export class PortfolioService {
     constructor(private splitService: Splitservice, private prisma: PrismaService, private stockService: StockService) { }
 
-    async getPortfolioData(uid: number) {
+    async getGroupedTransactions(data: { uid: number, sid?: number }): Promise<TransactionsGrouped> {
+        const transactions = await this.splitService.createSplitAdjustedTransactions(data.uid)
 
-        const transactions = await this.splitService.createSplitAdjustedTransactions(uid)
-
-        // i do not understand why the type definition of GroupedTransactions is necessary
-        const groupedTransactions: TransactionsGrouped =
+        const groupedTransactions =
             transactions.reduce((container: TransactionsGrouped, currentTransaction: TransactionGainAndSplitAdjusted) => {
-                container[currentTransaction.stockId] = container[currentTransaction.stockId] || []
-                container[currentTransaction.stockId].push(currentTransaction);
+                if (data.sid || data.sid !== currentTransaction.stockId) {
+                    container[currentTransaction.stockId] = container[currentTransaction.stockId] || []
+                    container[currentTransaction.stockId].push(currentTransaction);
+                }
                 return container;
             }, {})
 
+        return groupedTransactions;
+    }
+
+
+    agregateTransactions(groupedTransactions: TransactionsGrouped): TransactionsAgregationData {
         const agregatedTransactionsContainer: TransactionsAgregationData = {}
         for (const stockId in groupedTransactions) {
             const transactions = groupedTransactions[stockId]
@@ -48,46 +53,53 @@ export class PortFolioService {
 
             agregatedTransactionsContainer[stockId] = agregatedTransactions;
         }
+        return agregatedTransactionsContainer;
+    }
 
+
+    async getPortfolioData(uid: number): Promise<Portfolio> {
+
+        const groupedTransactions = await this.getGroupedTransactions({ uid })
+        const agregatedTransactions = this.agregateTransactions(groupedTransactions)
         const gainAndSplitAdjustedStocks: StockGainAndSplitAdjusted[] = []
 
-        let portfolioValue = 0;
+        let currentPortfolioValue = 0;
         let gainAbsolutePortfolio = 0;
         let moneyInvestedPortfolio = 0;
 
-        for (const stockId in agregatedTransactionsContainer) {
-            const agregatedTransactionData = agregatedTransactionsContainer[stockId]
+        for (const stockId in agregatedTransactions) {
+            const agregatedTransactionData = agregatedTransactions[stockId]
 
             const stock = await this.prisma.stock.findFirst({ where: { id: Number(stockId) } })
 
-            const currentPrice = (await this.stockService.getStockWithHistory(Number(stockId))).histories[0].open;
-            const yesterdaysPrice = (await this.stockService.getStockWithHistory(Number(stockId), 2)).histories[1].open
-            const trend = yesterdaysPrice
-                ? Math.round((currentPrice - yesterdaysPrice) / yesterdaysPrice * 100 * 100) / 100 : 0
+            const stockHistory = (await this.stockService.getStockWithHistory(Number(stockId))).histories[0];
+            const currentPrice = stockHistory.close
 
             const gainAbsolute = agregatedTransactionData.moneyRecievedFromSales - agregatedTransactionData.moneyInvestedInStock
                 + (agregatedTransactionData.amountAfterSplit * currentPrice);
-            const gainPercentage = gainAbsolute / agregatedTransactionData.moneyInvestedInStock;
+            const gainPercentage = (gainAbsolute - agregatedTransactionData.moneyInvestedInStock) / agregatedTransactionData.moneyInvestedInStock * 100;
             const gainPercentageRounded = Math.round(gainPercentage * 100) / 100
 
             gainAndSplitAdjustedStocks.push({
                 ...stock,
                 amountAfterSplit: agregatedTransactionData.amountAfterSplit,
                 price: currentPrice,
-                trend: trend,
+                trend: stockHistory.trend,
                 gainAbsolute: gainAbsolute,
                 gainPercentage: gainPercentageRounded
             })
 
-            portfolioValue += agregatedTransactionData.amountAfterSplit * currentPrice;
+            currentPortfolioValue += agregatedTransactionData.amountAfterSplit * currentPrice;
             gainAbsolutePortfolio += gainAbsolute;
             moneyInvestedPortfolio += agregatedTransactionData.moneyInvestedInStock;
         }
 
+        const gainPercentagePortfolio = (gainAbsolutePortfolio - moneyInvestedPortfolio) / moneyInvestedPortfolio * 100
+        const gainPercentagePortfolioRounded = Math.round(gainPercentagePortfolio * 100) / 100
         const portfolio: Portfolio = {
-            currentValue: portfolioValue,
+            currentPortfolioValue: currentPortfolioValue,
             gainAbsolute: gainAbsolutePortfolio,
-            gainPercentage: gainAbsolutePortfolio / moneyInvestedPortfolio,
+            gainPercentage: gainPercentagePortfolioRounded,
             stocks: gainAndSplitAdjustedStocks
         }
 
