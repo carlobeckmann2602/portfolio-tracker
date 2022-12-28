@@ -138,7 +138,7 @@ const Portfolio = () => {
         </p>
         <div
           onClick={() => setSearchActive(!searchActive)}
-          className="absolute bottom-0 right-4 z-10 rounded-full border border-highlight1 text-highlight1 
+          className="absolute bottom-0 right-0 z-10 rounded-full border border-highlight1 text-highlight1 
           border-solid w-10 h-10 flex justify-center items-center cursor-pointer text-[30px]"
         >
           <FiPlus
