@@ -49,7 +49,7 @@ export const DonutChart = ({
           <DonutChartContextProvider value={ctx}>
             <PieChart
               startAngle={90}
-              animate
+              animate={segments.length < 4}
               lineWidth={50}
               data={segments}
               segmentsStyle={!disabled ? { cursor: "pointer" } : undefined}
