@@ -82,7 +82,7 @@ const PortfolioContent = () => {
 
   return (
     <div>
-      <div className="relative">
+      <div className="px-4">
         <div className="relative">
           <DonutChart
             segments={chartSegments}
@@ -137,7 +137,7 @@ const Portfolio = () => {
   const [searchActive, setSearchActive] = useState(false);
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="flex flex-col gap-8 pt-8">
       <div className="flex flex-col gap-2 relative">
         <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
         <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
