@@ -1,13 +1,5 @@
-import { useCallback, useEffect, useState } from "react";
-import cn from "classnames";
 import { formatCurrencyValue } from "../../lib/util";
-import {
-  StockHolding,
-  usePortfolioData,
-  useStock,
-  useStockHoldingAmountMut,
-} from "../../lib/backend";
-import { Button } from "../button";
+import { StockHolding } from "../../lib/backend";
 import { TrendIcon } from "../stock/trend_icon";
 import {
   HoldingAmountCounterMutation,
@@ -17,52 +9,6 @@ import {
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
 );
-
-const CounterButton = ({
-  hidden,
-  ...props
-}: React.DetailedHTMLProps<
-  React.ButtonHTMLAttributes<HTMLButtonElement>,
-  HTMLButtonElement
-> & { hidden?: boolean }) => (
-  <button
-    {...props}
-    className={cn(
-      "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition",
-      hidden ? "opacity-0" : props.disabled ? "opacity-50" : null
-    )}
-  />
-);
-
-function CounterInput({
-  value,
-  onDecrement,
-  onIncrement,
-  min,
-  disabled,
-}: {
-  value: number;
-  onDecrement?: () => void;
-  onIncrement?: () => void;
-  min?: number;
-  disabled?: boolean;
-}) {
-  return (
-    <div className="flex items-center">
-      <CounterButton
-        onClick={() => onDecrement?.()}
-        hidden={min != undefined && min >= value}
-        disabled={disabled}
-      >
-        -
-      </CounterButton>
-      <div className="w-20 text-center">{value}</div>
-      <CounterButton onClick={() => onIncrement?.()} disabled={disabled}>
-        +
-      </CounterButton>
-    </div>
-  );
-}
 
 export function StockDetails({
   holding,
