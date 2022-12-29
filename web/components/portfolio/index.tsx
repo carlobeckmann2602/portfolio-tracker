@@ -1,5 +1,4 @@
 import { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
-import cn from "classnames";
 import { formatCurrencyValue } from "../../lib/util";
 import { StockHolding, usePortfolioData } from "../../lib/backend";
 import { StockDetails } from "./stock-details";
@@ -8,7 +7,6 @@ import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
-import BounceLoader from "react-spinners/BounceLoader";
 import { CardStack } from "../card-stack";
 
 const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
@@ -84,25 +82,13 @@ const PortfolioContent = () => {
 
   return (
     <div>
-      <div className="px-4">
-        <div className="relative">
-          <DonutChart
-            segments={chartSegments}
-            selectedId={selectedId}
-            onClick={setSelectedId}
-            disabled={!holdings?.length}
-          />
-          <div className="absolute inset-0 flex justify-center items-center pointer-events-none">
-            <div
-              className={cn(
-                "transition-transform duration-500",
-                isFetching && !isLoading ? "transform" : "scale-0"
-              )}
-            >
-              <BounceLoader color="#180A44" />
-            </div>
-          </div>
-        </div>
+      <div className="relative px-3 xs:p-0">
+        <DonutChart
+          segments={chartSegments}
+          selectedId={selectedId}
+          onClick={setSelectedId}
+          disabled={!holdings?.length}
+        />
       </div>
       <div>
         {holdings?.length ? (
