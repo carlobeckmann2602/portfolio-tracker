@@ -9,6 +9,10 @@ import {
 } from "../../lib/backend";
 import { Button } from "../button";
 import { TrendIcon } from "../stock/trend_icon";
+import {
+  HoldingAmountCounterMutation,
+  RemoveHoldingButton,
+} from "./amount-mutation";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
@@ -67,42 +71,11 @@ export function StockDetails({
   holding: StockHolding;
   selectionColor: string;
 }) {
-  const { mutate: mutateHoldingAmount, isLoading: mutationIsLoading } =
-    useStockHoldingAmountMut();
-  const portfolioIsLoading = usePortfolioData().isFetching;
-  const isLoading = mutationIsLoading || portfolioIsLoading;
-
-  const [tempAmount, setTempAmount] = useState(holding.amount);
-  useEffect(() => setTempAmount(holding.amount), [holding]);
-
-  const { data: stock } = useStock(holding.id);
-
-  const updateAmount = useCallback(
-    (amountOffset: number) => () => {
-      setTempAmount(tempAmount + amountOffset);
-      mutateHoldingAmount({
-        stockId: holding.id,
-        amountOffset,
-      });
-    },
-    [tempAmount, holding, mutateHoldingAmount]
-  );
-
-  const removeHolding = useCallback(() => {
-    // Set the number of shares of the current holding to 0
-    mutateHoldingAmount({
-      stockId: holding.id,
-      amountOffset: -holding.amount,
-    });
-  }, [holding, mutateHoldingAmount]);
-
-  const trendElem: JSX.Element = stock ? (
+  const trendElem: JSX.Element = (
     <>
-      {stock.trend < 0 ? "-" : "+"}
-      {Math.abs(stock.trend).toFixed(2).replace(".", ",")}%
+      {holding.stock.trend < 0 ? "-" : "+"}
+      {Math.abs(holding.stock.trend).toFixed(2).replace(".", ",")}%
     </>
-  ) : (
-    <>&nbsp;</>
   );
 
   return (
@@ -112,10 +85,10 @@ export function StockDetails({
           className="flex items-center gap-3 xs:gap-4 rounded-xl px-3 xs:px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
           style={{ borderColor: selectionColor }}
         >
-          <TrendIcon trend={stock?.trend} />
+          <TrendIcon trend={holding.stock.trend} />
           <div className="flex justify-between items-center flex-1 gap-4 text-sm xs:text-base">
             <div className="flex-1">
-              <h3 className="text-xl xs:text-2xl">{holding.name}</h3>
+              <h3 className="text-xl xs:text-2xl">{holding.stock.name}</h3>
               <p className="font-light">{trendElem}</p>
             </div>
             <div className="flex-shrink-0">
@@ -126,7 +99,7 @@ export function StockDetails({
         <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
-            <div>{stock ? formatCurrencyValue(stock.price) : <>&nbsp;</>}</div>
+            <div>{formatCurrencyValue(holding.stock.price)}</div>
           </TableRow>
           <TableRow>
             <div>Trend:</div>
@@ -134,19 +107,11 @@ export function StockDetails({
           </TableRow>
           <TableRow>
             <div>Count:</div>
-            <CounterInput
-              value={tempAmount}
-              onIncrement={updateAmount(1)}
-              onDecrement={updateAmount(-1)}
-              min={1}
-              disabled={isLoading}
-            />
+            <HoldingAmountCounterMutation holding={holding} />
           </TableRow>
         </div>
       </div>
-      <Button onClick={removeHolding} disabled={isLoading}>
-        Remove stock
-      </Button>
+      <RemoveHoldingButton holding={holding} />
     </div>
   );
 }

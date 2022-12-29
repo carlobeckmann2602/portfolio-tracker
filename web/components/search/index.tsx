@@ -18,7 +18,7 @@ export const Search = () => {
     usePortfolioData();
   const { data: foundStocks, isFetching: searchIsFetching } =
     useStockSearch(searchTerm);
-  const holdingAmountMut = useStockHoldingAmountMut();
+  const { mutate: mutateHoldingAmount } = useStockHoldingAmountMut();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isFetching = searchIsFetching || portfolioIsFetching;
@@ -47,7 +47,7 @@ export const Search = () => {
       foundStocks?.map((stock) => ({
         stock,
         inPortfolio:
-          portfolio?.holdings.some((holding) => holding.id == stock.id) ||
+          portfolio?.holdings.some((holding) => holding.stock.id == stock.id) ||
           false,
       })) || [],
     [foundStocks, portfolio]
@@ -111,9 +111,11 @@ export const Search = () => {
                 onClick={
                   !inPortfolio
                     ? () =>
-                        holdingAmountMut.mutate({
+                        mutateHoldingAmount({
                           stockId: stock.id,
                           amountOffset: 1,
+                          price: stock.price,
+                          date: new Date(),
                         })
                     : undefined
                 }

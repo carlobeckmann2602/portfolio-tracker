@@ -11,19 +11,16 @@ import {
   fetchStockSearch,
 } from "./rest";
 
-type StockCoreData = {
+export type Stock = {
   id: number;
   symbol: string;
   name: string;
-  description: string;
-};
-
-export type Stock = StockCoreData & {
   price: number;
   trend: number;
 };
 
-export type StockHolding = StockCoreData & {
+export type StockHolding = {
+  stock: Stock;
   amount: number;
   value: number;
 };
@@ -54,6 +51,8 @@ export const useStockSearch = (searchTerm: string) =>
 export type StockHoldingAmountMutVars = {
   stockId: number;
   amountOffset: number;
+  price: number;
+  date: Date;
 };
 
 export function useStockHoldingAmountMut() {

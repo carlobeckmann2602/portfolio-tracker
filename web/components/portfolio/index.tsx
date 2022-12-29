@@ -48,7 +48,9 @@ function useHoldingAddedEffect(
     if (prevHoldings) {
       const newHolding = holdings.find(
         (holding) =>
-          !prevHoldings.find((prevHolding) => holding.id == prevHolding.id)
+          !prevHoldings.find(
+            (prevHolding) => holding.stock.id == prevHolding.stock.id
+          )
       );
 
       if (newHolding) setSelectedId(holdings.indexOf(newHolding));
@@ -73,7 +75,7 @@ const PortfolioContent = () => {
       holdings?.length
         ? holdings.map((holding, i) => ({
             value: holding.value,
-            label: holdings.length > 1 ? holding.symbol : "",
+            label: holdings.length > 1 ? holding.stock.symbol : "",
             color: colors[i],
           }))
         : [{ value: 1, color: "#180A44", label: "" }],

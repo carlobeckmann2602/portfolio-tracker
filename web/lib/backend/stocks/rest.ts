@@ -27,47 +27,63 @@ type StockDTO = {
   histories: StockTimeDataDTO[];
 };
 
-type StockHoldingDTO = {
-  id: number;
-  symbol: string;
-  name: string;
-  description: string;
-  totalValue: number;
-  totalAmount: number;
+type StockHoldingDTO = StockDTO & {
+  amountAfterSplit: number;
+  price: number;
+  trend: number;
+  gainAbsolute: number;
+  gainPercentage: number;
 };
 
 type PortfolioDataDTO = {
-  portfoliovalue: number;
-  stocksOnUser: StockHoldingDTO[];
+  currentPortfolioValue: number;
+  gainAbsolute: number;
+  gainPercentage: number;
+  stocks: StockHoldingDTO[];
+};
+
+type StockHoldingAmountMutVarsDTO = {
+  amount: number;
+  pricePerUnit: number;
+  date: string;
 };
 
 const cleanupFloat = (num: number) => Math.round((num + 0.001) * 100) / 100;
 
-function createStockFromDTO({ histories, ...core }: StockDTO): Stock {
+function createStockFromDTO(
+  dto: StockDTO,
+  price?: number,
+  trend?: number
+): Stock {
+  const timeData = dto.histories[0];
+
   return {
-    ...core,
-    price: histories[0].close,
-    trend: histories[0].trend,
+    id: dto.id,
+    symbol: dto.symbol,
+    name: dto.name,
+    price: price || timeData?.close || 0,
+    trend: trend || timeData?.trend || 0,
   };
 }
 
 function createStockHoldingFromDTO({
-  totalAmount,
-  totalValue,
-  ...core
+  amountAfterSplit,
+  price,
+  trend,
+  ...data
 }: StockHoldingDTO): StockHolding {
   return {
-    ...core,
-    amount: totalAmount,
-    value: totalValue,
+    stock: createStockFromDTO(data, price, trend),
+    amount: amountAfterSplit,
+    value: amountAfterSplit * price,
   };
 }
 
 function createPortfolioFromDTO(dto: PortfolioDataDTO): PortfolioData {
   return {
-    value: cleanupFloat(dto.portfoliovalue),
-    holdings: dto.stocksOnUser
-      .filter((dto) => !!dto.totalAmount)
+    value: cleanupFloat(dto.currentPortfolioValue),
+    holdings: dto.stocks
+      .filter((dto) => !!dto.amountAfterSplit)
       .map((dto) => createStockHoldingFromDTO(dto)),
   };
 }
@@ -97,11 +113,20 @@ export async function fetchStockSearch(searchTerm: string) {
 export async function fetchStockHoldingAmountMut({
   stockId,
   amountOffset,
+  price,
+  date,
 }: StockHoldingAmountMutVars) {
   if (!amountOffset) return;
+
+  const vars: StockHoldingAmountMutVarsDTO = {
+    amount: Math.abs(amountOffset),
+    pricePerUnit: price,
+    date: date.toISOString(),
+  };
+
   await authFetch(`${BACKEND_REST_URL}/users/me/stocks/${stockId}`, {
     method: amountOffset > 0 ? "POST" : "DELETE",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ amount: Math.abs(amountOffset) }),
+    body: JSON.stringify(vars),
   });
 }

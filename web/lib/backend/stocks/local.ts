@@ -14,7 +14,7 @@ export function mutateHoldingAmountInLocalStorage({
   amountOffset,
 }: StockHoldingAmountMutVars) {
   let { holdings } = getPortfolioFromLocalStorage();
-  const holdingId = holdings.findIndex((other) => other.id == stockId);
+  const holdingId = holdings.findIndex((other) => other.stock.id == stockId);
   if (holdingId < 0) return;
 
   const [holding] = holdings.splice(holdingId, 1);
@@ -27,7 +27,7 @@ export function mutateHoldingAmountInLocalStorage({
       amount,
     });
 
-  holdings = holdings.sort((a, b) => a.id - b.id);
+  holdings = holdings.sort((a, b) => a.stock.id - b.stock.id);
 
   localStorage.setItem(
     "local-stock-portfolio",
