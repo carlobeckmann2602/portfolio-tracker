@@ -57,13 +57,15 @@ export const Search = () => {
     <div className="relative">
       <div
         className={cn(
-          "absolute -top-2 right-0 pointer-events-none transition duration-500 rounded-full overflow-hidden opacity-25",
+          "absolute -top-3 right-0 pointer-events-none transition duration-500 rounded-full overflow-hidden opacity-25",
           isFetching ? "scale-100" : "scale-0"
         )}
       >
         <BounceLoader color="white" size="3rem" />
       </div>
-      <h2 className="text-3xl font-bold font-serif mt-8 mb-6">Add stocks</h2>
+      <h2 className="text-2xl xs:text-3xl font-bold font-serif mt-8 mb-6">
+        Add stocks
+      </h2>
       <div className="flex mt-4 mb-6 rounded-md bg-front/10">
         <input
           ref={inputRef}
@@ -101,7 +103,7 @@ export const Search = () => {
               <button
                 key={i}
                 className={cn(
-                  "flex justify-between w-full mb-4",
+                  "flex justify-between w-full mb-4 transition",
                   inPortfolio && !searchTerm
                     ? "hidden"
                     : disabled
