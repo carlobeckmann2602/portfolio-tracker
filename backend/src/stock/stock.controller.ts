@@ -2,7 +2,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { AuthService } from 'src/auth/auth.service';
 import { StockAPITasksService } from 'src/stockAPITasks/stockAPITasks.service';
-import { Splitservice } from './split.service';
+import { SplitService } from './split.service';
 import { StockService } from './stock.service';
 @ApiTags('stocks')
 @Controller('stocks')
@@ -128,7 +128,7 @@ export class StockController {
     },
   ];
 
-  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService, private readonly splitService: Splitservice, private readonly authService: AuthService) { }
+  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService, private readonly splitService: SplitService, private readonly authService: AuthService) { }
 
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //

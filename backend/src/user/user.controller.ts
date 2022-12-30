@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Headers, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Headers, HttpException, HttpStatus, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
@@ -243,10 +243,20 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   @ApiResponse({ status: 201, description: 'Return success message' })
   @ApiBearerAuth('JWT-auth')
-  addStockToUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
+  async addStockToUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, true, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
+
+    try {
+
+      return await this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, true, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
+
+    } catch (error) {
+      throw new HttpException({
+        status: HttpStatus.NOT_FOUND,
+        error: error,
+      }, HttpStatus.NOT_FOUND);
+    }
   }
 }

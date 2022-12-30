@@ -3,23 +3,15 @@ import { PrismaClientKnownRequestError, PrismaClientValidationError } from "@pri
 import { PrismaService } from "src/prisma/prisma.service";
 import { StockGainAndSplitAdjusted } from "./interfaces/StockGainAndSplitAdjusted";
 import { PortfolioService } from "./portfolio.service";
+import { SplitService } from "./split.service";
 import { StockService } from "./stock.service";
 
 @Injectable()
 export class TransactionService {
-    constructor(private prisma: PrismaService, private portfolioService: PortfolioService, private stockService: StockService) { }
+    constructor(private prisma: PrismaService, private portfolioService: PortfolioService, private stockService: StockService, private splitService: SplitService) { }
     async addTransaction(uid: number, sid: number, amount: number, buy: boolean, pricePerUnit: number, date: Date): Promise<StockGainAndSplitAdjusted> {
 
-        const transactionGroup = await this.portfolioService.getGroupedTransactions({ uid, sid });
-        const transactionsAggregated = this.portfolioService.agregateTransactions(transactionGroup);
-        const aggregatedStockData = transactionsAggregated[sid];
-        if (!buy && amount > aggregatedStockData.amountAfterSplit) {
-            throw new BadRequestException(
-                `User can not sell more then his available amount of stocks. Available amount of stock ${aggregatedStockData.amountAfterSplit}`,
-            );
-        }
-        // get stock data
-        // throw exception in amount is bigger than amount in portfolio
+        // we might want to implement a check to make sure that the amount the user sells is smaller than the amount he currently owns
         try {
             await this.prisma.transactions.create({
                 data: {
@@ -44,21 +36,8 @@ export class TransactionService {
             throw error;
         }
 
-        const stock = await this.prisma.stock.findFirst({ where: { id: sid } });
-        const stockWithHistory = (await this.stockService.getStockWithHistory(sid, 30)).histories;
-        const amountAfterSplit = buy ? aggregatedStockData.amountAfterSplit + amount : aggregatedStockData.amountAfterSplit - amount;
-        const gainAbsolute = (aggregatedStockData.moneyRecievedFromSales - aggregatedStockData.moneyInvestedInStock) / aggregatedStockData.moneyInvestedInStock +
-            stockWithHistory[0].close * amountAfterSplit
-        const gainAbsoluteRounded = Math.round(gainAbsolute * 100) / 100
-        const gainPercentageRounded = Math.round(gainAbsolute - aggregatedStockData.moneyInvestedInStock / aggregatedStockData.moneyInvestedInStock * 100) / 100
-        return {
-            ...stock,
-            amountAfterSplit: buy ? aggregatedStockData.amountAfterSplit + amount : aggregatedStockData.amountAfterSplit - amount,
-            price: stockWithHistory[0].close,
-            trend: stockWithHistory[0].trend,
-            gainAbsolute: gainAbsoluteRounded,
-            gainPercentage: gainPercentageRounded,
-            histories: stockWithHistory
-        }
+        const transactions = (await this.splitService.createSplitAdjustedTransactions(uid, sid))
+        const transactionAgregationData = this.portfolioService.agregateTransactions(transactions)
+        return this.portfolioService.createGainAndSplitAdjustedStock(sid, transactionAgregationData)
     }
 }
