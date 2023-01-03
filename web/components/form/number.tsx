@@ -52,7 +52,7 @@ export const Number = ({
             setHasContent(!!(evt.target as HTMLInputElement).value)
           }
           onChange={onChange}
-          className="border-2 outline-none border-solid border-highlight1 p-3 text-center rounded-[10px] bg-front/10 font-bold text-highlight1 text-lg"
+          className="border-2 outline-none border-solid border-highlight1 p-2 text-center rounded-[10px] bg-front/10 font-bold text-highlight1 text-lg"
           ref={innerRef}
           disabled={disabled}
         />

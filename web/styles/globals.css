@@ -11,6 +11,10 @@
   }
 }
 
+.react-datepicker{
+  overflow: hidden;
+}
+
 .react-datepicker-wrapper,
 .react-datepicker__input-container,
 .react-datepicker__input-container input {
@@ -27,7 +31,7 @@
 
 .react-datepicker__month-container .react-datepicker__day--selected,
 .react-datepicker__month-container .react-datepicker__day:hover {
-  background-color: #11F1A6;
+  background-color: #180A44;
   font-weight: bold;
 }
 
@@ -41,7 +45,7 @@
 }
 .react-datepicker__portal .react-datepicker {
   border: 2px solid #11F1A6;
-  border-radius: 5px;
+  border-radius: 10px;
 }
 
 .react-datepicker__month-container
