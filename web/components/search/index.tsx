@@ -1,24 +1,29 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import cn from "classnames";
 import { FiPlus, FiSearch } from "react-icons/fi";
-import {
-  Stock,
-  useStockHoldingAmountMut,
-  usePortfolioData,
-  useStockSearch,
-} from "../../lib/backend";
+import { Stock, usePortfolioData, useStockSearch } from "../../lib/backend";
 import { SearchItem } from "./search_item";
 import BounceLoader from "react-spinners/BounceLoader";
+import { AddStockForm } from "./add_stock_form";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
-export const Search = () => {
+export type SearchProps = {
+  selectedStock: Stock | null;
+  setSelectedStock: (stock: Stock) => void;
+  closeSearch: () => void;
+};
+
+export const Search = ({
+  selectedStock,
+  setSelectedStock,
+  closeSearch,
+}: SearchProps) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { data: portfolio, isFetching: portfolioIsFetching } =
     usePortfolioData();
   const { data: foundStocks, isFetching: searchIsFetching } =
     useStockSearch(searchTerm);
-  const { mutate: mutateHoldingAmount } = useStockHoldingAmountMut();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const isFetching = searchIsFetching || portfolioIsFetching;
@@ -53,6 +58,11 @@ export const Search = () => {
     [foundStocks, portfolio]
   );
 
+  if (selectedStock) {
+    return (
+      <AddStockForm stock={selectedStock} onAdd={closeSearch}></AddStockForm>
+    );
+  }
   return (
     <div className="relative">
       <div
@@ -111,15 +121,7 @@ export const Search = () => {
                     : "rounded-md hover:bg-white/10"
                 )}
                 onClick={
-                  !inPortfolio
-                    ? () =>
-                        mutateHoldingAmount({
-                          stockId: stock.id,
-                          amountOffset: 1,
-                          price: stock.price,
-                          date: new Date(),
-                        })
-                    : undefined
+                  !inPortfolio ? () => setSelectedStock(stock) : undefined
                 }
                 disabled={disabled}
               >

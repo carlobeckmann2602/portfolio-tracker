@@ -28,7 +28,7 @@ export function CardStack({
   }, [showFront, prevShowFront, transitionDuration]);
 
   return (
-    <div className={cn("relative", !inTransition && "overflow-hidden")}>
+    <div className={cn("relative", !inTransition)}>
       <div
         style={{ transitionDuration: `${transitionDuration}ms` }}
         className={cn(
