@@ -34,17 +34,25 @@ struct JwtToken {
 
 class AuthenticationHandler: ObservableObject {
 
-  @Published var isLoggedIn: Bool = false
+  @Published var isLoggedIn: Bool = false {
+    didSet {
+      if isLoggedIn {
+        print("Logged in with JWT: \(jwtToken!.decodedToken.string)")
+      }
+    }
+  }
 
   private var jwtToken: JwtToken? = nil
   private var tokenStorage = TokenStorage()
 
   init() {
     let loadedToken = self.tokenStorage.loadToken()
-    self.isLoggedIn = loadedToken != nil
-    if self.isLoggedIn {
+    let isLoggedIn = loadedToken != nil
+    if isLoggedIn {
       jwtToken = loadedToken
     }
+    self.isLoggedIn = isLoggedIn
+
   }
 
   func register(email: String, password: String, password2: String) {
