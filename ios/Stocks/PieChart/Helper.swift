@@ -48,7 +48,7 @@ let pieColors = [
 ]
 
 func normalizedValue(portfolioEntry: PortfolioEntry, portfolio: Portfolio) -> Double {
-  var total: Float = 0.0
+  var total = 0.0
   portfolio.stocks.forEach { data in
     total += data.calculateStockValue()
   }
