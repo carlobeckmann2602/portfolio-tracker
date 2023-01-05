@@ -26,7 +26,7 @@ struct PortfolioOnUserDto: Decodable {
 struct PortfolioDto: Decodable {
   var currentPortfolioValue: Float
   var gainAbsolute: Float
-  var gainPercentage: Float
+  var gainPercentage: Float?
   var stocks: [PortfolioOnUserDto]
 }
 
@@ -53,7 +53,8 @@ class PortfolioHandler {
 
           let portfolio = Portfolio(
             stocks: portfolioStocks, currentPortfolioValue: portfolioDto.currentPortfolioValue,
-            gainAbsolute: portfolioDto.gainAbsolute, gainPercentage: portfolioDto.gainPercentage)
+            gainAbsolute: portfolioDto.gainAbsolute,
+            gainPercentage: portfolioDto.gainPercentage ?? 0)
 
           onComplete(portfolio)
         } catch {
