@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct History: Hashable, Codable, Identifiable {
+struct StockHistory: Hashable, Codable, Identifiable {
   var id: Int
   var stockId: Int
   var split: Int
@@ -23,7 +23,7 @@ struct Stock: Hashable, Codable, Identifiable {
   var name: String
   var symbol: String
   var description: String
-  var histories: [History]
+  var histories: [StockHistory]
 
   func getValue() -> Float {
     return histories[0].close

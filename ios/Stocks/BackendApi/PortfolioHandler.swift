@@ -20,7 +20,7 @@ struct PortfolioOnUserDto: Decodable {
   var moneyInvestedInStock: Float
   var gainAbsolute: Float
   var gainPercentage: Float
-  var histories: [History]
+  var histories: [StockHistory]
 }
 // TODO: add additional information to Portfolio/PortfolioEntry/Stock classes
 struct PortfolioDto: Decodable {
