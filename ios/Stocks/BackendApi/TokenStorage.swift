@@ -7,6 +7,7 @@
 
 import Foundation
 import JWTDecode
+import Just
 import KeychainAccess
 
 class TokenStorage {
@@ -27,6 +28,12 @@ class TokenStorage {
       if jwt.expired {
         return nil
       }
+
+      if !userFromTokenExists(jwt) {
+        print("User from token does not exist")
+        return nil
+      }
+
       return JwtToken(decodedToken: jwt)
     } catch {
       return nil
@@ -45,5 +52,14 @@ class TokenStorage {
     } catch let error {
       print("error: \(error)")
     }
+  }
+
+  private func userFromTokenExists(_ jwt: JWT) -> Bool {
+    let r = Just.get(
+      "\(ApiUtils.BASE_URL)/users/me",
+      headers: [
+        "Authorization": "Bearer \(jwt.string)"
+      ])
+    return r.ok
   }
 }
