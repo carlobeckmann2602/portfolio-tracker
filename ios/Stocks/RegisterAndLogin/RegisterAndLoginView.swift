@@ -19,7 +19,8 @@ struct RegisterAndLoginView: View {
   @ObservedObject var authenticationHandler: AuthenticationHandler = AuthenticationHandler()
   var body: some View {
     if authenticationHandler.isLoggedIn {
-      PortfolioView(networkAdapter: NetworkAdapter(authenticationHandler: authenticationHandler))
+      PortfolioView(
+        portfolioHandler: PortfolioHandler(authenticationHandler: authenticationHandler))
     } else {
       if currentState == .landing {
         LandingScreen(

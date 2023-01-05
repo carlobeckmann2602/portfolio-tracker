@@ -10,16 +10,16 @@ import SwiftUI
 
 class PortfolioLoader: LoadableObject {
   var loadEmpty: Bool = false
-  var networkAdapter: NetworkAdapter
+  var portfolioHandler: PortfolioHandler
   @Published private(set) var state = LoadingState<Portfolio>.idle
 
-  init(networkAdapter: NetworkAdapter) {
-    self.networkAdapter = networkAdapter
+  init(portfolioHandler: PortfolioHandler) {
+    self.portfolioHandler = portfolioHandler
   }
 
   func load() {
     state = .loading
-    networkAdapter.loadUserPortfolio(onComplete: { portfolio in
+    portfolioHandler.loadUserPortfolio(onComplete: { portfolio in
       self.state = .loaded(portfolio)
     })
   }

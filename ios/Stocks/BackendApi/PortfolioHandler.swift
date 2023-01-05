@@ -1,5 +1,5 @@
 //
-//  NetworkAdapter.swift
+//  PortfolioHandler.swift
 //  Stocks
 //
 //  Created by Jan Honsbrok on 09.12.22.
@@ -30,8 +30,7 @@ struct PortfolioDto: Decodable {
   var stocks: [PortfolioOnUserDto]
 }
 
-// TODO: rename to PortfolioHandler
-class NetworkAdapter {
+class PortfolioHandler {
 
   private let authenticationHandler: AuthenticationHandler
 
