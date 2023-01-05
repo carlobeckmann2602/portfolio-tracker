@@ -51,7 +51,9 @@ class PortfolioHandler {
 
           let portfolioStocks = self.mapToPortfolioEntries(portfolioDto)
 
-          let portfolio = Portfolio(stocks: portfolioStocks)
+          let portfolio = Portfolio(
+            stocks: portfolioStocks, currentPortfolioValue: portfolioDto.currentPortfolioValue,
+            gainAbsolute: portfolioDto.gainAbsolute, gainPercentage: portfolioDto.gainPercentage)
 
           onComplete(portfolio)
         } catch {

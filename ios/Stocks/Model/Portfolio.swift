@@ -9,13 +9,18 @@ import Foundation
 
 class Portfolio: ObservableObject {
   @Published var stocks: [PortfolioEntry]
+  var currentPortfolioValue: Float
+  var gainAbsolute: Float
+  var gainPercentage: Float
 
-  init(stocks: [PortfolioEntry]) {
+  init(
+    stocks: [PortfolioEntry], currentPortfolioValue: Float, gainAbsolute: Float,
+    gainPercentage: Float
+  ) {
     self.stocks = stocks
-  }
-
-  func totalValue() -> Double {
-    return stocks.map { $0.calculateStockValue() }.reduce(0, +)
+    self.currentPortfolioValue = currentPortfolioValue
+    self.gainAbsolute = gainAbsolute
+    self.gainPercentage = gainPercentage
   }
 
   func isEmpty() -> Bool {

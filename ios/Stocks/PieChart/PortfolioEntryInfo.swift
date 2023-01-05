@@ -66,11 +66,12 @@ struct PortfolioEntryInfo: View {
 }
 
 struct PortfolioEntryInfo_Previews: PreviewProvider {
-  static var portfolio = Portfolio(stocks: [
-    PortfolioEntry(stock: ModelData().stocks[0], amount: 5),
-    PortfolioEntry(stock: ModelData().stocks[4], amount: 8),
-    PortfolioEntry(stock: ModelData().stocks[22], amount: 15),
-  ])
+  static var portfolio = Portfolio(
+    stocks: [
+      PortfolioEntry(stock: ModelData().stocks[0], amount: 5),
+      PortfolioEntry(stock: ModelData().stocks[4], amount: 8),
+      PortfolioEntry(stock: ModelData().stocks[22], amount: 15),
+    ], currentPortfolioValue: 50, gainAbsolute: 30, gainPercentage: 0.3)
   static var previews: some View {
     VStack {
       PortfolioEntryInfo(

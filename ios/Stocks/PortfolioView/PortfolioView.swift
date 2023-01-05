@@ -20,7 +20,7 @@ struct PortfolioLoadedView: View {
           Spacer()
         }
         HStack {
-          Text(String(format: "%.2f€", portfolio.totalValue()))
+          Text(String(format: "%.2f€", portfolio.currentPortfolioValue))
             .roboto(size: 40, weight: .bold, foregroundColor: AppColors.PRIMARY)
           Spacer()
           NavigationLink(
