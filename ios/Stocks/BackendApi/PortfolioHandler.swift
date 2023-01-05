@@ -14,15 +14,23 @@ struct PortfolioOnUserDto: Decodable {
   var symbol: String
   var name: String
   var description: String
-  var totalValue: Float
-  var totalAmount: Int
+  var amountAfterSplit: Int
+  var price: Float
+  var trend: Float
+  var moneyInvestedInStock: Float
+  var gainAbsolute: Float
+  var gainPercentage: Float
+  var histories: [History]
 }
-
+// TODO: add additional information to Portfolio/PortfolioEntry/Stock classes
 struct PortfolioDto: Decodable {
-  var portfoliovalue: Float
-  var stocksOnUser: [PortfolioOnUserDto]
+  var currentPortfolioValue: Float
+  var gainAbsolute: Float
+  var gainPercentage: Float
+  var stocks: [PortfolioOnUserDto]
 }
 
+// TODO: rename to PortfolioHandler
 class NetworkAdapter {
 
   private let authenticationHandler: AuthenticationHandler
@@ -42,7 +50,7 @@ class NetworkAdapter {
         do {
           let portfolioDto = try r.getEntity(PortfolioDto.self)
 
-          let portfolioStocks = try self.loadPortfolioEntries(portfolioDto)
+          let portfolioStocks = self.mapToPortfolioEntries(portfolioDto)
 
           let portfolio = Portfolio(stocks: portfolioStocks)
 
@@ -54,16 +62,12 @@ class NetworkAdapter {
     )
   }
 
-  private func loadPortfolioEntries(_ portfolioDto: PortfolioDto) throws -> [PortfolioEntry] {
-    return try portfolioDto.stocksOnUser.map { stockOnUserDto in
-      let stock = try self.loadStock(stockId: stockOnUserDto.id)
-      return PortfolioEntry(stock: stock, amount: stockOnUserDto.totalAmount)
+  private func mapToPortfolioEntries(_ portfolioDto: PortfolioDto) -> [PortfolioEntry] {
+    return portfolioDto.stocks.map { stockOnUserDto in
+      let stock = Stock(
+        id: stockOnUserDto.id, name: stockOnUserDto.name, symbol: stockOnUserDto.symbol,
+        description: stockOnUserDto.description, histories: stockOnUserDto.histories)
+      return PortfolioEntry(stock: stock, amount: stockOnUserDto.amountAfterSplit)
     }
-  }
-
-  private func loadStock(stockId: Int) throws -> Stock {
-    let url = "\(ApiUtils.BASE_URL)/stocks/\(stockId)"
-    let response = JustOf<HTTP>().get(url, headers: self.authenticationHandler.getHeaders())
-    return try response.getEntity(Stock.self)
   }
 }
