@@ -31,9 +31,15 @@ class Portfolio: ObservableObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
       if existingEntryIndex != nil {
-        self.stocks[existingEntryIndex!].amount += amount
+        self.stocks[existingEntryIndex!].amountAfterSplit += amount
       } else {
-        let entry = PortfolioEntry(stock: stock, amount: amount)
+        let entry = PortfolioEntry(
+          stock: stock, amountAfterSplit: amount,
+          price: 147.49,  // TODO: populate this with proper data
+          trend: 3.03,
+          moneyInvestedInStock: 2500,
+          gainAbsolute: 4874.5,
+          gainPercentage: 94.98)
         self.stocks.append(entry)
       }
       self.stocks = self.stocks
@@ -48,12 +54,9 @@ class Portfolio: ObservableObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
       if existingEntryIndex != nil {
-        self.stocks[existingEntryIndex!].amount -= 1
-      } else {
-        let entry = PortfolioEntry(stock: stock, amount: 0)
-        self.stocks.append(entry)
+        self.stocks[existingEntryIndex!].amountAfterSplit -= 1
+        self.stocks = self.stocks
       }
-      self.stocks = self.stocks
     }
   }
 
@@ -61,12 +64,9 @@ class Portfolio: ObservableObject {
     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
       var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
       if existingEntryIndex != nil {
-        self.stocks[existingEntryIndex!].amount -= self.stocks[existingEntryIndex!].amount
-      } else {
-        let entry = PortfolioEntry(stock: stock, amount: 0)
-        self.stocks.append(entry)
+        self.stocks[existingEntryIndex!].amountAfterSplit = 0
+        self.stocks = self.stocks
       }
-      self.stocks = self.stocks
     }
   }
 

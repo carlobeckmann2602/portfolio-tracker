@@ -18,7 +18,7 @@ struct StepperView: View {
   }
 
   func decrementStep() {
-    if portfolioEntry.get_amount() > 0 {
+    if portfolioEntry.amountAfterSplit > 0 {
       portfolio.decrementStockFromPortfolio(stock: stock)
     }
   }
@@ -38,8 +38,8 @@ struct StepperView: View {
       .background(AppColors.PRIMARY)
       .cornerRadius(8)
       .padding(5)
-      .disabled(portfolioEntry.get_amount() <= 0)
-      Text("\(portfolioEntry.get_amount())")
+      .disabled(portfolioEntry.amountAfterSplit <= 0)
+      Text("\(portfolioEntry.amountAfterSplit)")
         .roboto(size: 25)
       Button {
         incrementStep()
@@ -55,6 +55,6 @@ struct StepperView: View {
   }
 
   var buttonColor: Color {
-    return portfolioEntry.get_amount() <= 0 ? .gray : .black
+    return portfolioEntry.amountAfterSplit <= 0 ? .gray : .black
   }
 }

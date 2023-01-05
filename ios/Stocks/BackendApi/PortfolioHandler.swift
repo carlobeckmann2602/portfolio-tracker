@@ -68,7 +68,15 @@ class PortfolioHandler {
       let stock = Stock(
         id: stockOnUserDto.id, name: stockOnUserDto.name, symbol: stockOnUserDto.symbol,
         description: stockOnUserDto.description, histories: stockOnUserDto.histories)
-      return PortfolioEntry(stock: stock, amount: stockOnUserDto.amountAfterSplit)
+      return PortfolioEntry(
+        stock: stock,
+        amountAfterSplit: stockOnUserDto.amountAfterSplit,
+        price: stockOnUserDto.price,
+        trend: stockOnUserDto.trend,
+        moneyInvestedInStock: stockOnUserDto.moneyInvestedInStock,
+        gainAbsolute: stockOnUserDto.gainAbsolute,
+        gainPercentage: stockOnUserDto.gainPercentage
+      )
     }
   }
 }

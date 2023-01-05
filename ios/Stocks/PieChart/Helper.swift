@@ -48,12 +48,12 @@ let pieColors = [
 ]
 
 func normalizedValue(portfolioEntry: PortfolioEntry, portfolio: Portfolio) -> Double {
-  var total = 0.0
+  var total: Float = 0.0
   portfolio.stocks.forEach { data in
     total += data.calculateStockValue()
   }
 
-  return portfolioEntry.calculateStockValue() / total
+  return Double(portfolioEntry.calculateStockValue() / total)
 }
 
 struct PieSlice {
