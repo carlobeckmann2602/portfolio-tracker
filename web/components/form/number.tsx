@@ -11,6 +11,7 @@ export type InputProps = {
   value?: string | number;
   disabled?: boolean;
   onChange?: (evt: BaseSyntheticEvent) => void;
+  min?: number;
 };
 
 export const Number = ({
@@ -23,6 +24,7 @@ export const Number = ({
   value,
   disabled = false,
   onChange,
+  min,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasContent, setHasContent] = useState(false);
@@ -55,6 +57,7 @@ export const Number = ({
           className="border-2 outline-none border-solid border-highlight1 p-2 text-center rounded-[10px] bg-front/10 font-bold text-highlight1 text-lg"
           ref={innerRef}
           disabled={disabled}
+          min={min}
         />
       </label>
     </div>

@@ -37,10 +37,13 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
           className="w-1/3"
           defaultValue={stockAmount}
           onChange={(evt) => updateAmount(evt)}
+          min={1}
         />
       </div>
       <div className="flex justify-between items-center mb-4">
-        <label className="w-1/3 font-light">Money spent (in €)</label>
+        <label className="w-1/3 font-light">
+          Money spent <span className="inline-block">(in €)</span>
+        </label>
         <Number
           name="price"
           className="w-1/3"
