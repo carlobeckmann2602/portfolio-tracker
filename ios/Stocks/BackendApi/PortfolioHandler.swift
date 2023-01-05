@@ -22,7 +22,7 @@ struct PortfolioOnUserDto: Decodable {
   var gainPercentage: Float
   var histories: [StockHistory]
 }
-// TODO: add additional information to Portfolio/PortfolioEntry/Stock classes
+
 struct PortfolioDto: Decodable {
   var currentPortfolioValue: Float
   var gainAbsolute: Float
@@ -57,7 +57,7 @@ class PortfolioHandler {
 
           onComplete(portfolio)
         } catch {
-          print("Failed load error message: \(error)")
+          print("Failed load portfolio: \(error)")
         }
       }
     )
