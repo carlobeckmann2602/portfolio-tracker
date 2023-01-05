@@ -8,6 +8,19 @@
 import Foundation
 import SwiftUI
 
+struct EmptyDonut: View {
+  var body: some View {
+    ZStack {
+      Circle()
+        .fill(AppColors.BACKGROUND)
+        .frame(width: 315, height: 315)
+      Circle()
+        .fill(AppColors.LIGHT_PURPLE)
+        .frame(width: 150, height: 150)
+    }
+  }
+}
+
 struct PortfolioLoadedView: View {
   @ObservedObject var portfolio: Portfolio
 
@@ -42,12 +55,17 @@ struct PortfolioLoadedView: View {
           .cornerRadius(radius: 40.0, corners: [.topLeft, .topRight])
           .ignoresSafeArea()
         if portfolio.isEmpty() {
-          Text("Your portfolio is empty, add a ").foregroundColor(Color.white)
+          VStack {
+            EmptyDonut().padding(.bottom, 30)
+            Text("Tap the plus button to add a new stock.").roboto(
+              size: 25, foregroundColor: Color.white
+            ).multilineTextAlignment(.center)
+          }
         } else {
           PieChart(
             portfolio: portfolio,
             separatorColor: Color(UIColor.systemBackground),
-            innerColor: Color(hex: "#3a2e60"),
+            innerColor: AppColors.LIGHT_PURPLE,
             accentColors: pieColors
           ).padding()
         }
