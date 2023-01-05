@@ -1,0 +1,93 @@
+.wrap :global(.react-datepicker) {
+  overflow: hidden;
+}
+
+.wrap :global(.react-datepicker-wrapper),
+.wrap :global(.react-datepicker__input-container),
+.wrap :global(.react-datepicker__input-container) input {
+  display: block;
+  width: 100%;
+  position: relative;
+}
+
+.wrap :global(.react-datepicker__day) {
+  background-color: transparent;
+  color: white;
+  font-weight: light;
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day--selected),
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day):hover {
+  background-color: #180a44;
+  font-weight: bold;
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day--keyboard-selected) {
+  background-color: transparent;
+}
+
+.wrap :global(.react-datepicker__month-container),
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__header) {
+  background-color: #4e4270;
+}
+.wrap :global(.react-datepicker__portal) :global(.react-datepicker) {
+  border: 2px solid #11f1a6;
+  border-radius: 10px;
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day),
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day-name),
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__current-month) {
+  font-family: "Roboto";
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day),
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__day-name) {
+  font-weight: light;
+  color: white;
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__current-month) {
+  font-weight: bold;
+  color: #11f1a6;
+}
+
+.wrap
+  :global(.react-datepicker__month-container)
+  :global(.react-datepicker__header) {
+  border: none;
+}
+
+.wrap :global(.react-datepicker) :global(.react-datepicker__navigation-icon) {
+  top: 10px;
+}
+
+.wrap
+  :global(.react-datepicker)
+  :global(.react-datepicker__navigation-icon)::before,
+.wrap
+  :global(.react-datepicker)
+  :global(.react-datepicker__navigation):hover
+  *::before {
+  border-color: #11f1a6;
+}

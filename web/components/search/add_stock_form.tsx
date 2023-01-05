@@ -2,8 +2,7 @@ import { Stock, useStockHoldingAmountMut } from "../../lib/backend";
 import { BaseSyntheticEvent, useState } from "react";
 import { Button } from "../button";
 import { Number } from "../form/number";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+import { DatePicker } from "../form/date-picker";
 
 export type AddStockFormProps = {
   stock: Stock;
@@ -54,9 +53,7 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
       <div className="mb-4">
         <label className="font-light">Purchase date</label>
         <DatePicker
-          dateFormat="dd.MM.yyyy"
-          withPortal
-          className="mt-4 border-2 outline-none border-solid border-highlight1 p-2 text-center rounded-[10px] bg-front/10 font-bold text-highlight1 text-lg"
+          className="mt-4"
           selected={purchaseDate}
           onChange={(date: Date) => setPurchaseDate(date)}
         />
