@@ -14,3 +14,7 @@ api.mobilesys.de {
 app.mobilesys.de {
   reverse_proxy web:3000
 }
+
+pgadmin.mobilesys.de {
+  reverse_proxy pgadmin:80
+}
