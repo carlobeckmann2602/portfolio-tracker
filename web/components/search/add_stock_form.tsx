@@ -22,7 +22,7 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
     mutateHoldingAmount({
       stockId: stock.id,
       amountOffset: stockAmount,
-      price: stock.price,
+      pricePerShare: stock.price,
       date: purchaseDate,
     });
   };

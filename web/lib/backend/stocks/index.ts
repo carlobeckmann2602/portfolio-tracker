@@ -51,7 +51,7 @@ export const useStockSearch = (searchTerm: string) =>
 export type StockHoldingAmountMutVars = {
   stockId: number;
   amountOffset: number;
-  price: number;
+  pricePerShare: number;
   date: Date;
 };
 
