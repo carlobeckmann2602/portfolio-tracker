@@ -1,6 +1,6 @@
 import React from "react";
 import { formatCurrencyValue } from "../../lib/util";
-import { TrendIcon } from "../stock/trend_icon";
+import { TrendIcon } from "../stock/trend-icon";
 
 export type SearchItemProps = {
   trend: number;

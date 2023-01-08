@@ -1,6 +1,6 @@
 import { formatCurrencyValue } from "../../lib/util";
 import { StockHolding } from "../../lib/backend";
-import { TrendIcon } from "../stock/trend_icon";
+import { TrendIcon } from "../stock/trend-icon";
 import {
   HoldingAmountCounterMutation,
   RemoveHoldingButton,

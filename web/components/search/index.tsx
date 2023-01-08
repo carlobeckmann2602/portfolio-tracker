@@ -2,9 +2,9 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import cn from "classnames";
 import { FiPlus, FiSearch } from "react-icons/fi";
 import { Stock, usePortfolioData, useStockSearch } from "../../lib/backend";
-import { SearchItem } from "./search_item";
+import { SearchItem } from "./search-item";
 import BounceLoader from "react-spinners/BounceLoader";
-import { AddStockForm } from "./add_stock_form";
+import { AddStockForm } from "./add-stock-form";
 
 type StockSearchResult = { stock: Stock; inPortfolio: boolean };
 
