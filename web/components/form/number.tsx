@@ -2,7 +2,6 @@ import { BaseSyntheticEvent, ReactNode, RefObject, useState } from "react";
 import cn from "classnames";
 
 export type InputProps = {
-  type?: string;
   name: string;
   placeholder?: string;
   innerRef?: RefObject<HTMLInputElement>;
@@ -12,10 +11,10 @@ export type InputProps = {
   value?: string | number;
   disabled?: boolean;
   onChange?: (evt: BaseSyntheticEvent) => void;
+  min?: number;
 };
 
-export const Input = ({
-  type = "text",
+export const Number = ({
   name,
   placeholder,
   icon,
@@ -25,6 +24,7 @@ export const Input = ({
   value,
   disabled = false,
   onChange,
+  min,
 }: InputProps) => {
   const [isFocused, setIsFocused] = useState(false);
   const [hasContent, setHasContent] = useState(false);
@@ -45,7 +45,7 @@ export const Input = ({
         <input
           defaultValue={defaultValue}
           value={value}
-          type={type}
+          type="number"
           name={name}
           placeholder={placeholder}
           onFocus={() => setIsFocused(true)}
@@ -54,9 +54,10 @@ export const Input = ({
             setHasContent(!!(evt.target as HTMLInputElement).value)
           }
           onChange={onChange}
-          className="border border-transparent outline-none border-solid focus:border-highlight1 p-3 pl-14 rounded-[10px] bg-front/10 font-light text-lg"
+          className="border-2 outline-none border-solid border-highlight1 p-2 text-center rounded-[10px] bg-front/10 font-bold text-highlight1 text-lg"
           ref={innerRef}
           disabled={disabled}
+          min={min}
         />
       </label>
     </div>

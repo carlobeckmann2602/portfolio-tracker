@@ -1,20 +1,15 @@
 import React, { useState } from "react";
-import { InputLabel } from "./input_label";
 
 export type CheckboxProps = {
   name: string;
-  label: string;
   text: string;
 };
 
-export const Checkbox = ({ name, label, text }: CheckboxProps) => {
+export const Checkbox = ({ name, text }: CheckboxProps) => {
   const [active, setActive] = useState(false);
-
-  let labelElement = label ? <InputLabel>{label}</InputLabel> : null;
 
   return (
     <div className="relative text-base form-group my-2">
-      {labelElement}
       <label htmlFor={name}>
         <div
           onClick={() => {

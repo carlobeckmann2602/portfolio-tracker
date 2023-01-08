@@ -1,16 +1,13 @@
-import React from "react";
-import {
-  StockHolding,
-  stringifyCurrencyValue,
-  useStockHoldings,
-} from "../../lib/backend";
-import { Modal } from "../modal";
+import { PropsWithChildren, useEffect, useMemo, useRef, useState } from "react";
+import { formatCurrencyValue } from "../../lib/util";
+import { Stock, StockHolding, usePortfolioData } from "../../lib/backend";
 import { StockDetails } from "./stock-details";
-import Search from "../search/index";
+import { Search } from "../search";
 import { FiPlus } from "react-icons/fi";
 import { Button } from "../button";
 import { DonutChart, DonutChartSegment } from "./donut-chart";
 import { useColorDistribution } from "./colors";
+import { CardStack } from "../card-stack";
 
 const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 
@@ -18,14 +15,14 @@ const STOCK_COLORS = ["#76FCFF", "#489CE8", "#A410FF", "#11F1A6", "#EA4FFF"];
 function useSelectedId(
   holdings?: StockHolding[]
 ): [number, (value: number) => void] {
-  const [id, setId] = React.useState(0);
+  const [id, setId] = useState(0);
 
-  const cappedId = React.useMemo(
+  const cappedId = useMemo(
     () => (holdings?.length ? Math.min(holdings.length - 1, id) : 0),
     [id, holdings]
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (id != cappedId) setId(cappedId);
   }, [id, cappedId]);
 
@@ -40,9 +37,9 @@ function useHoldingAddedEffect(
   holdings: StockHolding[] | undefined,
   setSelectedId: (id: number) => void
 ) {
-  const prevHoldingsRef = React.useRef(holdings);
+  const prevHoldingsRef = useRef(holdings);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!holdings) return;
 
     const prevHoldings = prevHoldingsRef.current;
@@ -61,87 +58,116 @@ function useHoldingAddedEffect(
   }, [holdings, setSelectedId]);
 }
 
-const Portfolio = () => {
-  const { data: holdings } = useStockHoldings();
+const PortfolioContent = () => {
+  const { data: portfolio, isLoading, isFetching } = usePortfolioData();
+  const holdings = portfolio?.holdings;
+
   const [selectedId, setSelectedId] = useSelectedId(holdings);
-  const [modalIsOpen, setModalIsOpen] = React.useState(false);
-  const currentBalance = React.useMemo<number | null>(
-    () =>
-      holdings
-        ?.map((holding) => holding.value)
-        .reduce((prev, curr) => prev + curr, 0) ?? null,
-    [holdings]
-  );
 
   useHoldingAddedEffect(holdings, setSelectedId);
 
   const colors = useColorDistribution(holdings?.length || 0, STOCK_COLORS);
 
-  const chartSegments = React.useMemo<DonutChartSegment[]>(
+  const chartSegments = useMemo<DonutChartSegment[]>(
     () =>
       holdings?.length
         ? holdings.map((holding, i) => ({
             value: holding.value,
+            label: holdings.length > 1 ? holding.stock.symbol : "",
             color: colors[i],
           }))
-        : [{ value: 1, color: "#180A44" }],
+        : [{ value: 1, color: "#180A44", label: "" }],
     [holdings, colors]
   );
 
-  if (!holdings) return <span>Loading...</span>;
-
   return (
-    <div className="flex flex-col gap-8">
-      <div className="flex flex-col gap-2">
-        <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
-        <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
-          {currentBalance != null ? (
-            stringifyCurrencyValue(currentBalance)
-          ) : (
-            <>&nbsp;</>
-          )}
-        </p>
-      </div>
-      <div className="relative -mx-6 flex flex-col gap-6 z-0 rounded-t-3xl p-6 bg-falloff-soft">
-        <div
-          onClick={() => setModalIsOpen(true)}
-          className="absolute top-4 right-4 z-10 rounded-full border-2 border-highlight1 text-highlight1 border-solid w-8 h-8 flex justify-center items-center cursor-pointer"
-        >
-          <FiPlus />
-        </div>
+    <div>
+      <div className="relative px-3 xs:p-0">
         <DonutChart
           segments={chartSegments}
+          selectedId={selectedId}
           onClick={setSelectedId}
-          disabled={!holdings.length}
+          disabled={!holdings?.length}
         />
-        <div className="xs:px-4 sm:px-6">
-          {holdings.length > 0 ? (
-            <StockDetails
-              holding={holdings[selectedId]}
-              selectionColor={colors[selectedId]}
-            />
-          ) : (
-            <p
-              className="text-center text-2xl font-light mx-auto mb-12"
-              style={{ maxWidth: "16rem" }}
-            >
-              Tap the plus button to add a new stock.
-            </p>
-          )}
-          <Button href="/settings" look={1} className="mt-4">
-            Personal settings
-          </Button>
+      </div>
+      <div>
+        {holdings?.length ? (
+          <StockDetails
+            holding={holdings[selectedId]}
+            selectionColor={colors[selectedId]}
+          />
+        ) : (
+          <p
+            className="text-center text-2xl font-light mx-auto mb-12"
+            style={{ maxWidth: "16rem" }}
+          >
+            {isLoading
+              ? "Loading..."
+              : "Tap the plus button to add a new stock."}
+          </p>
+        )}
+        <Button href="/settings" look={1} className="mt-4">
+          Personal settings
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+const Slide = ({ children }: PropsWithChildren) => (
+  <div className="relative z-0 rounded-t-3xl p-6 bg-falloff-soft">
+    <div className="xs:px-4 sm:px-6">{children}</div>
+  </div>
+);
+
+const Portfolio = () => {
+  const { data: portfolio } = usePortfolioData();
+  const [searchActive, setSearchActive] = useState(false);
+  const [selectedSearchStock, setSelectedStock] = useState<Stock | null>(null);
+
+  const toggleSearch = () => {
+    setSearchActive(!searchActive);
+    setSelectedStock(null);
+  };
+
+  return (
+    <div className="flex flex-col gap-8 pt-8">
+      <div className="flex flex-col gap-2 relative">
+        <h2 className="text-xl xs:text-2xl font-light">Your balance</h2>
+        <p className="font-semibold text-highlight1 text-3xl sm:text-4xl">
+          {formatCurrencyValue(portfolio?.value || 0)}
+        </p>
+        <div
+          onClick={() => toggleSearch()}
+          className="absolute bottom-0 right-0 z-10 rounded-full border border-highlight1 text-highlight1 
+          border-solid w-10 h-10 flex justify-center items-center cursor-pointer text-[30px]"
+        >
+          <FiPlus
+            className={`transition-transform duration-500 select-none ${
+              searchActive ? "rotate-[135deg]" : null
+            }`}
+          />
         </div>
       </div>
-      <Modal
-        title="Add stocks"
-        open={modalIsOpen}
-        onClose={() => {
-          setModalIsOpen(false);
-        }}
-      >
-        <Search />
-      </Modal>
+      <div className="-mx-6">
+        <CardStack
+          showFront={searchActive}
+          back={
+            <Slide>
+              <PortfolioContent />
+            </Slide>
+          }
+          front={
+            <Slide>
+              <Search
+                selectedStock={selectedSearchStock}
+                setSelectedStock={(stock) => setSelectedStock(stock)}
+                closeSearch={() => setSearchActive(false)}
+              />
+            </Slide>
+          }
+        />
+      </div>
     </div>
   );
 };

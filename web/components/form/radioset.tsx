@@ -1,13 +1,11 @@
 import React, { useState } from "react";
-import { InputLabel } from "./input_label";
 
 export type RadioSetProps = {
   name: string;
-  label: string;
   options: string[];
 };
 
-export const RadioSet = ({ name, label, options }: RadioSetProps) => {
+export const RadioSet = ({ name, options }: RadioSetProps) => {
   const [active, setActive] = useState(0);
 
   let optionElements = options.map((option, index) => {
@@ -40,7 +38,6 @@ export const RadioSet = ({ name, label, options }: RadioSetProps) => {
 
   return (
     <div className="relative text-base form-group my-2 flex flex-col">
-      <InputLabel>{label}</InputLabel>
       <fieldset className="flex flex-row">{optionElements}</fieldset>
     </div>
   );

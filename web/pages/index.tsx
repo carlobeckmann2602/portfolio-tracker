@@ -2,32 +2,30 @@ import type { NextPage } from "next";
 import { Helmet } from "../components/helmet";
 import { CenterSection } from "../components/center-section";
 import Portfolio from "../components/portfolio";
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-import { useAuthContext } from "../lib/backend";
+import { usePortfolioData } from "../lib/backend";
+import BounceLoader from "react-spinners/BounceLoader";
+
+const LoadingScreen = () => (
+  <div className="flex justify-center items-center fixed inset-0 bg-back z-20">
+    <div className="flex flex-col gap-8">
+      <div className="flex justify-center opacity-25">
+        <BounceLoader color="white" size="5rem" />
+      </div>
+      <p className="text-center text-2xl font-light">Loading...</p>
+    </div>
+  </div>
+);
 
 const Home: NextPage = () => {
-  const router = useRouter();
-  const [userID] = useAuthContext();
-
-  useEffect(() => {
-    if (!localStorage.getItem("userID")) {
-      router.push("/login");
-    }
-  });
-
-  if (!userID) {
-    return null;
-  }
+  const { isLoading } = usePortfolioData();
 
   return (
     <>
       <Helmet title="My portfolio" />
-      <div className="mt-16">
-        <CenterSection>
-          <Portfolio />
-        </CenterSection>
-      </div>
+      {isLoading && <LoadingScreen />}
+      <CenterSection>
+        <Portfolio />
+      </CenterSection>
     </>
   );
 };
