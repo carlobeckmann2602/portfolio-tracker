@@ -92,53 +92,66 @@ type LoginDTO = {
   password: string;
 };
 
-function fetchRegister(createUserDTO: CreateUserDTO) {
-  return fetch(`${BACKEND_REST_URL}/users`, {
+async function fetchFormPost(href: string, body: string) {
+  const res = await fetch(href, {
     method: "POST",
-    body: JSON.stringify(createUserDTO),
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
+    body,
   });
+
+  if (res.ok) return res;
+
+  const { message }: { message: string | string[] } = await res.json();
+  throw Array.isArray(message) ? message[0] : message;
 }
 
-function fetchLogin(loginDTO: LoginDTO) {
-  return fetch(`${BACKEND_REST_URL}/auth/login`, {
-    method: "POST",
-    body: JSON.stringify(loginDTO),
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-  });
+async function extractToken(res: Response) {
+  const token = (await res.json()).access_token as string | undefined;
+  if (!token) throw "Something went wrong";
+  return token;
+}
+
+async function fetchRegister(createUserDTO: CreateUserDTO) {
+  return extractToken(
+    await fetchFormPost(
+      `${BACKEND_REST_URL}/users`,
+      JSON.stringify(createUserDTO)
+    )
+  );
+}
+
+async function fetchLogin(loginDTO: LoginDTO) {
+  return extractToken(
+    await fetchFormPost(
+      `${BACKEND_REST_URL}/auth/login`,
+      JSON.stringify(loginDTO)
+    )
+  );
 }
 
 async function fetchLogout() {
   await authFetch(`${BACKEND_REST_URL}/auth/logout`);
 }
 
-function useTokenHandler() {
-  const { login } = useAuth();
-
-  return useCallback(
-    async (resp: Response) => {
-      if (!resp.ok) return;
-      const token: string = (await resp.json()).access_token;
-      login(token);
-    },
-    [login]
-  );
-}
-
 export function useRegistration() {
-  const handleToken = useTokenHandler();
-  return useMutation({ mutationFn: fetchRegister, onSuccess: handleToken });
+  const { login } = useAuth();
+  return useMutation<string, string, CreateUserDTO>({
+    mutationFn: fetchRegister,
+    onSuccess: login,
+  });
 }
+
+export type LoginError = { messages: string[] };
 
 export function useLogin() {
-  const handleToken = useTokenHandler();
-  return useMutation({ mutationFn: fetchLogin, onSuccess: handleToken });
+  const { login } = useAuth();
+  return useMutation<string, string, LoginDTO>({
+    mutationFn: fetchLogin,
+    onSuccess: login,
+  });
 }
 
 export function useLogout() {

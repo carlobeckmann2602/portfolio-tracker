@@ -10,7 +10,7 @@ import { FiMail, FiLock } from "react-icons/fi";
 import { LoggedInRedirection } from "../components/logged-in-redirection";
 
 const Login: NextPage = () => {
-  const login = useLogin();
+  const { mutate: login, error } = useLogin();
 
   return (
     <>
@@ -28,33 +28,43 @@ const Login: NextPage = () => {
             const email = formData.get("email") as string;
             const password = formData.get("password") as string;
 
-            login.mutate({
+            login({
               email,
               password,
             });
           }}
         >
-          <div className="mt-20 flex flex-col gap-5">
-            <Input
-              type="email"
-              name="email"
-              placeholder="Email"
-              icon={<FiMail />}
-            />
-            <Input
-              type="password"
-              name="password"
-              placeholder="Password"
-              icon={<FiLock />}
-            />
+          <div className="relative mt-20 mb-16">
+            <div className="flex flex-col gap-5">
+              <Input
+                type="email"
+                name="email"
+                placeholder="Email"
+                icon={<FiMail />}
+              />
+              <Input
+                type="password"
+                name="password"
+                placeholder="Password"
+                icon={<FiLock />}
+              />
+            </div>
+            {error && (
+              <div className="text-red-500 text-center absolute inset-x-0 mt-5">
+                {error}
+              </div>
+            )}
           </div>
-          <Button type="submit" look={3} className="mt-12">
+          <Button type="submit" look={3}>
             Log-In
           </Button>
         </form>
         <p className="text-lg font-light mt-5 text-center">
           Are you new here?{" "}
-          <Link href="/register" className="text-lg text-highlight1 font-thin">
+          <Link
+            href="/register"
+            className="text-lg text-highlight1 font-thin hover:underline"
+          >
             Register
           </Link>
         </p>

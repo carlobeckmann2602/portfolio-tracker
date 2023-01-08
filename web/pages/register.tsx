@@ -10,7 +10,7 @@ import { FiMail, FiLock } from "react-icons/fi";
 import { LoggedInRedirection } from "../components/logged-in-redirection";
 
 const Register: NextPage = () => {
-  const registration = useRegistration();
+  const { mutate: register, error } = useRegistration();
 
   return (
     <>
@@ -29,33 +29,40 @@ const Register: NextPage = () => {
             const password = formData.get("password") as string;
             const password2 = formData.get("password2") as string;
 
-            registration.mutate({
+            register({
               email,
               password,
               password2,
             });
           }}
         >
-          <div className="flex flex-col gap-12">
+          <div className="flex flex-col gap-16">
             <Input
               type="email"
               name="email"
               placeholder="Email"
               icon={<FiMail />}
             />
-            <div className="flex flex-col gap-5">
-              <Input
-                type="password"
-                name="password"
-                placeholder="Password"
-                icon={<FiLock />}
-              />
-              <Input
-                type="password"
-                name="password2"
-                placeholder="Repeat Password"
-                icon={<FiLock />}
-              />
+            <div className="relative">
+              <div className="flex flex-col gap-5">
+                <Input
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  icon={<FiLock />}
+                />
+                <Input
+                  type="password"
+                  name="password2"
+                  placeholder="Repeat Password"
+                  icon={<FiLock />}
+                />
+              </div>
+              {error && (
+                <div className="absolute inset-x-0 text-red-500 text-center pt-5">
+                  {error}
+                </div>
+              )}
             </div>
             <Button type="submit" look={3}>
               Register
@@ -63,7 +70,10 @@ const Register: NextPage = () => {
           </div>
           <p className="text-lg font-light mt-5 text-center">
             Already have an account?{" "}
-            <Link href="/login" className="text-lg text-highlight1 font-light">
+            <Link
+              href="/login"
+              className="text-lg text-highlight1 font-light hover:underline"
+            >
               Login
             </Link>
           </p>
