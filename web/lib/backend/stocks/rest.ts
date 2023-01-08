@@ -113,14 +113,14 @@ export async function fetchStockSearch(searchTerm: string) {
 export async function fetchStockHoldingAmountMut({
   stockId,
   amountOffset,
-  price,
+  pricePerShare,
   date,
 }: StockHoldingAmountMutVars) {
   if (!amountOffset) return;
 
   const vars: StockHoldingAmountMutVarsDTO = {
     amount: Math.abs(amountOffset),
-    pricePerUnit: price,
+    pricePerUnit: pricePerShare,
     date: date.toISOString(),
   };
 
