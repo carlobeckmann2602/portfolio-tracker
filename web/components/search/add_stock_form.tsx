@@ -17,16 +17,6 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
     setStockAmount(evt.target.value);
   };
 
-  const addStockAndCloseSearch = (stock: Stock) => {
-    onAdd();
-    mutateHoldingAmount({
-      stockId: stock.id,
-      amountOffset: stockAmount,
-      pricePerShare: stock.price,
-      date: purchaseDate,
-    });
-  };
-
   return (
     <div>
       <div className="flex justify-between items-center mb-4">
@@ -41,13 +31,12 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
       </div>
       <div className="flex justify-between items-center mb-4">
         <label className="w-1/3 font-light">
-          Money spent <span className="inline-block">(in €)</span>
+          Price per share <span className="inline-block">(in euros)</span>
         </label>
         <Number
           name="price"
           className="w-1/3"
-          value={(stockAmount * stock.price).toFixed(2)}
-          disabled
+          defaultValue={stock.price.toFixed(2)}
         />
       </div>
       <div className="mb-4">
@@ -55,10 +44,23 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
         <DatePicker
           className="mt-4"
           selected={purchaseDate}
-          onChange={(date: Date) => setPurchaseDate(date)}
+          onChange={(date) => {
+            if (date) setPurchaseDate(date);
+          }}
         />
       </div>
-      <Button look={1} onClick={() => addStockAndCloseSearch(stock)}>
+      <Button
+        look={1}
+        onClick={() => {
+          onAdd();
+          mutateHoldingAmount({
+            stockId: stock.id,
+            amountOffset: stockAmount,
+            pricePerShare: stock.price,
+            date: purchaseDate,
+          });
+        }}
+      >
         Add
       </Button>
     </div>
