@@ -28,6 +28,7 @@ struct RemoveAllAmount: View {
     } label: {
       Text("Remove all")
         .roboto(size: 20, weight: .medium)
+        .frame(maxWidth: .infinity)
         .padding()
         .overlay(
           RoundedRectangle(cornerRadius: 12)

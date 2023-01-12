@@ -20,4 +20,24 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
   func calculateStockValue() -> Double {
     return Double(Double(price) * Double(amountAfterSplit))
   }
+
+  func getGainPercentageString() -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .percent
+    formatter.minimumFractionDigits = 2
+    formatter.maximumFractionDigits = 2
+    formatter.positivePrefix = formatter.plusSign
+    formatter.negativePrefix = formatter.minusSign
+    return formatter.string(for: gainPercentage / 100) ?? "0,00%"
+  }
+
+  func getTrendPercentageString() -> String {
+    let formatter = NumberFormatter()
+    formatter.numberStyle = .percent
+    formatter.minimumFractionDigits = 2
+    formatter.maximumFractionDigits = 2
+    formatter.positivePrefix = formatter.plusSign
+    formatter.negativePrefix = formatter.minusSign
+    return formatter.string(for: trend / 100) ?? "0,00%"
+  }
 }
