@@ -14,6 +14,7 @@ struct AddToPortfolioView: View {
   var portfolioHandler: PortfolioHandler
 
   @State var input = "1"
+    @State var money_spend = 0.0
   @State private var todayDate = Date.now
   var body: some View {
     ZStack {
@@ -38,7 +39,7 @@ struct AddToPortfolioView: View {
         }.padding()
         HStack {
           Text("Money spent (in euros)").roboto(size: 20, weight: .light)
-          Text(String(amountSpend()))
+            TextField("", value: $money_spend, format: .number)
             .padding()
             .overlay(
               RoundedRectangle(cornerRadius: 12)
@@ -49,13 +50,13 @@ struct AddToPortfolioView: View {
           DatePicker(selection: $todayDate, in: ...Date.now, displayedComponents: .date) {
             Text("Purchase Date").roboto(size: 20, weight: .light)
           }
-          //            Text("Date is \(todayDate.formatted(date: .long, time: .omitted))")
+//                      Text("Date is \(money_spend)")
         }.padding()
         Button {
 
           do {
             try portfolioHandler.addToPortfolio(
-              stockId: stock.id, amount: stockNumberToPurchase(), pricePerUnit: 50, date: todayDate,
+              stockId: stock.id, amount: stockNumberToPurchase(), pricePerUnit: Float(money_spend), date: todayDate,
               onComplete: { portfolioEntry in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
                   portfolio.addStockToPortfolio(portfolioEntry: portfolioEntry)
@@ -80,7 +81,7 @@ struct AddToPortfolioView: View {
   func stockNumberToPurchase() -> Int {
     return Int(input) ?? 0
   }
-  func amountSpend() -> Int {
-    return Int(stock.getValue()) * (Int(input) ?? 0)
-  }
+//  func amountSpend() -> Int {
+//    return Int(stock.getValue()) * (Int(input) ?? 0)
+//  }
 }
