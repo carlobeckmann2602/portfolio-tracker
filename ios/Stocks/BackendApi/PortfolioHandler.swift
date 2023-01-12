@@ -9,6 +9,12 @@ import Foundation
 import JWTDecode
 import Just
 
+struct AddToPortfolioDto: Encodable {
+  var amount: Int
+  var pricePerUnit: Float
+  var date: Date
+}
+
 struct PortfolioOnUserDto: Decodable {
   var id: Int
   var symbol: String
@@ -64,20 +70,52 @@ class PortfolioHandler {
     )
   }
 
+  func addToPortfolio(
+    stockId: Int, amount: Int, pricePerUnit: Float, date: Date,
+    onComplete: @escaping (PortfolioEntry) -> Void
+  ) throws {
+    let dto = AddToPortfolioDto(amount: amount, pricePerUnit: pricePerUnit, date: date)
+    let jsonEncoder = JSONEncoder()
+    jsonEncoder.dateEncodingStrategy = .iso8601
+    let jsonData = try jsonEncoder.encode(dto)
+
+    JustOf<HTTP>().post(
+      "\(ApiUtils.BASE_URL)/users/me/stocks/\(stockId)",
+      headers: authenticationHandler.getHeaders(),
+      requestBody: jsonData,
+      asyncCompletionHandler: { r in
+        if !r.ok {
+          return
+        }
+        do {
+          let portfolioOnUserDto = try r.getEntity(PortfolioOnUserDto.self)
+          onComplete(self.mapToPortfolioEntry(portfolioOnUserDto))
+        } catch {
+          print("Failed to add stock to portfolio: \(error)")
+        }
+      }
+    )
+
+  }
+
   private func mapToPortfolioEntries(_ portfolioDto: PortfolioDto) -> [PortfolioEntry] {
     return portfolioDto.stocks.map { stockOnUserDto in
-      let stock = Stock(
-        id: stockOnUserDto.id, name: stockOnUserDto.name, symbol: stockOnUserDto.symbol,
-        description: stockOnUserDto.description, histories: stockOnUserDto.histories)
-      return PortfolioEntry(
-        stock: stock,
-        amountAfterSplit: stockOnUserDto.amountAfterSplit,
-        price: stockOnUserDto.price,
-        trend: stockOnUserDto.trend,
-        moneyInvestedInStock: stockOnUserDto.moneyInvestedInStock,
-        gainAbsolute: stockOnUserDto.gainAbsolute,
-        gainPercentage: stockOnUserDto.gainPercentage
-      )
+      return mapToPortfolioEntry(stockOnUserDto)
     }
+  }
+
+  private func mapToPortfolioEntry(_ stockOnUserDto: PortfolioOnUserDto) -> PortfolioEntry {
+    let stock = Stock(
+      id: stockOnUserDto.id, name: stockOnUserDto.name, symbol: stockOnUserDto.symbol,
+      description: stockOnUserDto.description, histories: stockOnUserDto.histories)
+    return PortfolioEntry(
+      stock: stock,
+      amountAfterSplit: stockOnUserDto.amountAfterSplit,
+      price: stockOnUserDto.price,
+      trend: stockOnUserDto.trend,
+      moneyInvestedInStock: stockOnUserDto.moneyInvestedInStock,
+      gainAbsolute: stockOnUserDto.gainAbsolute,
+      gainPercentage: stockOnUserDto.gainPercentage
+    )
   }
 }

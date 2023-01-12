@@ -25,7 +25,8 @@ struct SearchResultsList: View {
     List(stocks) { stock in
       NavigationLink(
         destination: AddToPortfolioView(
-            stock: stock, portfolio: portfolio, stocksHandler:StocksHandler(authenticationHandler: authenticationHandler))
+          stock: stock, portfolio: portfolio,
+          portfolioHandler: PortfolioHandler(authenticationHandler: authenticationHandler))
       ) {
         StockListCell(stock: stock)
           .padding(5)

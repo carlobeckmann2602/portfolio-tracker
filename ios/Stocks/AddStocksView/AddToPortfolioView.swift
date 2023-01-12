@@ -11,7 +11,7 @@ import SwiftUI
 struct AddToPortfolioView: View {
   var stock: Stock
   var portfolio: Portfolio
-  var stocksHandler: StocksHandler
+  var portfolioHandler: PortfolioHandler
 
   @State var input = "1"
   var body: some View {
@@ -31,16 +31,18 @@ struct AddToPortfolioView: View {
       Button {
 
         do {
-          try stocksHandler.addToPortfolio(
+          try portfolioHandler.addToPortfolio(
             stockId: stock.id, amount: stockNumberToPurchase(), pricePerUnit: 50, date: Date(),
-            onComplete: { stock in
-              portfolio.addStockToPortfolio(stock: stock, amount: stockNumberToPurchase())
+            onComplete: { portfolioEntry in
+              DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                portfolio.addStockToPortfolio(portfolioEntry: portfolioEntry)
+              }
             })
         } catch {
           print("error when adding to portfolio \(error)")
         }
-
         NavigationUtils.popToRootView()
+
       } label: {
         Text("Add to portfolio")
       }.buttonStyle(.borderedProminent)
