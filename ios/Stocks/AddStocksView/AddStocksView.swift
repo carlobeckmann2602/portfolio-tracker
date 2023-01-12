@@ -59,22 +59,25 @@ struct AddStocksView: View {
   @State var searchWasSubmitted = false
 
   var body: some View {
-    SearchStocksList(
-      searchWasSubmitted: searchWasSubmitted, portfolio: portfolio,
-      authenticationHandler: authenticationHandler
-    )
-    .searchable(text: $searchState.searchText, prompt: "Search a stock")
-    .onChange(
-      of: searchState.searchText,
-      perform: { newText in
-        searchWasSubmitted = false
+    ZStack {
+      AppColors.LIGHT_PURPLE.ignoresSafeArea()
+      SearchStocksList(
+        searchWasSubmitted: searchWasSubmitted, portfolio: portfolio,
+        authenticationHandler: authenticationHandler
+      )
+      .searchable(text: $searchState.searchText, prompt: "Search a stock")
+      .onChange(
+        of: searchState.searchText,
+        perform: { newText in
+          searchWasSubmitted = false
+        }
+      )
+      .onSubmit(of: .search) {
+        searchWasSubmitted = true
+        dismissSearch()
       }
-    )
-    .onSubmit(of: .search) {
-      searchWasSubmitted = true
-      dismissSearch()
+      .environmentObject(
+        searchState)
     }
-    .environmentObject(
-      searchState)
   }
 }
