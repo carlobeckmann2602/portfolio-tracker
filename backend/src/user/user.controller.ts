@@ -241,13 +241,13 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   @ApiResponse({ status: 200, description: 'Return success message' })
   @ApiBearerAuth('JWT-auth')
-  removeStockFromUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
+  removeStockFromUser(@Param('sid') sid: string, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
     return this.transactionService.addTransaction(
       req.user['userId'],
-      +sid,
+      sid,
       stockOnUserDto.amount,
       false,
       stockOnUserDto.pricePerUnit,
@@ -261,7 +261,7 @@ export class UserController {
   @ApiResponse({ status: 404, description: 'There was no stock with the given sid. The portfolio remains unchanged' })
   @ApiResponse({ status: 201, description: 'Return success message' })
   @ApiBearerAuth('JWT-auth')
-  async addStockToUser(@Param('sid') sid: number, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
+  async addStockToUser(@Param('sid') sid: string, @Body() stockOnUserDto: StockOnUserDto, @Req() req: Request) {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
@@ -269,7 +269,7 @@ export class UserController {
     try {
       return await this.transactionService.addTransaction(
         req.user['userId'],
-        +sid,
+        sid,
         stockOnUserDto.amount,
         true,
         stockOnUserDto.pricePerUnit,

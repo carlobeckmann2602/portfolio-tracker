@@ -8,7 +8,7 @@ import { StockService } from './stock.service';
 export class SplitService {
   constructor(private prisma: PrismaService, private stockService: StockService) {}
 
-  async createSplitAdjustedTransactions(userId: number, sid?: number): Promise<TransactionSplitAdjusted[]> {
+  async createSplitAdjustedTransactions(userId: number, sid?: string): Promise<TransactionSplitAdjusted[]> {
     // get each transaction for uid + sid
     const query: Prisma.TransactionsFindManyArgs = {
       where: {
@@ -17,7 +17,7 @@ export class SplitService {
     };
 
     if (sid) {
-      query.where.stockId = sid;
+      query.where.stockId = Number(sid);
     }
 
     const transactions = await this.prisma.transactions.findMany(query);
@@ -25,10 +25,8 @@ export class SplitService {
     // create list of all splits for sid
     const splits = await this.prisma.stockHistory.findMany({
       where: {
-        NOT: {
-          split: {
-            equals: 1.0,
-          },
+        split: {
+          not: 1.0,
         },
       },
     });

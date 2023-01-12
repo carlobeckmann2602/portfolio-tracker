@@ -6,21 +6,56 @@ import { PrismaService } from 'src/prisma/prisma.service';
 export class StockService {
   constructor(private prisma: PrismaService) {}
 
-  async getStockWithHistory(sid: number, lastNumberOfDays = 1) {
+  async getStockWithHistory(sid: string, lastNumberOfDays = 1) {
     try {
       const stock = await this.prisma.stock.findUnique({
         where: {
-          id: sid,
+          id: Number(sid),
         },
         include: {
           histories: {
             where: {
-              stockId: sid,
+              stockId: Number(sid),
             },
             orderBy: {
               time: 'desc',
             },
             take: lastNumberOfDays,
+          },
+        },
+      });
+
+      if (stock === null) {
+        throw new NotFoundException('Stock not found');
+      }
+
+      return stock;
+    } catch (error) {
+      if (error instanceof PrismaClientValidationError) {
+        throw new BadRequestException('Invalid parameter');
+      }
+      throw error;
+    }
+  }
+
+  async getStocskWithHistory(sids: number[], lastNumberOfDays = 1) {
+    const fallBackWindow = new Date();
+    fallBackWindow.setDate(fallBackWindow.getDate() - lastNumberOfDays + 10);
+    try {
+      const stock = await this.prisma.stock.findMany({
+        where: {
+          id: { in: sids },
+        },
+        include: {
+          histories: {
+            where: {
+              time: { gte: fallBackWindow },
+            },
+            orderBy: {
+              time: 'desc',
+            },
+            take: lastNumberOfDays,
+            distinct: ['time'],
           },
         },
       });

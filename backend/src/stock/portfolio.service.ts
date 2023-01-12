@@ -3,7 +3,9 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Portfolio } from './interfaces/Portfolio';
 import { StockGainAndSplitAdjusted } from './interfaces/StockGainAndSplitAdjusted';
 import { TransactionAgregationCollection } from './interfaces/transactions/TransactionAgregationCollection';
+import { TransactionAgregationCollectionWithStockInfo } from './interfaces/transactions/TransactionAgregationCollectionWithStockInfo';
 import { TransactionAgregationData } from './interfaces/transactions/TransactionAgregationData';
+import { TransactionAgregationDataWithStockInfo } from './interfaces/transactions/TransactionAgregationDataWithStockInfo';
 import { TransactionsGrouped } from './interfaces/transactions/TransactionsGrouped';
 import { TransactionSplitAdjusted } from './interfaces/transactions/TransactionSplitAdjusted';
 import { SplitService } from './split.service';
@@ -59,35 +61,25 @@ export class PortfolioService {
     return agregatedTransactions;
   }
 
-  async createGainAndSplitAdjustedStock(
-    sid: number,
-    transactionAgregationData: TransactionAgregationData,
-  ): Promise<StockGainAndSplitAdjusted> {
-    const stock = await this.prisma.stock.findFirst({ where: { id: Number(sid) } });
-
-    const stockHistory = (await this.stockService.getStockWithHistory(Number(sid), 30)).histories;
-    if (!stockHistory[0]) {
-      throw `No data available for stock with id ${sid}`;
-    }
-
-    const currentPrice = stockHistory[0].close;
+  createGainAndSplitAdjustedStock(sid: string, data: TransactionAgregationDataWithStockInfo): StockGainAndSplitAdjusted {
+    const currentPrice = data.stockInfo.histories[0]?.close;
 
     const gainAbsolute =
-      transactionAgregationData.moneyRecievedFromSales -
-      transactionAgregationData.moneyInvestedInStock +
-      transactionAgregationData.amountAfterSplit * currentPrice;
+      data.aggregationData.moneyRecievedFromSales -
+      data.aggregationData.moneyInvestedInStock +
+      data.aggregationData.amountAfterSplit * currentPrice;
     const gainPercentage =
-      ((gainAbsolute - transactionAgregationData.moneyInvestedInStock) / transactionAgregationData.moneyInvestedInStock) * 100;
+      ((gainAbsolute - data.aggregationData.moneyInvestedInStock) / data.aggregationData.moneyInvestedInStock) * 100;
     const gainPercentageRounded = Math.round(gainPercentage * 100) / 100;
+
     return {
-      ...stock,
-      amountAfterSplit: transactionAgregationData.amountAfterSplit,
+      ...data.stockInfo,
+      amountAfterSplit: data.aggregationData.amountAfterSplit,
       price: currentPrice,
-      trend: stockHistory[0].trend,
-      moneyInvestedInStock: transactionAgregationData.moneyInvestedInStock,
+      trend: data.stockInfo.histories[0]?.trend,
+      moneyInvestedInStock: data.aggregationData.moneyInvestedInStock,
       gainAbsolute: gainAbsolute,
       gainPercentage: gainPercentageRounded,
-      histories: stockHistory,
     };
   }
 
@@ -100,11 +92,24 @@ export class PortfolioService {
     let gainAbsolutePortfolio = 0;
     let moneyInvestedPortfolio = 0;
 
-    for (const stockId in transactionAgregationCollection) {
-      const gainAndSplitAdjustedStock = await this.createGainAndSplitAdjustedStock(
-        Number(stockId),
-        transactionAgregationCollection[stockId],
-      );
+    const getStocskWithHistory = await this.stockService.getStocskWithHistory(
+      Object.keys(transactionAgregationCollection).map((key) => Number(key)),
+      30,
+    );
+
+    const transactionAgregationCollectionWithStockInfo: TransactionAgregationCollectionWithStockInfo = {};
+
+    for (const [stockId, transactionAgregationData] of Object.entries(transactionAgregationCollection)) {
+      transactionAgregationCollectionWithStockInfo[Number(stockId)] = {
+        aggregationData: transactionAgregationData,
+        stockInfo: getStocskWithHistory.find((stock) => stock.id === Number(stockId)),
+      };
+    }
+
+    for (const stockId in transactionAgregationCollectionWithStockInfo) {
+      const info = transactionAgregationCollectionWithStockInfo[stockId];
+      const gainAndSplitAdjustedStock = this.createGainAndSplitAdjustedStock(stockId, info);
+
       gainAndSplitAdjustedStocks.push(gainAndSplitAdjustedStock);
 
       currentPortfolioValue += gainAndSplitAdjustedStock.amountAfterSplit * gainAndSplitAdjustedStock.price;

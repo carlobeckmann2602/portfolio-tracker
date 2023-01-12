@@ -166,14 +166,7 @@ export class StockController {
   @ApiOperation({ summary: 'Returns information about a specific stock' })
   @ApiResponse({ status: 200, description: 'Returns a json-object containing all information about the stock with the sid' })
   @ApiResponse({ status: 400, description: 'There was no stock with the given sid. No stock-object is returned' })
-  findOne(@Param('id') id: number) {
-    if (this.mockMode) {
-      if (id >= 0 && id < 8) {
-        return this.mockStocks[id];
-      } else {
-        return [];
-      }
-    }
-    return this.stockService.getStockWithHistory(+id);
+  findOne(@Param('id') id: string) {
+    return this.stockService.getStockWithHistory(id);
   }
 }

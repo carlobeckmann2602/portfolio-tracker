@@ -2,6 +2,7 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { PrismaClientKnownRequestError, PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { StockGainAndSplitAdjusted } from './interfaces/StockGainAndSplitAdjusted';
+import { TransactionAgregationDataWithStockInfo } from './interfaces/transactions/TransactionAgregationDataWithStockInfo';
 import { PortfolioService } from './portfolio.service';
 import { SplitService } from './split.service';
 import { StockService } from './stock.service';
@@ -14,9 +15,10 @@ export class TransactionService {
     private stockService: StockService,
     private splitService: SplitService,
   ) {}
+
   async addTransaction(
     uid: number,
-    sid: number,
+    sid: string,
     amount: number,
     buy: boolean,
     pricePerUnit: number,
@@ -27,7 +29,7 @@ export class TransactionService {
       await this.prisma.transactions.create({
         data: {
           userId: uid,
-          stockId: sid,
+          stockId: Number(sid),
           amount: amount,
           price: pricePerUnit,
           time: date || new Date(),
@@ -49,6 +51,11 @@ export class TransactionService {
 
     const transactions = await this.splitService.createSplitAdjustedTransactions(uid, sid);
     const transactionAgregationData = this.portfolioService.agregateTransactions(transactions);
-    return this.portfolioService.createGainAndSplitAdjustedStock(sid, transactionAgregationData);
+    const data = await this.stockService.getStockWithHistory(sid);
+    const combinedData: TransactionAgregationDataWithStockInfo = {
+      aggregationData: transactionAgregationData,
+      stockInfo: data,
+    };
+    return this.portfolioService.createGainAndSplitAdjustedStock(sid, combinedData);
   }
 }
