@@ -1,6 +1,7 @@
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
+
 @Injectable()
 export class StockService {
   constructor(private prisma: PrismaService) {}
@@ -82,7 +83,10 @@ export class StockService {
 
   async searchStocks(stockName: string) {
     //searchs stock with name or symbol
-    const stock = await this.prisma.stock.findMany({
+    const searchWindow = new Date();
+    searchWindow.setDate(searchWindow.getDate() - 7);
+
+    const stocks = await this.prisma.stock.findMany({
       where: {
         OR: [
           {
@@ -92,27 +96,25 @@ export class StockService {
             },
           },
           {
-            AND: {
-              symbol: {
-                contains: stockName,
-                mode: 'insensitive',
-              },
+            symbol: {
+              contains: stockName,
+              mode: 'insensitive',
             },
           },
         ],
       },
       include: {
         histories: {
-          orderBy: {
-            time: 'desc',
+          where: {
+            time: { gte: searchWindow },
           },
           take: 1,
+          orderBy: { time: 'desc' },
         },
       },
     });
-    return stock;
+    return stocks;
   }
-
   async countStockAmount(uid: number, sid: number): Promise<number> {
     let stockAmount = 0;
     const userTransactions = await this.prisma.transactions.findMany({
