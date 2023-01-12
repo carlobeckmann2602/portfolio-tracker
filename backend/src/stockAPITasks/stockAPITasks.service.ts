@@ -11,51 +11,6 @@ export class StockAPITasksService {
 
   // Hardcoded stocks (i.e. their symbols) which are used to fill the DB
 
-  //German DAX (XETRA) stocks (as from 19.12.2022)
-  // !!! Company overviews does not work with given symbols in stock-API alpha vantage !!! //
-  // public stockSymbols: String[] = [
-  //   'IBM', //	Adidas
-  //   'AIR.DEX', //	Airbus
-  //   'ALV.DEX', //	Allianz
-  //   'BAS.DEX', //	BASF
-  //   'BAYN.DEX', // Bayer
-  //   'BEI.DEX', //	Beiersdorf
-  //   'BMW.DEX', //	BMW
-  //   'BNR.DEX', //	Brenntag
-  //   'CON.DEX', //	Continental
-  //   '1COV.DEX', // Covestro
-  //   'DTG.DEX', //	Daimler Truck
-  //   'DBK.DEX', //	Deutsche Bank
-  //   'DB1.DEX', //	Deutsche Börse
-  //   'DPW.DEX', //	Deutsche Post
-  //   'DTE.DEX', //	Deutsche Telekom
-  //   'EOAN.DEX', // E.ON
-  //   'FRE.DEX', //	Fresenius
-  //   'FME.DEX', //	Fresenius Medical Care
-  //   'HNR1.DEX', // Hannover Rück
-  //   'HEI.DEX', //	HeidelbergCement (Heidelberg Materials)
-  //   'HEN3.DEX', // Henkel
-  //   'IFX.DEX', //	Infineon
-  //   'LIN.DEX', //	Linde
-  //   'MBG.DEX', //	Mercedes-Benz Group
-  //   'MRK.DEX', //	Merck
-  //   'MTX.DEX', //	MTU Aero Engines
-  //   'MUV2.DEX', // Münchener Rück
-  //   'PAG911.DEX', // Porsche AG
-  //   'PAH3.DEX', // Porsche SE
-  //   'QIA.DEX', //	Qiagen
-  //   'RWE.DEX', //	RWE
-  //   'SAP.DEX', //	SAP
-  //   'SRT3.DEX', // Sartorius
-  //   'SIE.DEX', //	Siemens
-  //   'ENR.DEX', //	Siemens Energy
-  //   'SHL.DEX', //	Siemens Healthineers
-  //   'SY1.DEX', //	Symrise
-  //   'VOW3.DEX', // Volkswagen
-  //   'VNA.DEX', //	Vonovia
-  //   'ZAL.DEX', //	Zalando
-  // ];
-
   // First 40 companies on American NASDAQ 100 (as from 19.12.2022)
   public stockSymbols: string[] = [
     'MSFT', //	Microsoft Corp

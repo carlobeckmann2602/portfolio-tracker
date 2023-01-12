@@ -120,35 +120,46 @@ export class StockService {
     //searchs stock with name or symbol
     const searchWindow = new Date();
     searchWindow.setDate(searchWindow.getDate() - 7);
-
-    const stocks = await this.prisma.stock.findMany({
-      where: {
-        OR: [
-          {
-            name: {
-              contains: stockName,
-              mode: 'insensitive',
+    try {
+      const stocks = await this.prisma.stock.findMany({
+        where: {
+          OR: [
+            {
+              name: {
+                contains: stockName,
+                mode: 'insensitive',
+              },
             },
-          },
-          {
-            symbol: {
-              contains: stockName,
-              mode: 'insensitive',
+            {
+              symbol: {
+                contains: stockName,
+                mode: 'insensitive',
+              },
             },
-          },
-        ],
-      },
-      include: {
-        histories: {
-          where: {
-            time: { gte: searchWindow },
-          },
-          take: 1,
-          orderBy: { time: 'desc' },
+          ],
         },
-      },
-    });
-    return stocks;
+        include: {
+          histories: {
+            where: {
+              time: { gte: searchWindow },
+            },
+            take: 1,
+            orderBy: { time: 'desc' },
+          },
+        },
+      });
+
+      if (stocks.length === 0) {
+        throw new NotFoundException('Stock not found');
+      }
+
+      return stocks;
+    } catch (error) {
+      if (error instanceof PrismaClientValidationError) {
+        throw new BadRequestException('Invalid parameter');
+      }
+      throw error;
+    }
   }
   async countStockAmount(uid: number, sid: number): Promise<number> {
     let stockAmount = 0;
