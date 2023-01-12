@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3D0A5EE7296FFCA100ECEB91 /* SearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A5EE6296FFCA100ECEB91 /* SearchHandler.swift */; };
 		3D0A5EE9297003BC00ECEB91 /* SearchResultLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A5EE8297003BC00ECEB91 /* SearchResultLoader.swift */; };
+		3D0A5EEB2970042700ECEB91 /* StyledProgressSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A5EEA2970042700ECEB91 /* StyledProgressSpinner.swift */; };
 		3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */; };
 		3D334D1429290DF000060649 /* StockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D1329290DF000060649 /* StockListCell.swift */; };
 		3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D15292915C100060649 /* AddToPortfolioView.swift */; };
@@ -90,6 +91,7 @@
 /* Begin PBXFileReference section */
 		3D0A5EE6296FFCA100ECEB91 /* SearchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHandler.swift; sourceTree = "<group>"; };
 		3D0A5EE8297003BC00ECEB91 /* SearchResultLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultLoader.swift; sourceTree = "<group>"; };
+		3D0A5EEA2970042700ECEB91 /* StyledProgressSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyledProgressSpinner.swift; sourceTree = "<group>"; };
 		3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		3D334D1329290DF000060649 /* StockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListCell.swift; sourceTree = "<group>"; };
 		3D334D15292915C100060649 /* AddToPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPortfolioView.swift; sourceTree = "<group>"; };
@@ -281,6 +283,7 @@
 				3DA98E1F29098A270091F88F /* Assets.xcassets */,
 				3DA98E2129098A270091F88F /* Preview Content */,
 				3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */,
+				3D0A5EEA2970042700ECEB91 /* StyledProgressSpinner.swift */,
 			);
 			path = Stocks;
 			sourceTree = "<group>";
@@ -563,6 +566,7 @@
 				3DA666F32929401B00C13EDF /* NavigationUtils.swift in Sources */,
 				85262E6229585D08000DF85D /* OnboardingStep1.swift in Sources */,
 				3DE6A4CD2944B62F00F9944A /* ApiUtils.swift in Sources */,
+				3D0A5EEB2970042700ECEB91 /* StyledProgressSpinner.swift in Sources */,
 				3D97BD1C2943B08F00B313B2 /* ActionButton.swift in Sources */,
 				3D552C0E295CA47900BF6F40 /* JustHttp+Extensions.swift in Sources */,
 				EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */,

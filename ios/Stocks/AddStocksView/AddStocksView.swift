@@ -31,7 +31,7 @@ struct SearchStocksList: View {
           loadable: SearchResultLoader(
             searchHandler: SearchHandler(authenticationHandler: authenticationHandler),
             searchText: searchState.searchText),
-          loadingView: ProgressView("Searching..")
+          loadingView: StyledProgressSpinner(text: "Searching..")
             .tint(.white)
             .foregroundColor(Color.white)
         ) { stocks in

@@ -90,7 +90,7 @@ struct PortfolioView: View {
         AppColors.BACKGROUND.ignoresSafeArea()
         AsyncContentView(
           loadable: PortfolioLoader(portfolioHandler: portfolioHandler),
-          loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
+          loadingView: StyledProgressSpinner(text: "Loading Portfolio..")
         ) { portfolio in
           PortfolioLoadedView(portfolio: portfolio, authenticationHandler: authenticationHandler)
         }
