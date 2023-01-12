@@ -41,7 +41,7 @@ struct PortfolioLoadedView: View {
             destination: AddStocksView(
               portfolio: portfolio, authenticationHandler: authenticationHandler
             ).navigationTitle(
-              "Add Stock")
+              "Add Stocks")
           ) {
             Label("add", systemImage: "plus.circle")
               .font(.system(size: 50)).fontWeight(.ultraLight)
