@@ -42,6 +42,7 @@ struct PortfolioLoadedView: View {
               portfolio: portfolio, authenticationHandler: authenticationHandler
             ).navigationTitle(
               "Add Stocks")
+
           ) {
             Label("add", systemImage: "plus.circle")
               .font(.system(size: 50)).fontWeight(.ultraLight)
