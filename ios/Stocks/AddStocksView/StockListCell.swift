@@ -17,11 +17,13 @@ struct StockListCell: View {
         .font(.system(size: 30))
       VStack(alignment: .leading) {
         Text(stock.name)
+          .roboto(size: 20, weight: .regular)
         Text("+2,5%")
-          .font(.system(size: 12))
+          .roboto(size: 18)
       }
       Spacer()
       Text(String(format: "%.2f€", stock.getValue()))
+        .roboto(size: 18)
     }
 
   }
