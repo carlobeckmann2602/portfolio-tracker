@@ -1,51 +1,14 @@
-import React from "react";
+import { formatCurrencyValue } from "../../lib/util";
+import { StockHolding } from "../../lib/backend";
+import { TrendIcon } from "../stock/trend-icon";
 import {
-  createStockHolding,
-  StockHolding,
-  stringifyCurrencyValue,
-  useStockHoldingMutation,
-} from "../../lib/backend";
-import { Button } from "../button";
-import { TrendIcon } from "../stock/trend_icon";
+  HoldingAmountCounterMutation,
+  RemoveHoldingButton,
+} from "./amount-mutation";
 
 const TableRow = ({ children }: React.PropsWithChildren) => (
   <div className="flex justify-between">{children}</div>
 );
-
-const CounterButton = (
-  props: React.DetailedHTMLProps<
-    React.ButtonHTMLAttributes<HTMLButtonElement>,
-    HTMLButtonElement
-  >
-) => (
-  <button
-    {...props}
-    className="rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition disabled:opacity-0"
-  />
-);
-
-function CounterInput({
-  value,
-  onChange,
-  min,
-}: {
-  value: number;
-  onChange: (value: number) => void;
-  min?: number;
-}) {
-  return (
-    <div className="flex items-center">
-      <CounterButton
-        onClick={() => onChange(value - 1)}
-        disabled={min != undefined && min >= value}
-      >
-        -
-      </CounterButton>
-      <div className="w-20 text-center">{value}</div>
-      <CounterButton onClick={() => onChange(value + 1)}>+</CounterButton>
-    </div>
-  );
-}
 
 export function StockDetails({
   holding,
@@ -54,62 +17,47 @@ export function StockDetails({
   holding: StockHolding;
   selectionColor: string;
 }) {
-  const { name, symbol, price } = holding.stock;
-  const [count, setCount] = React.useState(holding.amount);
-  const holdingMut = useStockHoldingMutation();
-
-  const setAmount = React.useCallback(
-    (amount: number) => {
-      setCount(amount);
-      // Overwrite the current holding with the correct number of shares
-      holdingMut.mutate(createStockHolding(holding.stock, amount));
-    },
-    [holding, holdingMut]
+  const trendElem: JSX.Element = (
+    <>
+      {holding.stock.trend < 0 ? "-" : "+"}
+      {Math.abs(holding.stock.trend).toFixed(2).replace(".", ",")}%
+    </>
   );
-
-  const removeHolding = React.useCallback(() => {
-    // Set the number of shares of the current holding to 0
-    holdingMut.mutate(createStockHolding(holding.stock, 0));
-  }, [holding, holdingMut]);
-
-  React.useEffect(() => setCount(holding.amount), [holding]);
 
   return (
     <div className="flex flex-col gap-12">
       <div className="flex flex-col gap-8">
         <div
-          className="flex items-center gap-4 rounded-xl px-4 py-3 bg-front/10 border-2 border-front/20 transition"
+          className="flex items-center gap-3 xs:gap-4 rounded-xl px-3 xs:px-4 py-3 bg-front/10 border-2 border-front/20 transition duration-500"
           style={{ borderColor: selectionColor }}
         >
-          <TrendIcon trend={0} />
-          <div className="flex justify-between items-center flex-1">
+          <TrendIcon trend={holding.stock.trend} />
+          <div className="flex justify-between items-center flex-1 gap-4 text-sm xs:text-base">
             <div className="flex-1">
-              <h3 className="text-2xl">{name}</h3>
-              <p className="font-light">+ 0,00 %</p>
+              <h3 className="text-xl xs:text-2xl">{holding.stock.name}</h3>
+              <p className="font-light">{trendElem}</p>
             </div>
-            <div>
-              <p className="font-light">
-                {stringifyCurrencyValue(holding.value)}
-              </p>
+            <div className="flex-shrink-0">
+              <p className="font-light">{formatCurrencyValue(holding.value)}</p>
             </div>
           </div>
         </div>
         <div className="flex flex-col font-light xs:text-lg gap-2">
           <TableRow>
             <div>Current price:</div>
-            <div>{stringifyCurrencyValue(price)}</div>
+            <div>{formatCurrencyValue(holding.stock.price)}</div>
           </TableRow>
           <TableRow>
             <div>Trend:</div>
-            <div>+ 0,00 %</div>
+            <div>{trendElem}</div>
           </TableRow>
           <TableRow>
             <div>Count:</div>
-            <CounterInput value={count} onChange={setAmount} min={1} />
+            <HoldingAmountCounterMutation holding={holding} />
           </TableRow>
         </div>
       </div>
-      <Button onClick={removeHolding}>Remove stock</Button>
+      <RemoveHoldingButton holding={holding} />
     </div>
   );
 }

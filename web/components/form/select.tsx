@@ -1,14 +1,18 @@
 import React from "react";
-import { InputLabel } from "./input_label";
 
 export type SelectProps = {
   name: string;
-  label: string;
+  placeholder: string;
   options: string[];
   nullable: boolean;
 };
 
-export const Select = ({ name, label, options, nullable }: SelectProps) => {
+export const Select = ({
+  name,
+  placeholder,
+  options,
+  nullable,
+}: SelectProps) => {
   let emptyOptionElement = null;
 
   if (nullable) {
@@ -21,10 +25,9 @@ export const Select = ({ name, label, options, nullable }: SelectProps) => {
   return (
     <div className="relative text-base form-group my-2">
       <label className="flex flex-col">
-        <InputLabel>{label}</InputLabel>
         <select
           name={name}
-          placeholder={label}
+          placeholder={placeholder}
           className="border outline-none border-solid border-highlight1/50 focus:border-highlight1 p-1 rounded-sm"
         >
           {emptyOptionElement}

@@ -1,23 +1,11 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import Head from "next/head";
-import { BackendApiProvider, AuthContextProvider } from "../lib/backend";
-import { useEffect, useState } from "react";
+import { BackendApiProvider } from "../lib/backend";
 import { Footer } from "../components/footer";
+import { LogoutButton } from "../components/logout-button";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [userID, setUserID] = useState<string | null>(null);
-
-  useEffect(() => {
-    setUserID(localStorage.getItem("userID"));
-  }, []);
-
-  useEffect(() => {
-    if (userID) {
-      localStorage.setItem("userID", userID);
-    }
-  }, [userID]);
-
   return (
     <>
       <Head>
@@ -38,14 +26,13 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </Head>
       <BackendApiProvider>
-        <AuthContextProvider value={[userID, setUserID]}>
-          <Component {...pageProps} />
-          <Footer />
-        </AuthContextProvider>
+        <LogoutButton />
+        <Component {...pageProps} />
+        <Footer />
       </BackendApiProvider>
       <div
         id="modal-portal"
-        className="absolute w-full h-full top-0 left-0 pointer-events-none"
+        className="fixed inset-0 pointer-events-none"
       ></div>
     </>
   );

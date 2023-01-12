@@ -22,6 +22,16 @@ export const Modal = ({
     setRoot(document.querySelector("#modal-portal"));
   }, []);
 
+  useEffect(() => {
+    if (!open) return;
+    // Save the previous value of overflow (most likely undefined)
+    const prevOverflowValue = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflowValue;
+    };
+  }, [open]);
+
   return open && root
     ? createPortal(
         <div
