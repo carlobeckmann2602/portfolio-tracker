@@ -37,6 +37,8 @@ model StockHistory {
   trend   Float
   time    DateTime
   stock   Stock    @relation(fields: [stockId], references: [id])
+
+  @@index([stockId(sort: Desc), time(sort: Desc)])
 }
 
 model Transactions {
@@ -52,6 +54,6 @@ model Transactions {
 }
 
 model Tokens {
-  id      Int      @id @default(autoincrement())
-  token   String
+  id    Int    @id @default(autoincrement())
+  token String
 }
