@@ -13,12 +13,12 @@ struct StockListCell: View {
   var body: some View {
 
     HStack {
-      Image(systemName: "arrow.up.circle.fill")
+      Image(systemName: stock.getArrow())
         .font(.system(size: 30))
       VStack(alignment: .leading) {
         Text(stock.name)
           .roboto(size: 20, weight: .regular)
-        Text("+2,5%")
+        Text(String(format: "%+.2f%%", stock.histories[0].trend))
           .roboto(size: 18)
       }
       Spacer()

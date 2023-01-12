@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct StockHistory: Hashable, Codable, Identifiable {
   var id: Int
@@ -27,5 +28,12 @@ struct Stock: Hashable, Codable, Identifiable {
 
   func getValue() -> Float {
     return histories[0].close
+  }
+
+  func getArrow() -> String {
+    if histories[0].trend > 0 {
+      return "arrow.up.circle.fill"
+    }
+    return "arrow.down.circle.fill"
   }
 }
