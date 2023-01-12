@@ -26,7 +26,21 @@ struct SearchResultsList: View {
           stock: stock, portfolio: portfolio)
       ) {
         StockListCell(stock: stock)
-      }.listRowBackground(AppColors.VERY_LIGHT_PURPLE)
+          .padding(5)
+      }.listRowBackground(
+        RoundedRectangle(cornerRadius: 12)
+          .background(.clear)
+          .foregroundColor(AppColors.VERY_LIGHT_PURPLE)
+          .padding(
+            EdgeInsets(
+              top: 7,
+              leading: 7,
+              bottom: 7,
+              trailing: 7
+            )
+          )
+      )
+      .listRowSeparator(.hidden)
     }.scrollContentBackground(.hidden)
   }
 }
