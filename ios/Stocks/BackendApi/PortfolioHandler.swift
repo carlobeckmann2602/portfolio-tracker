@@ -95,7 +95,28 @@ class PortfolioHandler {
         }
       }
     )
+  }
 
+  func removeFromPortfolio(
+    stockId: Int, amount: Int,
+    onComplete: @escaping () -> Void
+  ) throws {
+    let dto = AddToPortfolioDto(amount: amount, pricePerUnit: 50, date: Date())
+    let jsonEncoder = JSONEncoder()
+    jsonEncoder.dateEncodingStrategy = .iso8601
+    let jsonData = try jsonEncoder.encode(dto)
+
+    JustOf<HTTP>().delete(
+      "\(ApiUtils.BASE_URL)/users/me/stocks/\(stockId)",
+      headers: authenticationHandler.getHeaders(),
+      requestBody: jsonData,
+      asyncCompletionHandler: { r in
+        if !r.ok {
+          return
+        }
+        onComplete()
+      }
+    )
   }
 
   private func mapToPortfolioEntries(_ portfolioDto: PortfolioDto) -> [PortfolioEntry] {

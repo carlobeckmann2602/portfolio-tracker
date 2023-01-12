@@ -13,6 +13,7 @@ struct PieChart: View {
   var separatorColor: Color
   var innerColor: Color
   var accentColors: [Color]
+  var portfolioHandler: PortfolioHandler
 
   @State private var currentStockId: Int? = nil
 
@@ -74,7 +75,9 @@ struct PieChart: View {
 
       HStack {
         if currentPortfolioEntry() != nil {
-          PortfolioEntryInfo(portfolioEntry: currentPortfolioEntry()!, portfolio: self.portfolio)
+          PortfolioEntryInfo(
+            portfolioEntry: currentPortfolioEntry()!, portfolio: self.portfolio,
+            portfolioHandler: portfolioHandler)
         } else {
           Text("Tap on an area of the donut chart for more.")
             .roboto(size: 25)

@@ -9,13 +9,22 @@ import Foundation
 import SwiftUI
 
 struct RemoveAllAmount: View {
-  var stock: Stock
+  var portfolioEntry: PortfolioEntry
   var portfolio: Portfolio
+  var portfolioHandler: PortfolioHandler
 
   @State var input = "1"
   var body: some View {
     Button {
-      portfolio.removeAllStockFromPortfolio(stock: stock)
+      do {
+        try portfolioHandler.removeFromPortfolio(
+          stockId: portfolioEntry.stock.id, amount: portfolioEntry.amountAfterSplit,
+          onComplete: {
+            portfolio.removeAllStockFromPortfolio(stock: portfolioEntry.stock)
+          })
+      } catch {
+        print("error when removing from portfolio \(error)")
+      }
     } label: {
       Text("Remove all")
         .roboto(size: 20, weight: .medium)

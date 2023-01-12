@@ -69,7 +69,8 @@ struct PortfolioLoadedView: View {
             portfolio: portfolio,
             separatorColor: Color(UIColor.systemBackground),
             innerColor: AppColors.LIGHT_PURPLE,
-            accentColors: pieColors
+            accentColors: pieColors,
+            portfolioHandler: PortfolioHandler(authenticationHandler: authenticationHandler)
           ).padding()
         }
       }

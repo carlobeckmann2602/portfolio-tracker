@@ -11,6 +11,7 @@ import SwiftUI
 struct PortfolioEntryInfo: View {
   var portfolioEntry: PortfolioEntry
   var portfolio: Portfolio
+  var portfolioHandler: PortfolioHandler
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       ZStack {
@@ -53,7 +54,8 @@ struct PortfolioEntryInfo: View {
           .roboto(size: 25)
       }
       StepperView(stock: portfolioEntry.stock, portfolio: portfolio, portfolioEntry: portfolioEntry)
-      RemoveAllAmount(stock: portfolioEntry.stock, portfolio: portfolio)
+      RemoveAllAmount(
+        portfolioEntry: portfolioEntry, portfolio: portfolio, portfolioHandler: portfolioHandler)
     }.foregroundColor(Color.white)
   }
   func formatPortfolioProportion() -> String {
@@ -62,40 +64,5 @@ struct PortfolioEntryInfo: View {
       normalizedValue(
         portfolioEntry: portfolioEntry, portfolio: self.portfolio)
         * 100)
-  }
-}
-
-struct PortfolioEntryInfo_Previews: PreviewProvider {
-  static var portfolio = Portfolio(
-    stocks: [
-      PortfolioEntry(
-        stock: ModelData().stocks[0],
-        amountAfterSplit: 50,
-        price: 147.49,
-        trend: 3.03,
-        moneyInvestedInStock: 2500,
-        gainAbsolute: 4874.5,
-        gainPercentage: 94.98
-      ),
-      PortfolioEntry(
-        stock: ModelData().stocks[4], amountAfterSplit: 50,
-        price: 147.49,
-        trend: 3.03,
-        moneyInvestedInStock: 2500,
-        gainAbsolute: 4874.5,
-        gainPercentage: 94.98),
-      PortfolioEntry(
-        stock: ModelData().stocks[22], amountAfterSplit: 50,
-        price: 147.49,
-        trend: 3.03,
-        moneyInvestedInStock: 2500,
-        gainAbsolute: 4874.5,
-        gainPercentage: 94.98),
-    ], currentPortfolioValue: 50, gainAbsolute: 30, gainPercentage: 0.3)
-  static var previews: some View {
-    VStack {
-      PortfolioEntryInfo(
-        portfolioEntry: PortfolioEntryInfo_Previews.portfolio.stocks[0], portfolio: portfolio)
-    }.frame(maxWidth: .infinity, maxHeight: .infinity).background(Color.black)
   }
 }
