@@ -3,9 +3,9 @@ import { PrismaClientValidationError } from '@prisma/client/runtime';
 import { PrismaService } from 'src/prisma/prisma.service';
 @Injectable()
 export class StockService {
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
-  async getStockWithHistory(sid: number, lastNumberOfDays: number = 1) {
+  async getStockWithHistory(sid: number, lastNumberOfDays = 1) {
     try {
       const stock = await this.prisma.stock.findUnique({
         where: {
@@ -128,7 +128,6 @@ export class StockService {
     }
     return stockAmount;
   }
-
 
   /* async findAllStocksOnUser(uid: number) {
     const user = await this.userService.findOne(uid);

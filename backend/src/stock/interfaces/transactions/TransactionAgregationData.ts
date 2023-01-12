@@ -1,5 +1,5 @@
 export interface TransactionAgregationData {
-    amountAfterSplit: number
-    moneyInvestedInStock: number
-    moneyRecievedFromSales: number
+  amountAfterSplit: number;
+  moneyInvestedInStock: number;
+  moneyRecievedFromSales: number;
 }

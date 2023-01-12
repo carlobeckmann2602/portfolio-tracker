@@ -3,7 +3,6 @@ import { IsDateString, IsNotEmpty, IsNumber } from 'class-validator';
 
 //Bug in Swagger -> not in Swagger UI!
 export class StockOnUserDto {
-
   @IsNumber()
   @ApiProperty()
   @IsNotEmpty()

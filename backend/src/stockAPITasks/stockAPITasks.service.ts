@@ -7,7 +7,7 @@ import { ApiFunctions } from './ApiFunctions';
 export class StockAPITasksService {
   private readonly logger = new Logger(StockAPITasksService.name);
 
-  constructor(private prisma: PrismaService) { }
+  constructor(private prisma: PrismaService) {}
 
   // Hardcoded stocks (i.e. their symbols) which are used to fill the DB
 
@@ -57,7 +57,7 @@ export class StockAPITasksService {
   // ];
 
   // First 40 companies on American NASDAQ 100 (as from 19.12.2022)
-  public stockSymbols: String[] = [
+  public stockSymbols: string[] = [
     'MSFT', //	Microsoft Corp
     'AAPL', //	Apple Inc
     'AMZN', //	Amazon.com Inc
@@ -118,7 +118,7 @@ export class StockAPITasksService {
     const stocks = await this.prisma.stock.findMany();
 
     // Keep track of count of stock-API requests: max. 5 calls per minute are possible
-    var requestCount = 0;
+    let requestCount = 0;
     for (const currentStock of stocks) {
       // If 5 calls were made (within a minute): Wait a minute for new possible requests
       if (requestCount === 5) {
@@ -174,7 +174,7 @@ export class StockAPITasksService {
     const stocks = await this.prisma.stock.findMany();
 
     // Keep track of count of stock-API requests: max. 5 calls per minute are possible
-    var requestCount = 0;
+    let requestCount = 0;
     for (const currentStock of stocks) {
       const stockHistories = await this.prisma.stockHistory.findMany({
         where: { stockId: currentStock.id },
@@ -250,7 +250,7 @@ export class StockAPITasksService {
     this.logger.debug('----------------------------------------------------');
 
     // Keep track of count of stock-API requests: max. 5 calls per minute are possible
-    var requestCount = 0;
+    let requestCount = 0;
     for (const currentStock of this.stockSymbols) {
       // If 5 calls were made (within a minute): Wait a minute for new possible requests
       if (requestCount === 5) {
@@ -339,7 +339,7 @@ export class StockAPITasksService {
     });
 
     // Compute trend by searching the last available datapoint right before the current data (note: available datapoints are in descending order)
-    var trend: number = 0.0;
+    let trend = 0.0;
     if (historicData != null) {
       for (const currentEntry of historicData) {
         if (currentEntry.time < new Date(dateKey)) {
@@ -361,13 +361,13 @@ export class StockAPITasksService {
    * @param outputSize Determines the output size of the response- Only relevant for certain endpoints, especially those who return stock values with historic data
    * @returns Data-object of the stock-API response. Find detailed descriptions of the object-properties on https://www.alphavantage.co/documentation/
    */
-  async requestStockAPI(stockSymbol: String, apiFunction: ApiFunctions, outputSize?: ApiFunctions) {
+  async requestStockAPI(stockSymbol: string, apiFunction: ApiFunctions, outputSize?: ApiFunctions) {
     const axios = require('axios');
 
     // Hardcoded API-key for alpha vantage
     const params = { apikey: '6Q89Q5LYA6SHDOCL' };
-    const baseURL: String = 'https://www.alphavantage.co/query';
-    var requestURL: String = `${baseURL}` + `?${apiFunction}` + `&symbol=${stockSymbol}`;
+    const baseURL = 'https://www.alphavantage.co/query';
+    let requestURL: string = `${baseURL}` + `?${apiFunction}` + `&symbol=${stockSymbol}`;
 
     if (outputSize != null) {
       requestURL += `&${outputSize}`;

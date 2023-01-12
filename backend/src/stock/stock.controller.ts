@@ -128,7 +128,12 @@ export class StockController {
     },
   ];
 
-  constructor(private readonly stockService: StockService, private readonly taskService: StockAPITasksService, private readonly splitService: SplitService, private readonly authService: AuthService) { }
+  constructor(
+    private readonly stockService: StockService,
+    private readonly taskService: StockAPITasksService,
+    private readonly splitService: SplitService,
+    private readonly authService: AuthService,
+  ) {}
 
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
@@ -146,8 +151,6 @@ export class StockController {
   // ----------------------------------------- //
   // ONLY FOR TESTING PURPOSES, DELETE LATER   //
   // ----------------------------------------- //
-
-
 
   @Get()
   @ApiOperation({ summary: 'Returns all stocks that contain the given (sub)string in their name or symbol' })

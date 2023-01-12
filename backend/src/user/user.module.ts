@@ -13,4 +13,4 @@ import { UserService } from './user.service';
   providers: [UserService, PrismaService, PortfolioService, AuthService],
   exports: [UserService],
 })
-export class UserModule { }
+export class UserModule {}

@@ -1,5 +1,5 @@
-import { TransactionAgregationData } from "./TransactionAgregationData";
+import { TransactionAgregationData } from './TransactionAgregationData';
 
 export interface TransactionAgregationCollection {
-    [stockId: number]: TransactionAgregationData
+  [stockId: number]: TransactionAgregationData;
 }

@@ -1,5 +1,5 @@
-import { TransactionSplitAdjusted } from "./TransactionSplitAdjusted";
+import { TransactionSplitAdjusted } from './TransactionSplitAdjusted';
 
 export interface TransactionsGrouped {
-    [key: string]: TransactionSplitAdjusted[]
+  [key: string]: TransactionSplitAdjusted[];
 }

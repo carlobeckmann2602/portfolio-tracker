@@ -12,7 +12,16 @@ import { TransactionService } from './transaction.service';
 @Module({
   imports: [JwtModule.register({}), StockAPITasks],
   controllers: [StockController],
-  providers: [StockService, SplitService, PortfolioService, StockAPITasksService, UserService, AuthService, JwtService, TransactionService],
+  providers: [
+    StockService,
+    SplitService,
+    PortfolioService,
+    StockAPITasksService,
+    UserService,
+    AuthService,
+    JwtService,
+    TransactionService,
+  ],
   exports: [StockService, SplitService, TransactionService],
 })
-export class StockModule { }
+export class StockModule {}

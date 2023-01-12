@@ -1,4 +1,17 @@
-import { Body, Controller, Delete, Get, Headers, HttpException, HttpStatus, Param, Patch, Post, Req, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Headers,
+  HttpException,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Req,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Request } from 'express';
 import { AuthService } from 'src/auth/auth.service';
@@ -165,9 +178,7 @@ export class UserController {
     private readonly authService: AuthService,
     private readonly transactionService: TransactionService,
     private readonly portfolioService: PortfolioService,
-  ) { }
-
-
+  ) {}
 
   @Post()
   @ApiOperation({ summary: 'Create a new user' })
@@ -234,7 +245,14 @@ export class UserController {
     if (this.mockMode) {
       return `This action updates a user with id #${req.user['userId']} with the transmitted stock data`;
     }
-    return this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, false, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
+    return this.transactionService.addTransaction(
+      req.user['userId'],
+      +sid,
+      stockOnUserDto.amount,
+      false,
+      stockOnUserDto.pricePerUnit,
+      stockOnUserDto.date,
+    );
   }
 
   @UseGuards(JwtGuard)
@@ -249,14 +267,22 @@ export class UserController {
     }
 
     try {
-
-      return await this.transactionService.addTransaction(req.user['userId'], +sid, stockOnUserDto.amount, true, stockOnUserDto.pricePerUnit, stockOnUserDto.date);
-
+      return await this.transactionService.addTransaction(
+        req.user['userId'],
+        +sid,
+        stockOnUserDto.amount,
+        true,
+        stockOnUserDto.pricePerUnit,
+        stockOnUserDto.date,
+      );
     } catch (error) {
-      throw new HttpException({
-        status: HttpStatus.NOT_FOUND,
-        error: error,
-      }, HttpStatus.NOT_FOUND);
+      throw new HttpException(
+        {
+          status: HttpStatus.NOT_FOUND,
+          error: error,
+        },
+        HttpStatus.NOT_FOUND,
+      );
     }
   }
 }

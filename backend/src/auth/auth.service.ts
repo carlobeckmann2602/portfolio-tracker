@@ -33,7 +33,7 @@ export class AuthService {
     return this.signToken(user.id, user.email);
   }
 
-  //logout 
+  //logout
   async logout(headers: Headers) {
     if (headers['authorization'] == undefined) {
       return response.status(404);

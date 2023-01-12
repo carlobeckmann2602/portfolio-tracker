@@ -1,5 +1,5 @@
-import { StockGainAndSplitAdjusted } from "../StockGainAndSplitAdjusted"
+import { StockGainAndSplitAdjusted } from '../StockGainAndSplitAdjusted';
 
 export interface TransactionsAgregated {
-    [key: string]: StockGainAndSplitAdjusted
+  [key: string]: StockGainAndSplitAdjusted;
 }
