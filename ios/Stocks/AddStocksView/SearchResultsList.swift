@@ -11,6 +11,8 @@ import SwiftUI
 struct SearchResultsList: View {
   var portfolio: Portfolio
   var stocks: [Stock]
+  var authenticationHandler: AuthenticationHandler
+
   var body: some View {
     if stocks.isEmpty {
       VStack {
@@ -23,7 +25,7 @@ struct SearchResultsList: View {
     List(stocks) { stock in
       NavigationLink(
         destination: AddToPortfolioView(
-          stock: stock, portfolio: portfolio)
+            stock: stock, portfolio: portfolio, stocksHandler:StocksHandler(authenticationHandler: authenticationHandler))
       ) {
         StockListCell(stock: stock)
           .padding(5)

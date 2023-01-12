@@ -35,7 +35,8 @@ struct SearchStocksList: View {
             .tint(.white)
             .foregroundColor(Color.white)
         ) { stocks in
-          SearchResultsList(portfolio: portfolio, stocks: stocks)
+          SearchResultsList(
+            portfolio: portfolio, stocks: stocks, authenticationHandler: authenticationHandler)
         }
       } else {
         VStack {

@@ -117,7 +117,8 @@ class AuthenticationHandler: ObservableObject {
   }
   func getHeaders() -> [String: String] {
     return [
-      "Authorization": "Bearer \(getToken().decodedToken.string)"
+      "Authorization": "Bearer \(getToken().decodedToken.string)",
+      "Content-Type": "application/json",
     ]
   }
 
