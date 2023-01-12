@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D0A5EE7296FFCA100ECEB91 /* SearchHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A5EE6296FFCA100ECEB91 /* SearchHandler.swift */; };
+		3D0A5EE9297003BC00ECEB91 /* SearchResultLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D0A5EE8297003BC00ECEB91 /* SearchResultLoader.swift */; };
 		3D30B0E42915817200FEFDF8 /* AsyncContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */; };
 		3D334D1429290DF000060649 /* StockListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D1329290DF000060649 /* StockListCell.swift */; };
 		3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D334D15292915C100060649 /* AddToPortfolioView.swift */; };
@@ -86,6 +88,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		3D0A5EE6296FFCA100ECEB91 /* SearchHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchHandler.swift; sourceTree = "<group>"; };
+		3D0A5EE8297003BC00ECEB91 /* SearchResultLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultLoader.swift; sourceTree = "<group>"; };
 		3D30B0E32915817200FEFDF8 /* AsyncContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsyncContentView.swift; sourceTree = "<group>"; };
 		3D334D1329290DF000060649 /* StockListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StockListCell.swift; sourceTree = "<group>"; };
 		3D334D15292915C100060649 /* AddToPortfolioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddToPortfolioView.swift; sourceTree = "<group>"; };
@@ -313,6 +317,7 @@
 				3DE049652913C80000B9D392 /* SearchResultsList.swift */,
 				3D334D1329290DF000060649 /* StockListCell.swift */,
 				3D334D15292915C100060649 /* AddToPortfolioView.swift */,
+				3D0A5EE8297003BC00ECEB91 /* SearchResultLoader.swift */,
 			);
 			path = AddStocksView;
 			sourceTree = "<group>";
@@ -365,6 +370,7 @@
 				3D67E5322943D00E009F877D /* AuthenticationHandler.swift */,
 				3DE6A4CC2944B62F00F9944A /* ApiUtils.swift */,
 				3D4F5B5C295C647C00F4ECF0 /* TokenStorage.swift */,
+				3D0A5EE6296FFCA100ECEB91 /* SearchHandler.swift */,
 			);
 			path = BackendApi;
 			sourceTree = "<group>";
@@ -562,6 +568,7 @@
 				EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */,
 				3D334D1429290DF000060649 /* StockListCell.swift in Sources */,
 				85262E66295886FE000DF85D /* OnboardingStep2.swift in Sources */,
+				3D0A5EE9297003BC00ECEB91 /* SearchResultLoader.swift in Sources */,
 				859B300B29311D7500BBB8F7 /* RemoveAllAmount.swift in Sources */,
 				EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */,
 				3D67E5332943D00E009F877D /* AuthenticationHandler.swift in Sources */,
@@ -570,6 +577,7 @@
 				3DE049622913C7A400B9D392 /* Stock.swift in Sources */,
 				3D4F5B5D295C647C00F4ECF0 /* TokenStorage.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
+				3D0A5EE7296FFCA100ECEB91 /* SearchHandler.swift in Sources */,
 				3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */,
 				3D67E52A2943C67E009F877D /* PortfolioHandler.swift in Sources */,
 				3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */,

@@ -8,24 +8,24 @@
 import Foundation
 import SwiftUI
 
-func filterStocks(text: String) -> [Stock] {
-  return ModelData().stocks.filter({ stock in
-    return !text.isEmpty && stock.name.lowercased().starts(with: text.lowercased())
-  })
-}
-
 struct SearchResultsList: View {
-  @EnvironmentObject var searchState: SearchState
   var portfolio: Portfolio
+  var stocks: [Stock]
   var body: some View {
-    List {
-      ForEach(filterStocks(text: searchState.searchText)) { stock in
-        NavigationLink(
-          destination: AddToPortfolioView(
-            stock: stock, portfolio: portfolio)
-        ) {
-          StockListCell(stock: stock)
-        }
+    if stocks.isEmpty {
+      VStack {
+        Spacer()
+        Text("No results found")
+          .roboto(size: 25)
+        Spacer()
+      }
+    }
+    List(stocks) { stock in
+      NavigationLink(
+        destination: AddToPortfolioView(
+          stock: stock, portfolio: portfolio)
+      ) {
+        StockListCell(stock: stock)
       }
     }
   }

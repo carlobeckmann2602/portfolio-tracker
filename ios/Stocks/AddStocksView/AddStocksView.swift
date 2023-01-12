@@ -14,26 +14,67 @@ class SearchState: ObservableObject {
 }
 
 struct SearchStocksList: View {
+  var searchWasSubmitted: Bool
   var portfolio: Portfolio
+  var authenticationHandler: AuthenticationHandler
+  @EnvironmentObject var searchState: SearchState
+
+  @Environment(\.dismiss) private var dismiss
 
   @Environment(\.isSearching)
   private var isSearching: Bool
 
   var body: some View {
-    SearchResultsList(portfolio: portfolio)
+    VStack {
+      if searchWasSubmitted {
+        AsyncContentView(
+          loadable: SearchResultLoader(
+            searchHandler: SearchHandler(authenticationHandler: authenticationHandler),
+            searchText: searchState.searchText),
+          loadingView: ProgressView("Searching..")
+            .tint(.white)
+            .foregroundColor(Color.white)
+        ) { stocks in
+          SearchResultsList(portfolio: portfolio, stocks: stocks)
+        }
+      } else {
+        VStack {
+          Spacer()
+          Text("Search a stock by name")
+            .roboto(size: 25)
+          Spacer()
+        }
+      }
+    }
+
   }
 }
 
 struct AddStocksView: View {
-
-  @StateObject var searchState = SearchState()
   var portfolio: Portfolio
+  var authenticationHandler: AuthenticationHandler
+  @StateObject var searchState = SearchState()
+
+  @Environment(\.dismissSearch) private var dismissSearch
+  @State var searchWasSubmitted = false
 
   var body: some View {
-
-    SearchStocksList(portfolio: portfolio)
-
-      .searchable(text: $searchState.searchText, prompt: "Search a stock").environmentObject(
-        searchState)
+    SearchStocksList(
+      searchWasSubmitted: searchWasSubmitted, portfolio: portfolio,
+      authenticationHandler: authenticationHandler
+    )
+    .searchable(text: $searchState.searchText, prompt: "Search a stock")
+    .onChange(
+      of: searchState.searchText,
+      perform: { newText in
+        searchWasSubmitted = false
+      }
+    )
+    .onSubmit(of: .search) {
+      searchWasSubmitted = true
+      dismissSearch()
+    }
+    .environmentObject(
+      searchState)
   }
 }

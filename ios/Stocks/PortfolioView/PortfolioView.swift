@@ -23,6 +23,7 @@ struct EmptyDonut: View {
 
 struct PortfolioLoadedView: View {
   @ObservedObject var portfolio: Portfolio
+  var authenticationHandler: AuthenticationHandler
 
   var body: some View {
     VStack(alignment: .leading) {
@@ -37,7 +38,9 @@ struct PortfolioLoadedView: View {
             .roboto(size: 40, weight: .bold, foregroundColor: AppColors.PRIMARY)
           Spacer()
           NavigationLink(
-            destination: AddStocksView(portfolio: portfolio).navigationTitle(
+            destination: AddStocksView(
+              portfolio: portfolio, authenticationHandler: authenticationHandler
+            ).navigationTitle(
               "Add Stock")
           ) {
             Label("add", systemImage: "plus.circle")
@@ -79,6 +82,7 @@ struct PortfolioLoadedView: View {
 
 struct PortfolioView: View {
   var portfolioHandler: PortfolioHandler
+  var authenticationHandler: AuthenticationHandler
 
   var body: some View {
     NavigationView {
@@ -88,7 +92,7 @@ struct PortfolioView: View {
           loadable: PortfolioLoader(portfolioHandler: portfolioHandler),
           loadingView: ProgressView("Loading Portfolio..").tint(.white).foregroundColor(Color.white)
         ) { portfolio in
-          PortfolioLoadedView(portfolio: portfolio)
+          PortfolioLoadedView(portfolio: portfolio, authenticationHandler: authenticationHandler)
         }
 
       }
