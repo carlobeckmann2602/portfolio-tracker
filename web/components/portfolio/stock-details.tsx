@@ -48,7 +48,7 @@ export function StockDetails({
             <div>{formatCurrencyValue(holding.stock.price)}</div>
           </TableRow>
           <TableRow>
-            <div>Trend:</div>
+            <div>24h Trend:</div>
             <div>{trendElem}</div>
           </TableRow>
           <TableRow>
