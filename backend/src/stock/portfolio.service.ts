@@ -92,7 +92,7 @@ export class PortfolioService {
     let gainAbsolutePortfolio = 0;
     let moneyInvestedPortfolio = 0;
 
-    const getStocskWithHistory = await this.stockService.getStocskWithHistory(
+    const getStocskWithHistory = await this.stockService.getStockskWithHistory(
       Object.keys(transactionAgregationCollection).map((key) => Number(key)),
       30,
     );
@@ -110,7 +110,9 @@ export class PortfolioService {
       const info = transactionAgregationCollectionWithStockInfo[stockId];
       const gainAndSplitAdjustedStock = this.createGainAndSplitAdjustedStock(stockId, info);
 
-      gainAndSplitAdjustedStocks.push(gainAndSplitAdjustedStock);
+      if (gainAndSplitAdjustedStock.amountAfterSplit > 0) {
+        gainAndSplitAdjustedStocks.push(gainAndSplitAdjustedStock);
+      }
 
       currentPortfolioValue += gainAndSplitAdjustedStock.amountAfterSplit * gainAndSplitAdjustedStock.price;
       gainAbsolutePortfolio += gainAndSplitAdjustedStock.gainAbsolute;
@@ -122,7 +124,7 @@ export class PortfolioService {
     const portfolio: Portfolio = {
       currentPortfolioValue: currentPortfolioValue,
       gainAbsolute: gainAbsolutePortfolio,
-      gainPercentage: gainPercentagePortfolioRounded,
+      gainPercentage: gainPercentagePortfolioRounded || 0,
       stocks: gainAndSplitAdjustedStocks,
     };
 
