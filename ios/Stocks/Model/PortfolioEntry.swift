@@ -28,7 +28,7 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
     formatter.maximumFractionDigits = 2
     formatter.positivePrefix = formatter.plusSign
     formatter.negativePrefix = formatter.minusSign
-    return formatter.string(for: gainPercentage / 100) ?? "0,00%"
+    return formatter.string(for: gainPercentage / 100) ?? "0,00 %"
   }
 
   func getTrendPercentageString() -> String {
@@ -38,6 +38,17 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
     formatter.maximumFractionDigits = 2
     formatter.positivePrefix = formatter.plusSign
     formatter.negativePrefix = formatter.minusSign
-    return formatter.string(for: trend / 100) ?? "0,00%"
+    return formatter.string(for: trend / 100) ?? "0,00 %"
+  }
+
+  func getAbsoluteGainString() -> String {
+    let formatter = NumberFormatter()
+    formatter.currencySymbol = "€"
+    formatter.numberStyle = .currency
+    formatter.minimumFractionDigits = 2
+    formatter.maximumFractionDigits = 2
+    formatter.positivePrefix = formatter.plusSign
+    formatter.negativePrefix = formatter.minusSign
+    return formatter.string(for: gainAbsolute) ?? "0,00 €"
   }
 }

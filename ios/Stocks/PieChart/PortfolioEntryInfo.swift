@@ -12,6 +12,17 @@ struct PortfolioEntryInfo: View {
   var portfolioEntry: PortfolioEntry
   var portfolio: Portfolio
   var portfolioHandler: PortfolioHandler
+
+  var gainColor: Color {
+    if portfolioEntry.gainAbsolute > 0 {
+      return AppColors.PRIMARY
+    } else if portfolioEntry.gainAbsolute < 0 {
+      return .red
+    } else {
+      return .white
+    }
+  }
+
   var body: some View {
     VStack(alignment: .leading, spacing: 10) {
       ZStack {
@@ -41,12 +52,12 @@ struct PortfolioEntryInfo: View {
             Text(portfolioEntry.stock.name)
               .roboto(size: 25, weight: .medium)
             Text(
-              "+2,45%"
+              portfolioEntry.getGainPercentageString()
             )
             .roboto(size: 18, weight: .regular)
           }
           Spacer()
-          Text(String(format: "%.02f€", portfolioEntry.calculateStockValue())).roboto(
+          Text(String(format: "%.02f €", portfolioEntry.calculateStockValue())).roboto(
             size: 18, weight: .regular)
         }.padding(20)
       }
@@ -57,7 +68,7 @@ struct PortfolioEntryInfo: View {
           Text("Current price:")
             .roboto(size: 25)
           Spacer()
-          Text(String(format: "%.2f€", portfolioEntry.stock.getValue()))
+          Text(String(format: "%.2f €", portfolioEntry.stock.getValue()))
             .roboto(size: 25)
         }
         HStack {
@@ -71,8 +82,8 @@ struct PortfolioEntryInfo: View {
           Text("Gains:")
             .roboto(size: 25)
           Spacer()
-          Text(String(format: "%.2f€", portfolioEntry.gainAbsolute))
-            .roboto(size: 25, foregroundColor: AppColors.PRIMARY)
+          Text(portfolioEntry.getAbsoluteGainString())
+            .roboto(size: 25, foregroundColor: gainColor)
         }
         Spacer()
           .padding(.bottom, 10)
