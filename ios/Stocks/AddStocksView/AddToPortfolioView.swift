@@ -17,7 +17,7 @@ struct AddToPortfolioView: View {
     @State var money_spend = 0.0
   @State private var todayDate = Date.now
   var body: some View {
-    ZStack {
+      ZStack (alignment: .top) {
       LinearGradient(
         gradient: Gradient(colors: [
           AppColors.LIGHT_PURPLE
@@ -30,28 +30,30 @@ struct AddToPortfolioView: View {
         }.padding()
         HStack {
           Text("Total stocks purchased").roboto(size: 20, weight: .light)
+            Spacer()
           TextField("", text: $input)
             .padding()
             .overlay(
               RoundedRectangle(cornerRadius: 12)
                 .stroke(AppColors.PRIMARY, lineWidth: 1)
             ).frame(width: 100, height: 2)
-        }.padding()
+        }.padding(20)
         HStack {
           Text("Money spent (in euros)").roboto(size: 20, weight: .light)
+            Spacer()
             TextField("", value: $money_spend, format: .number)
             .padding()
             .overlay(
               RoundedRectangle(cornerRadius: 12)
                 .stroke(AppColors.PRIMARY, lineWidth: 1)
             ).frame(width: 100, height: 2)
-        }.padding()
+        }.padding(20)
         HStack {
           DatePicker(selection: $todayDate, in: ...Date.now, displayedComponents: .date) {
             Text("Purchase Date").roboto(size: 20, weight: .light)
           }
 //                      Text("Date is \(money_spend)")
-        }.padding()
+        }.padding(20)
         Button {
 
           do {
@@ -74,7 +76,7 @@ struct AddToPortfolioView: View {
         }
         .background(AppColors.PRIMARY)
         .cornerRadius(8)
-        .padding()
+        .padding(45)
       }
     }
   }
