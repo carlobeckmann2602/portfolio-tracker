@@ -10,9 +10,11 @@ const Page: NextPage = () => (
     <PageHeading description="The requested page could not be found.">
       404
     </PageHeading>
-    <CenterSection>
-      <Button href="/">Back home</Button>
-    </CenterSection>
+    <div className="relative mb-8">
+      <CenterSection>
+        <Button href="/">Back home</Button>
+      </CenterSection>
+    </div>
   </>
 );
 
