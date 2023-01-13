@@ -14,7 +14,8 @@ export const SearchItem = ({ trend, name, price }: SearchItemProps) => (
     <div className="text-left flex-1">
       <p>{name}</p>
       <p className="font-light">
-        {trend > 0 ? "+" : "-"} {trend}%
+        {trend > 0 ? "+" : ""}
+        {trend}%
       </p>
     </div>
     <div className="font-light">{formatCurrencyValue(price)}</div>
