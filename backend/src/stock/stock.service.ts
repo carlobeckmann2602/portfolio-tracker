@@ -38,11 +38,11 @@ export class StockService {
     }
   }
 
-  async getStocskWithHistory(sids: number[], lastNumberOfDays = 1) {
+  async getStockskWithHistory(sids: number[], lastNumberOfDays = 1) {
     const fallBackWindow = new Date();
     fallBackWindow.setDate(fallBackWindow.getDate() - lastNumberOfDays + 10);
     try {
-      const stock = await this.prisma.stock.findMany({
+      const stocks = await this.prisma.stock.findMany({
         where: {
           id: { in: sids },
         },
@@ -60,11 +60,11 @@ export class StockService {
         },
       });
 
-      if (stock === null) {
+      if (stocks.length === 0) {
         throw new NotFoundException('Stock not found');
       }
 
-      return stock;
+      return stocks;
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
         throw new BadRequestException('Invalid parameter');
