@@ -69,6 +69,8 @@
 		EDA81C84291C0D4E00A420E2 /* ModelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C83291C0D4E00A420E2 /* ModelData.swift */; };
 		EDA81C86291C128E00A420E2 /* Portfolio.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C85291C128E00A420E2 /* Portfolio.swift */; };
 		EDA81C8A291C2A1500A420E2 /* PortfolioEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */; };
+		EDD024752970C5C900495D67 /* RemovePopover.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD024742970C5C900495D67 /* RemovePopover.swift */; };
+		EDD024772970D18300495D67 /* Test.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDD024762970D18300495D67 /* Test.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -152,6 +154,8 @@
 		EDA81C83291C0D4E00A420E2 /* ModelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelData.swift; sourceTree = "<group>"; };
 		EDA81C85291C128E00A420E2 /* Portfolio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Portfolio.swift; sourceTree = "<group>"; };
 		EDA81C89291C2A1500A420E2 /* PortfolioEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PortfolioEntry.swift; sourceTree = "<group>"; };
+		EDD024742970C5C900495D67 /* RemovePopover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemovePopover.swift; sourceTree = "<group>"; };
+		EDD024762970D18300495D67 /* Test.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -383,6 +387,8 @@
 			children = (
 				85A5C4BD2930DC6400478FC0 /* Stepper.swift */,
 				859B300A29311D7500BBB8F7 /* RemoveAllAmount.swift */,
+				EDD024742970C5C900495D67 /* RemovePopover.swift */,
+				EDD024762970D18300495D67 /* Test.swift */,
 			);
 			path = RemoveStocksView;
 			sourceTree = "<group>";
@@ -582,6 +588,7 @@
 				3D4F5B5D295C647C00F4ECF0 /* TokenStorage.swift in Sources */,
 				3D97BD132943A3B300B313B2 /* LandingScreen.swift in Sources */,
 				3D0A5EE7296FFCA100ECEB91 /* SearchHandler.swift in Sources */,
+				EDD024772970D18300495D67 /* Test.swift in Sources */,
 				3DE6A4CA2944A02A00F9944A /* Text+Extensions.swift in Sources */,
 				3D67E52A2943C67E009F877D /* PortfolioHandler.swift in Sources */,
 				3DA98E1C29098A260091F88F /* StocksApp.swift in Sources */,
@@ -589,6 +596,7 @@
 				3D334D16292915C100060649 /* AddToPortfolioView.swift in Sources */,
 				3DA98E4A290992970091F88F /* PortfolioView.swift in Sources */,
 				3DA598E32943B5E8007111B9 /* TextInput.swift in Sources */,
+				EDD024752970C5C900495D67 /* RemovePopover.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -60,7 +60,8 @@ struct OnboardingStep1: View {
                   endPoint: .trailing
                 ).frame(width: 300)
                   .cornerRadius(10)
-              ).frame(width: 300)
+              )
+              .frame(width: 300)
           }
           HStack {
             Button {

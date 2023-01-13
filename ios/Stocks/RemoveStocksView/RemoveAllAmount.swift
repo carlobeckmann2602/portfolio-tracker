@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import PopupView
 import SwiftUI
 
 struct RemoveAllAmount: View {
@@ -13,18 +14,12 @@ struct RemoveAllAmount: View {
   var portfolio: Portfolio
   var portfolioHandler: PortfolioHandler
 
+  @State private var showingPopover = false
+
   @State var input = "1"
   var body: some View {
     Button {
-      do {
-        try portfolioHandler.removeFromPortfolio(
-          stockId: portfolioEntry.stock.id, amount: portfolioEntry.amountAfterSplit,
-          onComplete: {
-            portfolio.removeAllStockFromPortfolio(stock: portfolioEntry.stock)
-          })
-      } catch {
-        print("error when removing from portfolio \(error)")
-      }
+      showingPopover = true
     } label: {
       Text("Remove all")
         .roboto(size: 20, weight: .medium)
@@ -33,7 +28,12 @@ struct RemoveAllAmount: View {
         .overlay(
           RoundedRectangle(cornerRadius: 12)
             .stroke(.white, lineWidth: 3)
-        ).frame(maxWidth: .infinity)
+        )
+    }
+    .popover(isPresented: $showingPopover) {
+      RemovePopover(
+        stockName: portfolioEntry.stock.name, portfolioEntry: portfolioEntry, portfolio: portfolio,
+        portfolioHandler: portfolioHandler, showingPopover: $showingPopover)
     }
   }
 }
