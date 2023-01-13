@@ -136,7 +136,7 @@ export const Search = ({
                   disabled={disabled}
                 >
                   <SearchItem
-                    trend={2.5}
+                    trend={stock.trend}
                     name={stock.name}
                     price={stock.price}
                   />
