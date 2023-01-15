@@ -24,7 +24,15 @@ const withPWA = require('next-pwa')({
       urlPattern: ({url}) => {
         return url.pathname === '/users/me/stocks'
       },
-      handler: 'NetworkOnly',
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'user_stocks',
+        expiration: {
+          maxEntries: 1,
+          maxAgeSeconds: 24 * 60 * 60 // 24 hours
+        },
+        networkTimeoutSeconds: 8/10
+      }
     },
     ...runtimeCaching
   ]
