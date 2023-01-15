@@ -26,6 +26,7 @@
     "@types/react": "^18.0.21",
     "@types/react-datepicker": "^4.8.0",
     "@types/react-dom": "^18.0.6",
+    "@types/serviceworker": "^0.0.59",
     "autoprefixer": "^10.4.12",
     "cypress": "^10.11.0",
     "eslint": "^8.26.0",
