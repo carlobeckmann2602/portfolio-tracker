@@ -2,15 +2,42 @@
 // @ts-ignore
 self.__WB_DISABLE_DEV_LOGS = true;
 
-async function syncContent() {
-  console.log("Syncing content");
+let authToken: string | null = null;
+let resolveAuthTokenRequest: (value?: never) => void = () => {};
+
+// listen for messages from the window
+self.addEventListener("message", (event: MessageEvent<any>) => {
+  if (event.data.type === "setAuthToken") {
+    authToken = event.data.authToken;
+    resolveAuthTokenRequest();
+  }
+});
+
+async function syncStockData() {
   const stocksCache = await caches.open("stocks");
   await stocksCache.add("https://api.mobilesys.de/stocks?name=");
+}
+
+async function syncUserStocks() {
+  // to sync user stocks, we need the auth token
+  // if no auth token is available, wait for it
+  // while the we request the auth token from the window
+  if (!authToken) {
+    await new Promise(async (resolve) => {
+      // save the resolve function to call it later
+      resolveAuthTokenRequest = resolve;
+      const window = (await self.clients.matchAll({ type: "window" }))[0];
+      // send a message to the window to get the auth token
+      window.postMessage({
+        type: "getAuthToken",
+      });
+    });
+  }
 
   const user_stocks_cache = await caches.open("user_stocks");
   const request = new Request("https://api.mobilesys.de/users/me/stocks", {
     headers: {
-      Authorization: `Bearer ${localStorage.getItem("authToken")}`,
+      Authorization: `Bearer ${authToken}`,
     },
   });
   await user_stocks_cache.add(request);
@@ -22,13 +49,16 @@ async function initializeBackgroundSync() {
     // register periodicsync event listener
     self.addEventListener("periodicsync", (event) => {
       //@ts-ignore
-      if (event.tag === "content-sync") {
-        // See the "Think before you sync" section for
-        // checks you could perform before syncing.
-        //@ts-ignore
-        event.waitUntil(syncContent());
+      switch (event.tag) {
+        case "syncStockData":
+          //@ts-ignore
+          event.waitUntil(syncStockData());
+          break;
+        case "syncUserStocks":
+          //@ts-ignore
+          event.waitUntil(syncUserStocks());
+          break;
       }
-      // Other logic for different tags as needed.
     });
 
     // check if background sync is granted
@@ -39,15 +69,19 @@ async function initializeBackgroundSync() {
     });
 
     if (status.state === "granted") {
-      //@ts-ignore
-      const registration = await navigator.serviceWorker.ready;
       try {
+        // register periodic Sync with a minimum interval of 12 hours
         //@ts-ignore
-        await registration.periodicSync.register("content-sync", {
+        await self.registration.periodicSync.register("syncStockData", {
+          minInterval: 12 * 60 * 60 * 1000, // 12 hours
+        });
+
+        //@ts-ignore
+        await self.registration.periodicSync.register("syncUserStocks", {
           minInterval: 12 * 60 * 60 * 1000, // 12 hours
         });
       } catch (error) {
-        // Periodic background sync cannot be used.
+        console.log("periodicSync could not be registered");
       }
     }
   } else {
