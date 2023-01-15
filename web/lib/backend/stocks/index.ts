@@ -126,8 +126,8 @@ export function useStockHoldingAmountMut() {
     onError(err, variables, context) {
       client.setQueryData(["stock-portfolio"], context!.previousValue);
     },
-    // onSettled() {
-    //   client.invalidateQueries(["stock-portfolio"]);
-    // },
+    onSettled() {
+      client.invalidateQueries(["stock-portfolio"]);
+    },
   });
 }
