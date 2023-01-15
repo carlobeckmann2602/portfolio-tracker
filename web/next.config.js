@@ -4,6 +4,7 @@ const runtimeCaching = require('next-pwa/cache')
 
 const withPWA = require('next-pwa')({
   dest: 'public',
+  reloadOnOnline: false,
   runtimeCaching: [
     {
       urlPattern: ({url}) => {
@@ -17,6 +18,20 @@ const withPWA = require('next-pwa')({
           maxAgeSeconds: 24 * 60 * 60 // 24 hours
         },
         networkTimeoutSeconds: 2/10
+      }
+    },
+    {
+      urlPattern: ({url}) => {
+        return url.pathname === '/users/me/stocks'
+      },
+      handler: 'NetworkFirst',
+      options: {
+        cacheName: 'user_stocks',
+        expiration: {
+          maxEntries: 1,
+          maxAgeSeconds: 24 * 60 * 60 // 24 hours
+        },
+        networkTimeoutSeconds: 8/10
       }
     },
     ...runtimeCaching

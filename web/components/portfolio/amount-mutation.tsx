@@ -79,6 +79,7 @@ export function HoldingAmountCounterMutation({
         pricePerShare: holding.stock.price,
         date: new Date(),
         amountOffset,
+        stock: holding.stock,
       });
     },
     [tempAmount, holding, mutateHoldingAmount]
@@ -106,6 +107,7 @@ export function RemoveHoldingButton({ holding }: { holding: StockHolding }) {
       pricePerShare: holding.value / holding.amount,
       date: new Date(),
       amountOffset: -holding.amount,
+      stock: holding.stock,
     });
   }, [holding, mutateHoldingAmount]);
 

@@ -46,6 +46,36 @@ export function AuthProvider({ children }: PropsWithChildren) {
     if (token) setUser(decodeJWToken(token));
   }, []);
 
+  useEffect(() => {
+    // handle messages from the service worker
+    function handleMessage(event: MessageEvent) {
+      if (event.data.type === "getAuthToken") {
+        navigator.serviceWorker.ready.then((registration) => {
+          registration.active?.postMessage({
+            type: "setAuthToken",
+            authToken: getAuthToken(),
+          });
+        });
+      }
+    }
+
+    // listen for messages from the service worker
+    navigator.serviceWorker.addEventListener("message", handleMessage);
+
+    // send the auth token to the service worker
+    navigator.serviceWorker.ready.then((registration) => {
+      registration.active?.postMessage({
+        type: "setAuthToken",
+        authToken: getAuthToken(),
+      });
+    });
+
+    return () => {
+      // remove the listener
+      navigator.serviceWorker.removeEventListener("message", handleMessage);
+    };
+  }, [user]);
+
   const auth = useMemo<Auth>(
     () => ({
       user,
