@@ -9,6 +9,7 @@ import { Button } from "../button";
 
 const CounterButton = ({
   hidden,
+  disabled,
   ...props
 }: React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -16,9 +17,10 @@ const CounterButton = ({
 > & { hidden?: boolean }) => (
   <button
     {...props}
+    disabled={disabled || hidden}
     className={cn(
       "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition",
-      hidden ? "opacity-0" : props.disabled ? "opacity-50" : null
+      hidden ? "opacity-0" : disabled ? "opacity-50" : null
     )}
   />
 );
@@ -53,20 +55,12 @@ function CounterInput({
   );
 }
 
-function useAmountMutationInProgress() {
-  const { isLoading: mutationIsLoading } = useStockHoldingAmountMut();
-  const { isFetching: portfolioIsLoading } = usePortfolioData();
-
-  return mutationIsLoading || portfolioIsLoading;
-}
-
 export function HoldingAmountCounterMutation({
   holding,
 }: {
   holding: StockHolding;
 }) {
   const { mutate: mutateHoldingAmount } = useStockHoldingAmountMut();
-  const isLoading = useAmountMutationInProgress();
 
   const [tempAmount, setTempAmount] = useState(holding.amount);
   useEffect(() => setTempAmount(holding.amount), [holding]);
@@ -91,14 +85,12 @@ export function HoldingAmountCounterMutation({
       onIncrement={createAmountMutFn(1)}
       onDecrement={createAmountMutFn(-1)}
       min={1}
-      disabled={isLoading}
     />
   );
 }
 
 export function RemoveHoldingButton({ holding }: { holding: StockHolding }) {
   const { mutate: mutateHoldingAmount } = useStockHoldingAmountMut();
-  const isLoading = useAmountMutationInProgress();
 
   const removeHolding = useCallback(() => {
     // Set the number of shares of the current holding to 0
@@ -111,9 +103,5 @@ export function RemoveHoldingButton({ holding }: { holding: StockHolding }) {
     });
   }, [holding, mutateHoldingAmount]);
 
-  return (
-    <Button onClick={removeHolding} disabled={isLoading}>
-      Remove stock
-    </Button>
-  );
+  return <Button onClick={removeHolding}>Remove stock</Button>;
 }

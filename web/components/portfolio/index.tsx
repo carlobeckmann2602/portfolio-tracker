@@ -106,9 +106,6 @@ const PortfolioContent = () => {
               : "Tap the plus button to add a new stock."}
           </p>
         )}
-        <Button href="/settings" look={1} className="mt-4">
-          Personal settings
-        </Button>
       </div>
     </div>
   );
