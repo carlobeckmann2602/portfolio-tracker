@@ -9,6 +9,7 @@ import { Button } from "../button";
 
 const CounterButton = ({
   hidden,
+  disabled,
   ...props
 }: React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
@@ -16,9 +17,10 @@ const CounterButton = ({
 > & { hidden?: boolean }) => (
   <button
     {...props}
+    disabled={disabled || hidden}
     className={cn(
       "rounded-md bg-highlight1 text-back font-semibold w-8 select-none transition",
-      hidden ? "opacity-0" : props.disabled ? "opacity-50" : null
+      hidden ? "opacity-0" : disabled ? "opacity-50" : null
     )}
   />
 );
