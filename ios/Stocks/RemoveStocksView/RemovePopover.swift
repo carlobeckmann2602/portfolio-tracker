@@ -55,7 +55,7 @@ struct RemovePopover: View {
               try portfolioHandler.removeFromPortfolio(
                 stockId: portfolioEntry.stock.id, amount: portfolioEntry.amountAfterSplit,
                 onComplete: {
-                  portfolio.removeAllStockFromPortfolio(stock: portfolioEntry.stock)
+                  portfolio.removeAllStockFromPortfolio(portfolioEntry: portfolioEntry)
                   showingPopover = false
                 })
             } catch {

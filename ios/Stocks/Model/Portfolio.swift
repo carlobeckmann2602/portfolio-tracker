@@ -37,7 +37,7 @@ class Portfolio: ObservableObject {
       self.stocks.append(portfolioEntry)
     }
     self.stocks = self.stocks
-      self.currentPortfolioValue += Float(portfolioEntry.calculateStockValue())
+    self.currentPortfolioValue += Float(portfolioEntry.calculateStockValue())
   }
 
   func incrementStockFromPortfolio(stock: Stock) {
@@ -54,11 +54,14 @@ class Portfolio: ObservableObject {
     }
   }
 
-  func removeAllStockFromPortfolio(stock: Stock) {
-    var existingEntryIndex = self.stocks.firstIndex(where: { $0.stock.id == stock.id })
+  func removeAllStockFromPortfolio(portfolioEntry: PortfolioEntry) {
+    let existingEntryIndex = self.stocks.firstIndex(where: {
+      $0.stock.id == portfolioEntry.stock.id
+    })
     if existingEntryIndex != nil {
       self.stocks[existingEntryIndex!].amountAfterSplit = 0
       self.stocks = self.stocks
+      self.currentPortfolioValue -= Float(portfolioEntry.calculateStockValue())
     }
   }
 
