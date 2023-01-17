@@ -37,7 +37,7 @@ class Portfolio: ObservableObject {
       self.stocks.append(portfolioEntry)
     }
     self.stocks = self.stocks
-    self.currentPortfolioValue += portfolioEntry.moneyInvestedInStock
+      self.currentPortfolioValue += Float(portfolioEntry.calculateStockValue())
   }
 
   func incrementStockFromPortfolio(stock: Stock) {
