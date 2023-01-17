@@ -11,14 +11,21 @@ import Just
 extension HTTPResult {
   func getEntity<T>(
     _ type: T.Type,
-    keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys
+    keyDecodingStrategy: JSONDecoder.KeyDecodingStrategy = .useDefaultKeys,
+    expectedStatusCode: Int = 200
   ) throws -> T where T: Decodable {
-    if !self.ok {
-      throw self.error!
+    if self.statusCode != expectedStatusCode {
+      if self.error != nil {
+        throw self.error!
+      } else {
+        throw NSError(
+          domain:
+            "HTTP response has not expected status code, expected \(expectedStatusCode), was \(self.statusCode)",
+          code: self.statusCode!)
+      }
     }
     let decoder = JSONDecoder()
     decoder.keyDecodingStrategy = keyDecodingStrategy
-    decoder.keyDecodingStrategy = .convertFromSnakeCase
     return try decoder.decode(T.self, from: self.text!.data(using: .utf8)!)
   }
 }

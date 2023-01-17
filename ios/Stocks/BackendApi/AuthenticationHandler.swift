@@ -131,7 +131,7 @@ class AuthenticationHandler: ObservableObject {
 
   private func readErrorFromReponse(response: HTTPResult) -> ReponseError? {
     do {
-      return try response.getEntity(ReponseError.self)
+      return try response.getEntity(ReponseError.self, expectedStatusCode: 403)
     } catch {
       print("Failed load error message: \(error)")
       return nil
