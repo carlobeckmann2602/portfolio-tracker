@@ -61,7 +61,9 @@ class AuthenticationHandler: ObservableObject {
 
   }
 
-  func register(email: String, password: String, password2: String) {
+  func register(
+    email: String, password: String, password2: String, onError: @escaping (String) -> Void
+  ) {
     Just.post(
       "\(ApiUtils.BASE_URL)/users",
       data: [
@@ -73,22 +75,28 @@ class AuthenticationHandler: ObservableObject {
           print("Error: " + r.reason)
           return
         }
-          switch r.statusCode {
-          case 403:
-              let reponseError = self.readErrorFromReponse403(response: r)
-              print("Error: \(reponseError!.message)")
-              return
-          case 201:
-              do {
-                  try self.getJwtTokenFromResponse(r)
-                  return
-              } catch {
-                  print("Failed to decode JWT: \(error)")
-                  return
-              }
-          default:
-              print("Unexpected reponse: \(r.statusCode) \(r.content)")
+        switch r.statusCode {
+        case 403:
+          let reponseError = self.readErrorFromReponse403(response: r)
+          print("Error: \(reponseError!.message)")
+          onError(reponseError!.message)
+          return
+        case 201:
+          do {
+            try self.getJwtTokenFromResponse(r)
+            return
+          } catch {
+            print("Failed to decode JWT: \(error)")
+            return
           }
+        case 400:
+          let reponseError = self.readErrorFromReponse400(response: r)
+          print("Error: \(reponseError!.message.joined(separator: "\n"))")
+          onError(reponseError!.message.joined(separator: "\n"))
+          return
+        default:
+          print("Unexpected reponse: \(r.statusCode) \(r.content)")
+        }
       })
   }
 
@@ -103,28 +111,28 @@ class AuthenticationHandler: ObservableObject {
           print("Error: " + r.reason)
           return
         }
-          switch r.statusCode {
-          case 403:
-              let reponseError = self.readErrorFromReponse403(response: r)
-              print("Error: \(reponseError!.message)")
-              onError(reponseError!.message)
-              return
-          case 201:
-              do {
-                  try self.getJwtTokenFromResponse(r)
-                  return
-              } catch {
-                  print("Failed to decode JWT: \(error)")
-                  return
-              }
-          case 400:
-              let reponseError = self.readErrorFromReponse400(response: r)
-              print("Error: \(reponseError!.message.joined(separator: ", "))")
-              onError(reponseError!.message.joined(separator: ", "))
-              return
-          default:
-              print("Unexpected reponse: \(r.statusCode) \(r.content)")
+        switch r.statusCode {
+        case 403:
+          let reponseError = self.readErrorFromReponse403(response: r)
+          print("Error: \(reponseError!.message)")
+          onError(reponseError!.message)
+          return
+        case 201:
+          do {
+            try self.getJwtTokenFromResponse(r)
+            return
+          } catch {
+            print("Failed to decode JWT: \(error)")
+            return
           }
+        case 400:
+          let reponseError = self.readErrorFromReponse400(response: r)
+          print("Error: \(reponseError!.message.joined(separator: "\n"))")
+          onError(reponseError!.message.joined(separator: "\n"))
+          return
+        default:
+          print("Unexpected reponse: \(r.statusCode) \(r.content)")
+        }
       })
   }
 
@@ -151,15 +159,15 @@ class AuthenticationHandler: ObservableObject {
       return nil
     }
   }
-    
-    private func readErrorFromReponse400(response: HTTPResult) -> ReponseError400? {
-      do {
-        return try response.getEntity(ReponseError400.self, expectedStatusCode: 400)
-      } catch {
-        print("Failed load error message: \(error)")
-        return nil
-      }
+
+  private func readErrorFromReponse400(response: HTTPResult) -> ReponseError400? {
+    do {
+      return try response.getEntity(ReponseError400.self, expectedStatusCode: 400)
+    } catch {
+      print("Failed load error message: \(error)")
+      return nil
     }
+  }
 
   private func getJwtTokenFromResponse(_ r: HTTPResult) throws {
     let authReponse = try r.getEntity(

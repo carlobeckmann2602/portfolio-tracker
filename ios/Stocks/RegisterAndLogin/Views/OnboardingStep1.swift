@@ -34,7 +34,7 @@ struct OnboardingStep1: View {
           Text("Step 1")
             .robotoSerif(size: 45, weight: .bold)
             .padding([.top], 100)
-            Text("Add stocks to the pie chart by clicking on the + button")
+          Text("Add stocks to the pie chart by clicking on the + button")
             .roboto(size: 20, weight: .light)
             .frame(width: 300)
             .cornerRadius(10)
