@@ -16,6 +16,7 @@ struct LoginScreen: View {
 
   @State var emailText: String = ""
   @State var passwordText: String = ""
+      @State var errorMessage: String = ""
 
   var body: some View {
     ZStack {
@@ -55,9 +56,15 @@ struct LoginScreen: View {
           secure: true
         )
         .padding([.top], 5)
+          Text(errorMessage)
+              .foregroundColor(.red)
+              .padding(.top, 5)
         ActionButton(
           action: {
-            authenticationHandler.login(email: emailText, password: passwordText)
+              authenticationHandler.login(email: emailText, password: passwordText, onError: { errorMessage in
+                  self.errorMessage = errorMessage
+                  self.passwordText = ""
+              })
           }, text: "Login"
         ).padding([.top], 30)
         HStack {

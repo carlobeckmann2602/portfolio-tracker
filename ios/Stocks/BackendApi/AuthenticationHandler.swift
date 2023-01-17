@@ -13,9 +13,15 @@ struct AuthResponse: Decodable {
   let accessToken: String
 }
 
-struct ReponseError: Decodable {
+struct ReponseError403: Decodable {
   let statusCode: Int
   let message: String
+  let error: String
+}
+
+struct ReponseError400: Decodable {
+  let statusCode: Int
+  let message: [String]
   let error: String
 }
 
@@ -67,25 +73,26 @@ class AuthenticationHandler: ObservableObject {
           print("Error: " + r.reason)
           return
         }
-        if r.statusCode == 403 {
-          let reponseError = self.readErrorFromReponse(response: r)
-          print("Error: \(reponseError!.message)")
-          return
-        }
-        if r.statusCode == 201 {
-          do {
-            try self.getJwtTokenFromResponse(r)
-            return
-          } catch {
-            print("Failed to decode JWT: \(error)")
-            return
+          switch r.statusCode {
+          case 403:
+              let reponseError = self.readErrorFromReponse403(response: r)
+              print("Error: \(reponseError!.message)")
+              return
+          case 201:
+              do {
+                  try self.getJwtTokenFromResponse(r)
+                  return
+              } catch {
+                  print("Failed to decode JWT: \(error)")
+                  return
+              }
+          default:
+              print("Unexpected reponse: \(r.statusCode) \(r.content)")
           }
-        }
-        print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
   }
 
-  func login(email: String, password: String) {
+  func login(email: String, password: String, onError: @escaping (String) -> Void) {
     Just.post(
       "\(ApiUtils.BASE_URL)/auth/login",
       data: [
@@ -96,21 +103,28 @@ class AuthenticationHandler: ObservableObject {
           print("Error: " + r.reason)
           return
         }
-        if r.statusCode == 403 {
-          let reponseError = self.readErrorFromReponse(response: r)
-          print("Error: \(reponseError!.message)")
-          return
-        }
-        if r.statusCode == 201 {
-          do {
-            try self.getJwtTokenFromResponse(r)
-            return
-          } catch {
-            print("Failed to decode JWT: \(error)")
-            return
+          switch r.statusCode {
+          case 403:
+              let reponseError = self.readErrorFromReponse403(response: r)
+              print("Error: \(reponseError!.message)")
+              onError(reponseError!.message)
+              return
+          case 201:
+              do {
+                  try self.getJwtTokenFromResponse(r)
+                  return
+              } catch {
+                  print("Failed to decode JWT: \(error)")
+                  return
+              }
+          case 400:
+              let reponseError = self.readErrorFromReponse400(response: r)
+              print("Error: \(reponseError!.message.joined(separator: ", "))")
+              onError(reponseError!.message.joined(separator: ", "))
+              return
+          default:
+              print("Unexpected reponse: \(r.statusCode) \(r.content)")
           }
-        }
-        print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
   }
 
@@ -129,14 +143,23 @@ class AuthenticationHandler: ObservableObject {
     ]
   }
 
-  private func readErrorFromReponse(response: HTTPResult) -> ReponseError? {
+  private func readErrorFromReponse403(response: HTTPResult) -> ReponseError403? {
     do {
-      return try response.getEntity(ReponseError.self, expectedStatusCode: 403)
+      return try response.getEntity(ReponseError403.self, expectedStatusCode: 403)
     } catch {
       print("Failed load error message: \(error)")
       return nil
     }
   }
+    
+    private func readErrorFromReponse400(response: HTTPResult) -> ReponseError400? {
+      do {
+        return try response.getEntity(ReponseError400.self, expectedStatusCode: 400)
+      } catch {
+        print("Failed load error message: \(error)")
+        return nil
+      }
+    }
 
   private func getJwtTokenFromResponse(_ r: HTTPResult) throws {
     let authReponse = try r.getEntity(

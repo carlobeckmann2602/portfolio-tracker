@@ -33,6 +33,7 @@ struct OnboardingStep2: View {
           .roboto(size: 20, weight: .light)
           .frame(width: 300)
           .cornerRadius(10)
+          .multilineTextAlignment(.center)
           Spacer()
           Button {
             goToLogin()
