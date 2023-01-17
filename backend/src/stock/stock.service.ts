@@ -7,6 +7,9 @@ export class StockService {
   constructor(private prisma: PrismaService) {}
 
   async getStockWithHistory(sid: string, lastNumberOfDays = 1) {
+    const fallBackWindow = new Date();
+    fallBackWindow.setDate(fallBackWindow.getDate() - (lastNumberOfDays + 10));
+
     try {
       const stock = await this.prisma.stock.findUnique({
         where: {
@@ -16,6 +19,7 @@ export class StockService {
           histories: {
             where: {
               stockId: Number(sid),
+              time: { gte: fallBackWindow },
             },
             orderBy: {
               time: 'desc',
@@ -39,8 +43,12 @@ export class StockService {
   }
 
   async getStockskWithHistory(sids: number[], lastNumberOfDays = 1) {
+    if (sids.length === 0) {
+      return [];
+    }
+
     const fallBackWindow = new Date();
-    fallBackWindow.setDate(fallBackWindow.getDate() - lastNumberOfDays + 10);
+    fallBackWindow.setDate(fallBackWindow.getDate() - (lastNumberOfDays + 10));
     try {
       const stocks = await this.prisma.stock.findMany({
         where: {
