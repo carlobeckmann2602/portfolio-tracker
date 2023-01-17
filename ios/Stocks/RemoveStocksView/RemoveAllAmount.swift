@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import PopupView
 import SwiftUI
 
 struct RemoveAllAmount: View {
