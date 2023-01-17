@@ -139,7 +139,8 @@ class AuthenticationHandler: ObservableObject {
   }
 
   private func getJwtTokenFromResponse(_ r: HTTPResult) throws {
-    let authReponse = try r.getEntity(AuthResponse.self, keyDecodingStrategy: .convertFromSnakeCase)
+    let authReponse = try r.getEntity(
+      AuthResponse.self, keyDecodingStrategy: .convertFromSnakeCase, expectedStatusCode: 201)
     let jwt = try decode(jwt: authReponse.accessToken)
     print("Loaded JWT: ", jwt)
     self.jwtToken = JwtToken(decodedToken: jwt)
