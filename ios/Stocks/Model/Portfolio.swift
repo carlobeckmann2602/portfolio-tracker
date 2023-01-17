@@ -59,7 +59,7 @@ class Portfolio: ObservableObject {
       $0.stock.id == portfolioEntry.stock.id
     })
     if existingEntryIndex != nil {
-        self.stocks.remove(at: existingEntryIndex!)
+      self.stocks.remove(at: existingEntryIndex!)
       self.stocks = self.stocks
       self.currentPortfolioValue -= Float(portfolioEntry.calculateStockValue())
     }
