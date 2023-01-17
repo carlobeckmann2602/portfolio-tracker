@@ -63,33 +63,33 @@ struct PortfolioEntryInfo: View {
       }
       Spacer()
         .frame(height: 2)
-      ScrollView(showsIndicators: false) {
-        HStack {
-          Text("Current price:")
-            .roboto(size: 25)
-          Spacer()
-          Text(String(format: "%.2f €", portfolioEntry.stock.getValue()))
-            .roboto(size: 25)
-        }
-        HStack {
-          Text("24h Trend:")
-            .roboto(size: 25)
-          Spacer()
-          Text(portfolioEntry.getTrendPercentageString())
-            .roboto(size: 25)
-        }
-        HStack {
-          Text("Gains:")
-            .roboto(size: 25)
-          Spacer()
-          Text(portfolioEntry.getAbsoluteGainString())
-            .roboto(size: 25, foregroundColor: gainColor)
-        }
+      //ScrollView(showsIndicators: false) {
+      HStack {
+        Text("Current price:")
+          .roboto(size: 25)
         Spacer()
-          .padding(.bottom, 10)
-        RemoveAllAmount(
-          portfolioEntry: portfolioEntry, portfolio: portfolio, portfolioHandler: portfolioHandler)
-      }.foregroundColor(Color.white)
+        Text(String(format: "%.2f €", portfolioEntry.stock.getValue()))
+          .roboto(size: 25)
+      }
+      HStack {
+        Text("24h Trend:")
+          .roboto(size: 25)
+        Spacer()
+        Text(portfolioEntry.getTrendPercentageString())
+          .roboto(size: 25)
+      }
+      HStack {
+        Text("Gains:")
+          .roboto(size: 25)
+        Spacer()
+        Text(portfolioEntry.getAbsoluteGainString())
+          .roboto(size: 25, foregroundColor: gainColor)
+      }
+      Spacer()
+        .padding(.bottom, 10)
+      RemoveAllAmount(
+        portfolioEntry: portfolioEntry, portfolio: portfolio, portfolioHandler: portfolioHandler)
+      //}.foregroundColor(Color.white)
 
     }
   }

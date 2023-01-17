@@ -26,53 +26,64 @@ struct PortfolioLoadedView: View {
   var authenticationHandler: AuthenticationHandler
 
   var body: some View {
-    VStack(alignment: .leading) {
-      VStack {
-        HStack {
-          Text("Your balance")
-            .roboto(size: 25, weight: .regular)
-          Spacer()
-        }
-        HStack {
-          Text(String(format: "%.2f€", portfolio.currentPortfolioValue))
-            .roboto(size: 40, weight: .bold, foregroundColor: AppColors.PRIMARY)
-          Spacer()
-          NavigationLink(
-            destination: AddStocksView(
-              portfolio: portfolio, authenticationHandler: authenticationHandler
-            ).navigationTitle(
-              "Add Stocks")
+    ScrollView(showsIndicators: false) {
+      VStack(alignment: .leading) {
+        VStack {
+          HStack {
+            Text("Your balance")
+              .roboto(size: 25, weight: .regular)
+            Spacer()
+          }
+          HStack {
+            Text(String(format: "%.2f€", portfolio.currentPortfolioValue))
+              .roboto(size: 40, weight: .bold, foregroundColor: AppColors.PRIMARY)
+            Spacer()
+            NavigationLink(
+              destination: AddStocksView(
+                portfolio: portfolio, authenticationHandler: authenticationHandler
+              ).navigationTitle(
+                "Add Stocks")
 
-          ) {
-            Label("add", systemImage: "plus.circle")
-              .font(.system(size: 50)).fontWeight(.ultraLight)
-              .foregroundColor(AppColors.PRIMARY)
-              .labelStyle(.iconOnly)
+            ) {
+              Label("add", systemImage: "plus.circle")
+                .font(.system(size: 50)).fontWeight(.ultraLight)
+                .foregroundColor(AppColors.PRIMARY)
+                .labelStyle(.iconOnly)
+            }
           }
-        }
-      }.padding()
-      ZStack {
-        Rectangle()
-          .fill(.white)
-          .opacity(0.15)
-          .frame(maxWidth: .infinity)
-          .cornerRadius(radius: 40.0, corners: [.topLeft, .topRight])
-          .ignoresSafeArea()
-        if portfolio.isEmpty() {
+        }.padding()
+        ZStack {
+          Rectangle()
+            .fill(.white)
+            .opacity(0.15)
+            .frame(maxWidth: .infinity)
+            .cornerRadius(radius: 40.0, corners: [.topLeft, .topRight, .bottomLeft, .bottomRight])
+            .ignoresSafeArea()
           VStack {
-            EmptyDonut().padding(.bottom, 30)
-            Text("Tap the plus button to add a new stock.").roboto(
-              size: 25, foregroundColor: Color.white
-            ).multilineTextAlignment(.center)
+            if portfolio.isEmpty() {
+              EmptyDonut().padding(.bottom, 30)
+              Text("Tap the plus button to add a new stock.").roboto(
+                size: 25, foregroundColor: Color.white
+              ).multilineTextAlignment(.center)
+            } else {
+              PieChart(
+                portfolio: portfolio,
+                separatorColor: Color(UIColor.systemBackground),
+                innerColor: AppColors.LIGHT_PURPLE,
+                accentColors: pieColors,
+                portfolioHandler: PortfolioHandler(authenticationHandler: authenticationHandler)
+              ).padding()
+            }
+            Button {
+              authenticationHandler.logout()
+            } label: {
+              Text("Logout")
+                .roboto(size: 20, weight: .medium)
+                .frame(width: 300, height: 50)
+            }.background(AppColors.PRIMARY)
+              .cornerRadius(8)
+              .padding()
           }
-        } else {
-          PieChart(
-            portfolio: portfolio,
-            separatorColor: Color(UIColor.systemBackground),
-            innerColor: AppColors.LIGHT_PURPLE,
-            accentColors: pieColors,
-            portfolioHandler: PortfolioHandler(authenticationHandler: authenticationHandler)
-          ).padding()
         }
       }
     }

@@ -75,6 +75,7 @@ class AuthenticationHandler: ObservableObject {
         if r.statusCode == 201 {
           do {
             try self.getJwtTokenFromResponse(r)
+            return
           } catch {
             print("Failed to decode JWT: \(error)")
             return
@@ -103,6 +104,7 @@ class AuthenticationHandler: ObservableObject {
         if r.statusCode == 201 {
           do {
             try self.getJwtTokenFromResponse(r)
+            return
           } catch {
             print("Failed to decode JWT: \(error)")
             return
@@ -110,6 +112,11 @@ class AuthenticationHandler: ObservableObject {
         }
         print("Unexpected reponse: \(r.statusCode) \(r.content)")
       })
+  }
+
+  func logout() {
+    tokenStorage.deleteToken()
+    isLoggedIn = false
   }
 
   func getToken() -> JwtToken {
