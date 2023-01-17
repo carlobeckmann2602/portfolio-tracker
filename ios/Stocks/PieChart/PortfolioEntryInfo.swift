@@ -35,11 +35,11 @@ struct PortfolioEntryInfo: View {
               .stroke(.blue, lineWidth: 3)
           )
         HStack {
-          if portfolioEntry.gainPercentage > 0 {
+          if (portfolioEntry.gainPercentage != nil) && portfolioEntry.gainPercentage! > 0 {
             Image(systemName: "arrow.up.circle")
               .font(.system(size: 50)).fontWeight(.light)
               .padding(.trailing)
-          } else if portfolioEntry.gainPercentage < 0 {
+          } else if (portfolioEntry.gainPercentage != nil) && portfolioEntry.gainPercentage! < 0 {
             Image(systemName: "arrow.down.circle")
               .font(.system(size: 50)).fontWeight(.light)
               .padding(.trailing)

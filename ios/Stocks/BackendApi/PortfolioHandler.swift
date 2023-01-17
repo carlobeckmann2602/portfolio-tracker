@@ -25,7 +25,7 @@ struct PortfolioOnUserDto: Decodable {
   var trend: Float
   var moneyInvestedInStock: Float
   var gainAbsolute: Float
-  var gainPercentage: Float
+  var gainPercentage: Float?
   var histories: [StockHistory]
 }
 

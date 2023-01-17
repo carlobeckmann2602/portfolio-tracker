@@ -15,7 +15,7 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
   var trend: Float
   var moneyInvestedInStock: Float
   var gainAbsolute: Float
-  var gainPercentage: Float
+  var gainPercentage: Float?
 
   func calculateStockValue() -> Double {
     return Double(Double(price) * Double(amountAfterSplit))
@@ -28,7 +28,7 @@ struct PortfolioEntry: Hashable, Codable, Identifiable {
     formatter.maximumFractionDigits = 2
     formatter.positivePrefix = formatter.plusSign
     formatter.negativePrefix = formatter.minusSign
-    return formatter.string(for: gainPercentage / 100) ?? "0,00 %"
+      return formatter.string(for: (gainPercentage ?? 0.0) / 100.0) ?? "0,00 %"
   }
 
   func getTrendPercentageString() -> String {
