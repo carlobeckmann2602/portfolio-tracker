@@ -58,6 +58,7 @@ export const AddStockForm = ({ stock, onAdd }: AddStockFormProps) => {
             amountOffset: stockAmount,
             pricePerShare: stock.price,
             date: purchaseDate,
+            stock,
           });
         }}
       >

@@ -53,6 +53,7 @@ export type StockHoldingAmountMutVars = {
   amountOffset: number;
   pricePerShare: number;
   date: Date;
+  stock: Stock;
 };
 
 export function useStockHoldingAmountMut() {
@@ -60,7 +61,72 @@ export function useStockHoldingAmountMut() {
 
   return useAuthMutation({
     mutationFn: fetchStockHoldingAmountMut,
-    onSuccess() {
+    async onMutate(variables) {
+      await client.cancelQueries(["stock-portfolio"]);
+
+      const previousValue = client.getQueryData<PortfolioData>([
+        "stock-portfolio",
+      ]);
+
+      client.setQueryData<PortfolioData>(
+        ["stock-portfolio"],
+        (old) => {
+          if (!old) return;
+
+          let newHoldings;
+          const ammountAfterOffset = old.holdings.find((holding) =>
+            holding.stock.id === variables.stockId
+          )?.amount! + variables.amountOffset;
+
+          if (ammountAfterOffset > 0 || variables.amountOffset > 0) {
+            if (
+              old.holdings.some((holding) =>
+                holding.stock.id === variables.stockId
+              )
+            ) {
+              newHoldings = old.holdings.map((holding) => {
+                if (holding.stock.id === variables.stockId) {
+                  return {
+                    ...holding,
+                    stock: variables.stock,
+                    amount: holding.amount + variables.amountOffset,
+                    value: holding.value +
+                      variables.amountOffset * variables.pricePerShare,
+                  };
+                }
+                return holding;
+              });
+            } else {
+              newHoldings = [
+                ...old.holdings,
+                {
+                  stock: variables.stock,
+                  amount: variables.amountOffset,
+                  value: variables.amountOffset * variables.pricePerShare,
+                },
+              ];
+            }
+          } else {
+            newHoldings = old.holdings.filter((holding) => {
+              return holding.stock.id !== variables.stockId;
+            });
+          }
+
+          return {
+            value: old.value + variables.amountOffset * variables.pricePerShare,
+            holdings: newHoldings.sort((a, b) =>
+              a.stock.id - b.stock.id
+            ),
+          };
+        },
+      );
+
+      return { previousValue };
+    },
+    onError(err, variables, context) {
+      client.setQueryData(["stock-portfolio"], context!.previousValue);
+    },
+    onSettled() {
       client.invalidateQueries(["stock-portfolio"]);
     },
   });
