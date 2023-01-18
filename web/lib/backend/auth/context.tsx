@@ -90,7 +90,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       logout() {
         setUser(null);
         unsetAuthToken();
-        queryClient.clear();
+        queryClient.setQueryData(["stock-portfolio"], null);
         router.push("/login");
       },
     }),
