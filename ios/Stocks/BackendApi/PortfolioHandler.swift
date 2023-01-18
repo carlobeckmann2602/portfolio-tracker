@@ -88,7 +88,7 @@ class PortfolioHandler {
           return
         }
         do {
-          let portfolioOnUserDto = try r.getEntity(PortfolioOnUserDto.self)
+          let portfolioOnUserDto = try r.getEntity(PortfolioOnUserDto.self, expectedStatusCode: 201)
           onComplete(self.mapToPortfolioEntry(portfolioOnUserDto))
         } catch {
           print("Failed to add stock to portfolio: \(error)")
