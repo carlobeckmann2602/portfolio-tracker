@@ -1,0 +1,762 @@
+[
+  {
+    "id": 2,
+    "symbol": "AAPL",
+    "name": "Apple Inc",
+    "description": "Apple Inc. is an American multinational technology company that specializes in consumer electronics, computer software, and online services. Apple is the world's largest technology company by revenue (totalling $274.5 billion in 2020) and, since January 2021, the world's most valuable company. As of 2021, Apple is the world's fourth-largest PC vendor by unit sales, and fourth-largest smartphone manufacturer. It is one of the Big Five American information technology companies, along with Amazon, Google, Microsoft, and Facebook.",
+    "histories": [
+      {
+        "id": 270770,
+        "stockId": 2,
+        "split": 1,
+        "open": 130.92,
+        "close": 131.86,
+        "high": 132.415,
+        "low": 129.64,
+        "trend": -2.55,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "symbol": "TSLA",
+    "name": "Tesla Inc",
+    "description": "Tesla, Inc. is an American electric vehicle and clean energy company based in Palo Alto, California. Tesla's current products include electric cars, battery energy storage from home to grid-scale, solar panels and solar roof tiles, as well as other related products and services. In 2020, Tesla had the highest sales in the plug-in and battery electric passenger car segments, capturing 16% of the plug-in market (which includes plug-in hybrids) and 23% of the battery-electric (purely electric) market. Through its subsidiary Tesla Energy, the company develops and is a major installer of solar photovoltaic energy generation systems in the United States. Tesla Energy is also one of the largest global suppliers of battery energy storage systems, with 3 GWh of battery storage supplied in 2020.",
+    "histories": [
+      {
+        "id": 298435,
+        "stockId": 7,
+        "split": 1,
+        "open": 126.37,
+        "close": 123.15,
+        "high": 128.6173,
+        "low": 121.02,
+        "trend": -7.08,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "symbol": "PEP",
+    "name": "PepsiCo Inc",
+    "description": "PepsiCo, Inc. is an American based multinational food, snack, and beverage corporation headquartered in Harrison, New York, in the hamlet of Purchase. PepsiCo's business encompasses all aspects of the food and beverage market. It oversees the manufacturing, distribution, and marketing of its products.",
+    "histories": [
+      {
+        "id": 270773,
+        "stockId": 9,
+        "split": 1,
+        "open": 180.91,
+        "close": 182.26,
+        "high": 182.55,
+        "low": 180.45,
+        "trend": -0.52,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "symbol": "META",
+    "name": "Meta Platforms Inc.",
+    "description": "Meta Platforms, Inc. develops products that enable people to connect and share with friends and family through mobile devices, PCs, virtual reality headsets, wearables and home devices around the world. The company is headquartered in Menlo Park, California.",
+    "histories": [
+      {
+        "id": 236236,
+        "stockId": 8,
+        "split": 1,
+        "open": 116.03,
+        "close": 118.04,
+        "high": 118.175,
+        "low": 115.535,
+        "trend": -1,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "symbol": "AVGO",
+    "name": "Broadcom Inc",
+    "description": "Broadcom Inc. is an American designer, developer, manufacturer and global supplier of a wide range of semiconductor and infrastructure software products. Broadcom's product offerings serve the data center, networking, software, broadband, wireless, and storage and industrial markets.",
+    "histories": [
+      {
+        "id": 270782,
+        "stockId": 10,
+        "split": 1,
+        "open": 550,
+        "close": 552.43,
+        "high": 553.6175,
+        "low": 547.45,
+        "trend": -0.61,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "symbol": "COST",
+    "name": "Costco Wholesale Corp",
+    "description": "Costco Wholesale Corporation (doing business as Costco Wholesale and also known simply as Costco) is an American multinational corporation which operates a chain of membership-only (needing a membership to shop there) big-box retail stores. As of 2020, Costco was the fifth largest retailer in the world, and the world's largest retailer of choice and prime beef, organic foods, rotisserie chicken, and wine as of 2016.",
+    "histories": [
+      {
+        "id": 270783,
+        "stockId": 11,
+        "split": 1,
+        "open": 457.52,
+        "close": 462.65,
+        "high": 463.1799,
+        "low": 454.8,
+        "trend": -0.25,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "symbol": "NVDA",
+    "name": "NVIDIA Corporation",
+    "description": "Nvidia Corporation is an American multinational technology company incorporated in Delaware and based in Santa Clara, California. It designs graphics processing units (GPUs) for the gaming and professional markets, as well as system on a chip units (SoCs) for the mobile computing and automotive market.",
+    "histories": [
+      {
+        "id": 268315,
+        "stockId": 6,
+        "split": 1,
+        "open": 151.96,
+        "close": 152.06,
+        "high": 153.39,
+        "low": 148.83,
+        "trend": -5.58,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "symbol": "GOOGL",
+    "name": "Alphabet Inc Class A",
+    "description": "Alphabet Inc. is an American multinational conglomerate headquartered in Mountain View, California. It was created through a restructuring of Google on October 2, 2015, and became the parent company of Google and several former Google subsidiaries. The two co-founders of Google remained as controlling shareholders, board members, and employees at Alphabet. Alphabet is the world's fourth-largest technology company by revenue and one of the world's most valuable companies.",
+    "histories": [
+      {
+        "id": 270776,
+        "stockId": 5,
+        "split": 1,
+        "open": 87.11,
+        "close": 89.23,
+        "high": 89.545,
+        "low": 87.07,
+        "trend": -1.19,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 15,
+    "symbol": "TXN",
+    "name": "Texas Instruments Incorporated",
+    "description": "Texas Instruments Incorporated (TI) is an American technology company headquartered in Dallas, Texas, that designs and manufactures semiconductors and various integrated circuits, which it sells to electronics designers and manufacturers globally. It is one of the top 10 semiconductor companies worldwide based on sales volume.",
+    "histories": [
+      {
+        "id": 298440,
+        "stockId": 15,
+        "split": 1,
+        "open": 163.03,
+        "close": 164.38,
+        "high": 164.8,
+        "low": 162.278,
+        "trend": -1.83,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "symbol": "AMZN",
+    "name": "Amazon.com Inc",
+    "description": "Amazon.com, Inc. is an American multinational technology company which focuses on e-commerce, cloud computing, digital streaming, and artificial intelligence. It is one of the Big Five companies in the U.S. information technology industry, along with Google, Apple, Microsoft, and Facebook. The company has been referred to as one of the most influential economic and cultural forces in the world, as well as the world's most valuable brand.",
+    "histories": [
+      {
+        "id": 270768,
+        "stockId": 3,
+        "split": 1,
+        "open": 83.25,
+        "close": 85.25,
+        "high": 85.78,
+        "low": 82.9344,
+        "trend": -2.65,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "symbol": "CSCO",
+    "name": "Cisco Systems Inc",
+    "description": "Cisco Systems, Inc. is an American multinational technology conglomerate headquartered in San Jose, California, in the center of Silicon Valley. Cisco develops, manufactures and sells networking hardware, software, telecommunications equipment and other high-technology services and products. Through its numerous acquired subsidiaries, such as OpenDNS, Webex, Jabber and Jasper, Cisco specializes in specific tech markets, such as the Internet of Things (IoT), domain security and energy management. On January 25, 2021, Cisco reincorporated in Delaware.",
+    "histories": [
+      {
+        "id": 270778,
+        "stockId": 12,
+        "split": 1,
+        "open": 47.25,
+        "close": 47.48,
+        "high": 47.49,
+        "low": 47.01,
+        "trend": -0.51,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 14,
+    "symbol": "ADBE",
+    "name": "Adobe Systems Incorporated",
+    "description": "Adobe Inc. is an American multinational computer software company. Incorporated in Delaware and headquartered in San Jose, California, it has historically specialized in software for the creation and publication of a wide range of content, including graphics, photography, illustration, animation, multimedia, motion pictures and print. The company has expanded into digital marketing management software. Adobe has millions of users worldwide. Flagship products include: Photoshop image editing software, Adobe Illustrator vector-based illustration software, Adobe Acrobat Reader and the Portable Document Format (PDF), plus a host of tools primarily for audio-visual content creation, editing and publishing.",
+    "histories": [
+      {
+        "id": 270775,
+        "stockId": 14,
+        "split": 1,
+        "open": 335,
+        "close": 338.45,
+        "high": 338.92,
+        "low": 333.285,
+        "trend": -0.3,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "symbol": "GOOG",
+    "name": "Alphabet Inc Class C",
+    "description": "Alphabet Inc. is an American multinational conglomerate headquartered in Mountain View, California. It was created through a restructuring of Google on October 2, 2015, and became the parent company of Google and several former Google subsidiaries. The two co-founders of Google remained as controlling shareholders, board members, and employees at Alphabet. Alphabet is the world's fourth-largest technology company by revenue and one of the world's most valuable companies.",
+    "histories": [
+      {
+        "id": 270780,
+        "stockId": 4,
+        "split": 1,
+        "open": 87.62,
+        "close": 89.81,
+        "high": 90.1,
+        "low": 87.62,
+        "trend": -1.47,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 13,
+    "symbol": "TMUS",
+    "name": "T-Mobile US Inc",
+    "description": "T-Mobile US, Inc., doing business under the global brand name T-Mobile, is an American wireless network operator. Its headquarters are located in Bellevue, Washington, in the Seattle metropolitan area and Overland Park, Kansas, in the Kansas City metropolitan area.",
+    "histories": [
+      {
+        "id": 225802,
+        "stockId": 13,
+        "split": 1,
+        "open": 139.51,
+        "close": 140.02,
+        "high": 140.65,
+        "low": 138.61,
+        "trend": -0.75,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 35,
+    "symbol": "MRNA",
+    "name": "Moderna Inc",
+    "description": "Moderna, Inc., a biotechnology company, develops messenger RNA-based vaccines and therapies for the treatment of infectious diseases, immuno-oncology, rare diseases, cardiovascular diseases, and autoimmune diseases. The company is headquartered in Cambridge, Massachusetts.",
+    "histories": [
+      {
+        "id": 222220,
+        "stockId": 35,
+        "split": 1,
+        "open": 206.69,
+        "close": 199.08,
+        "high": 208.99,
+        "low": 197.56,
+        "trend": -1.49,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 21,
+    "symbol": "SBUX",
+    "name": "Starbucks Corporation",
+    "description": "Starbucks Corporation is an American multinational chain of coffeehouses and roastery reserves headquartered in Seattle, Washington. As the world's largest coffeehouse chain, Starbucks is seen to be the main representation of the United States' second wave of coffee culture.",
+    "histories": [
+      {
+        "id": 270803,
+        "stockId": 21,
+        "split": 1,
+        "open": 97.59,
+        "close": 98.27,
+        "high": 98.3,
+        "low": 96.88,
+        "trend": -0.87,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 22,
+    "symbol": "INTC",
+    "name": "Intel Corporation",
+    "description": "Intel Corporation is an American multinational corporation and technology company headquartered in Santa Clara, California, in Silicon Valley. It is the world's largest semiconductor chip manufacturer by revenue, and is the developer of the x86 series of microprocessors, the processors found in most personal computers (PCs).",
+    "histories": [
+      {
+        "id": 267759,
+        "stockId": 22,
+        "split": 1,
+        "open": 25.92,
+        "close": 26.09,
+        "high": 26.19,
+        "low": 25.6835,
+        "trend": -2,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 23,
+    "symbol": "GILD",
+    "name": "Gilead Sciences Inc",
+    "description": "Gilead Sciences, Inc. is an American biopharmaceutical company headquartered in Foster City, California, that focuses on researching and developing antiviral drugs used in the treatment of HIV, hepatitis B, hepatitis C, and influenza, including Harvoni and Sovaldi.",
+    "histories": [
+      {
+        "id": 270790,
+        "stockId": 23,
+        "split": 1,
+        "open": 85.22,
+        "close": 84.75,
+        "high": 85.245,
+        "low": 84.28,
+        "trend": -0.03,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 36,
+    "symbol": "CSX",
+    "name": "CSX Corporation",
+    "description": "CSX Corporation is an American holding company focused on rail transportation and real estate in North America, among other industries. Based in Richmond, Virginia, USA after the merger, in 2003 the CSX Corporation headquarters moved to Jacksonville, Florida.",
+    "histories": [
+      {
+        "id": 268908,
+        "stockId": 36,
+        "split": 1,
+        "open": 31.04,
+        "close": 31.25,
+        "high": 31.32,
+        "low": 30.86,
+        "trend": 0.29,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 27,
+    "symbol": "ISRG",
+    "name": "Intuitive Surgical Inc",
+    "description": "Intuitive Surgical, Inc. is an American corporation that develops, manufactures, and markets robotic products designed to improve clinical outcomes of patients through minimally invasive surgery, most notably with the da Vinci Surgical System.",
+    "histories": [
+      {
+        "id": 270795,
+        "stockId": 27,
+        "split": 1,
+        "open": 261.92,
+        "close": 262.66,
+        "high": 263.99,
+        "low": 260.51,
+        "trend": -0.59,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 28,
+    "symbol": "MDLZ",
+    "name": "Mondelez International Inc",
+    "description": "Mondelez International, Inc. is an American multinational confectionery, food, holding and beverage and snack food company based in Chicago, Illinois.",
+    "histories": [
+      {
+        "id": 270797,
+        "stockId": 28,
+        "split": 1,
+        "open": 66.79,
+        "close": 67.1,
+        "high": 67.235,
+        "low": 66.54,
+        "trend": 0,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 25,
+    "symbol": "AMD",
+    "name": "Advanced Micro Devices Inc",
+    "description": "Advanced Micro Devices, Inc. (AMD) is an American multinational semiconductor company based in Santa Clara, California, that develops computer processors and related technologies for business and consumer markets. AMD's main products include microprocessors, motherboard chipsets, embedded processors and graphics processors for servers, workstations, personal computers and embedded system applications.",
+    "histories": [
+      {
+        "id": 270793,
+        "stockId": 25,
+        "split": 1,
+        "open": 63.11,
+        "close": 64.52,
+        "high": 64.66,
+        "low": 62.72,
+        "trend": -4.49,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 34,
+    "symbol": "BKNG",
+    "name": "Booking Holdings Inc",
+    "description": "Booking Holdings Inc. is an American travel technology company organized in Delaware and based in Norwalk, Connecticut, that owns and operates several travel fare aggregators and travel fare metasearch engines including namesake and flagship Booking.com, Priceline.com, Agoda.com, Kayak.com, Cheapflights, Rentalcars.com, Momondo, and OpenTable.",
+    "histories": [
+      {
+        "id": 298418,
+        "stockId": 34,
+        "split": 1,
+        "open": 1926.42,
+        "close": 1971.52,
+        "high": 1973.34,
+        "low": 1918.72,
+        "trend": -1.09,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 26,
+    "symbol": "ADP",
+    "name": "Automatic Data Processing Inc",
+    "description": "Automatic Data Processing, Inc. (ADP) is an American provider of human resources management software and services.",
+    "histories": [
+      {
+        "id": 298412,
+        "stockId": 26,
+        "split": 1,
+        "open": 237.92,
+        "close": 240.94,
+        "high": 241.65,
+        "low": 236.59,
+        "trend": -2.68,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 30,
+    "symbol": "ADI",
+    "name": "Analog Devices Inc",
+    "description": "Analog Devices, Inc. (ADI), also known simply as Analog, is an American multinational semiconductor company specializing in data conversion, signal processing and power management technology, headquartered in Wilmington, Massachusetts.",
+    "histories": [
+      {
+        "id": 298457,
+        "stockId": 30,
+        "split": 1,
+        "open": 162.7,
+        "close": 163.84,
+        "high": 164.116,
+        "low": 161.25,
+        "trend": -1.29,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 31,
+    "symbol": "PYPL",
+    "name": "PayPal Holdings Inc",
+    "description": "PayPal Holdings, Inc. is an American company operating an online payments system in the majority of countries that support online money transfers, and serves as an electronic alternative to traditional paper methods like checks and money orders. The company operates as a payment processor for online vendors, auction sites, and many other commercial users, for which it charges a fee.",
+    "histories": [
+      {
+        "id": 274692,
+        "stockId": 31,
+        "split": 1,
+        "open": 68.05,
+        "close": 69.03,
+        "high": 69.2499,
+        "low": 67.71,
+        "trend": -0.71,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 32,
+    "symbol": "VRTX",
+    "name": "Vertex Pharmaceuticals Inc",
+    "description": "Vertex Pharmaceuticals, Inc. is an American biopharmaceutical company based in Boston, Massachusetts.",
+    "histories": [
+      {
+        "id": 270798,
+        "stockId": 32,
+        "split": 1,
+        "open": 292.8,
+        "close": 289.69,
+        "high": 294.815,
+        "low": 288.07,
+        "trend": 0.9,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 17,
+    "symbol": "AMGN",
+    "name": "Amgen Inc",
+    "description": "Amgen Inc. (formerly Applied Molecular Genetics Inc.) is an American multinational biopharmaceutical company headquartered in Thousand Oaks, California. Focused on molecular biology and biochemistry, its goal is to provide a healthcare business based on recombinant DNA technology.",
+    "histories": [
+      {
+        "id": 270802,
+        "stockId": 17,
+        "split": 1,
+        "open": 264.88,
+        "close": 263.92,
+        "high": 265.29,
+        "low": 262.9,
+        "trend": -0.35,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 37,
+    "symbol": "FISV",
+    "name": "Fiserv Inc",
+    "description": "Fiserv, Inc. is an American multinational company headquartered in Brookfield, Wisconsin that provides financial technology and financial services. The company's clients include banks, thrifts, credit unions, securities broker dealers, leasing and finance companies, and retailers.",
+    "histories": [
+      {
+        "id": 270766,
+        "stockId": 37,
+        "split": 1,
+        "open": 99.38,
+        "close": 100.46,
+        "high": 100.67,
+        "low": 98.82,
+        "trend": -1,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 20,
+    "symbol": "QCOM",
+    "name": "Qualcomm Incorporated",
+    "description": "Qualcomm is an American multinational corporation headquartered in San Diego, California, and incorporated in Delaware. It creates semiconductors, software, and services related to wireless technology. It owns patents critical to the 5G, 4G, CDMA2000, TD-SCDMA and WCDMA mobile communications standards.",
+    "histories": [
+      {
+        "id": 270124,
+        "stockId": 20,
+        "split": 1,
+        "open": 109.7,
+        "close": 110.84,
+        "high": 110.92,
+        "low": 108.21,
+        "trend": -2.55,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 24,
+    "symbol": "INTU",
+    "name": "Intuit Inc",
+    "description": "Intuit Inc. is an American business that specializes in financial software. Intuit's products include the tax preparation application TurboTax, personal finance app Mint and the small business accounting program QuickBooks.",
+    "histories": [
+      {
+        "id": 270792,
+        "stockId": 24,
+        "split": 1,
+        "open": 383.32,
+        "close": 384.49,
+        "high": 385.43,
+        "low": 378.5,
+        "trend": -0.53,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 33,
+    "symbol": "REGN",
+    "name": "Regeneron Pharmaceuticals Inc",
+    "description": "Regeneron Pharmaceuticals, Inc. is an American biotechnology company headquartered in Westchester County, New York. Originally focused on neurotrophic factors and their regenerative capabilities, giving rise to its name, the company then branched out into the study of both cytokine and tyrosine kinase receptors.",
+    "histories": [
+      {
+        "id": 270726,
+        "stockId": 33,
+        "split": 1,
+        "open": 733.96,
+        "close": 726.74,
+        "high": 735.6,
+        "low": 718.36,
+        "trend": -0.29,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 29,
+    "symbol": "AMAT",
+    "name": "Applied Materials Inc",
+    "description": "Applied Materials, Inc. is an American corporation that supplies equipment, services and software for the manufacture of semiconductor (integrated circuit) chips for electronics, flat panel displays for computers, smartphones and televisions, and solar products. The company also supplies equipment to produce coatings for flexible electronics, packaging and other applications. The company is headquartered in Santa Clara, California, in Silicon Valley.",
+    "histories": [
+      {
+        "id": 298415,
+        "stockId": 29,
+        "split": 1,
+        "open": 96.69,
+        "close": 97.22,
+        "high": 97.3878,
+        "low": 95.33,
+        "trend": -5.31,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 19,
+    "symbol": "NFLX",
+    "name": "Netflix Inc",
+    "description": "Netflix, Inc. is an American over-the-top content platform and production company headquartered in Los Gatos, California. Netflix was founded in 1997 by Reed Hastings and Marc Randolph in Scotts Valley, California. The company's primary business is a subscription-based streaming service offering online streaming from a library of films and television series, including those produced in-house.",
+    "histories": [
+      {
+        "id": 270788,
+        "stockId": 19,
+        "split": 1,
+        "open": 296.18,
+        "close": 294.965,
+        "high": 298.4614,
+        "low": 291.91,
+        "trend": -0.64,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 18,
+    "symbol": "HON",
+    "name": "Honeywell International Inc",
+    "description": "Honeywell International Inc. is an American publicly traded, multinational conglomerate headquartered in Charlotte, North Carolina. It primarily operates in four areas of business: aerospace, building technologies, performance materials and technologies (PMT), and safety and productivity solutions (SPS).",
+    "histories": [
+      {
+        "id": 270787,
+        "stockId": 18,
+        "split": 1,
+        "open": 212,
+        "close": 213.87,
+        "high": 214.705,
+        "low": 211.46,
+        "trend": -1.09,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 16,
+    "symbol": "CMCSA",
+    "name": "Comcast Corp",
+    "description": "Comcast Corporation is an American telecommunications conglomerate headquartered in Philadelphia, Pennsylvania. It is the second-largest broadcasting and cable television company in the world by revenue (behind AT&T), the largest pay-TV company, the largest cable TV company and largest home Internet service provider in the United States, and the nation's third-largest home telephone service provider. Comcast provides services to U.S. residential and commercial customers in 40 states and in the District of Columbia. As the parent company of the international media company NBCUniversal since 2011, Comcast is a producer of feature films and television programs intended for theatrical exhibition and over-the-air and cable television broadcast, respectively.",
+    "histories": [
+      {
+        "id": 270805,
+        "stockId": 16,
+        "split": 1,
+        "open": 34.78,
+        "close": 35.14,
+        "high": 35.195,
+        "low": 34.74,
+        "trend": 0.06,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 38,
+    "symbol": "LRCX",
+    "name": "Lam Research Corp",
+    "description": "Lam Research Corporation is an American corporation that engages in the design, manufacture, marketing, and service of semiconductor processing equipment used in the fabrication of integrated circuits. Its products are used primarily in front-end wafer processing, which involves the steps that create the active components of semiconductor devices (transistors, capacitors) and their wiring (interconnects). The company also builds equipment for back-end wafer-level packaging (WLP), and for related manufacturing markets such as for microelectromechanical systems (MEMS). The company is headquartered in Fremont, California, in the Silicon Valley.",
+    "histories": [
+      {
+        "id": 270808,
+        "stockId": 38,
+        "split": 1,
+        "open": 405.62,
+        "close": 412.12,
+        "high": 412.47,
+        "low": 400.55,
+        "trend": -6.08,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 39,
+    "symbol": "ATVI",
+    "name": "Activision Blizzard Inc",
+    "description": "Activision Blizzard, Inc. is an American video game holding company based in Santa Monica, California. Activision Blizzard currently includes five business units: Activision Publishing, Blizzard Entertainment, King, Major League Gaming, and Activision Blizzard Studios.",
+    "histories": [
+      {
+        "id": 298425,
+        "stockId": 39,
+        "split": 1,
+        "open": 75.7,
+        "close": 75.95,
+        "high": 76.07,
+        "low": 75.5,
+        "trend": 0.11,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 40,
+    "symbol": "MU",
+    "name": "Micron Technology Inc",
+    "description": "Micron Technology, Inc. is an American producer of computer memory and computer data storage including dynamic random-access memory, flash memory, and USB flash drives. It is headquartered in Boise, Idaho.",
+    "histories": [
+      {
+        "id": 270806,
+        "stockId": 40,
+        "split": 1,
+        "open": 49,
+        "close": 50.2,
+        "high": 50.55,
+        "low": 48.985,
+        "trend": 0,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  },
+  {
+    "id": 1,
+    "symbol": "MSFT",
+    "name": "Microsoft Corporation",
+    "description": "Microsoft Corporation is an American multinational technology company which produces computer software, consumer electronics, personal computers, and related services. Its best known software products are the Microsoft Windows line of operating systems, the Microsoft Office suite, and the Internet Explorer and Edge web browsers. Its flagship hardware products are the Xbox video game consoles and the Microsoft Surface lineup of touchscreen personal computers. Microsoft ranked No. 21 in the 2020 Fortune 500 rankings of the largest United States corporations by total revenue; it was the world's largest software maker by revenue as of 2016. It is considered one of the Big Five companies in the U.S. information technology industry, along with Google, Apple, Amazon, and Facebook.",
+    "histories": [
+      {
+        "id": 298427,
+        "stockId": 1,
+        "split": 1,
+        "open": 236.11,
+        "close": 238.73,
+        "high": 238.87,
+        "low": 233.9428,
+        "trend": -2.13,
+        "time": "2022-12-23T00:00:00.000Z"
+      }
+    ]
+  }
+]
