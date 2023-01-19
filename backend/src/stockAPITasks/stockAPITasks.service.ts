@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/ban-types */
 import { Injectable, Logger } from '@nestjs/common';
 import { Cron } from '@nestjs/schedule';
 import { PrismaService } from 'src/prisma/prisma.service';
