@@ -18,7 +18,7 @@ struct StockListCell: View {
       VStack(alignment: .leading) {
         Text(stock.name)
           .roboto(size: 20, weight: .regular)
-        Text(String(format: "%+.2f%%", stock.histories[0].trend))
+        Text(stock.getTrend())
           .roboto(size: 18)
       }
       Spacer()
