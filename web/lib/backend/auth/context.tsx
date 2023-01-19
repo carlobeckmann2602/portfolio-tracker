@@ -7,6 +7,7 @@ import {
   useState,
 } from "react";
 import { useRouter } from "next/router";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AUTH_TOKEN_KEY = "authToken";
 export const getAuthToken = () => localStorage.getItem(AUTH_TOKEN_KEY);
@@ -40,6 +41,7 @@ export const useAuth = () => useContext(AuthContext)!;
 export function AuthProvider({ children }: PropsWithChildren) {
   const router = useRouter();
   const [user, setUser] = useState<AuthUser | null>(null);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const token = getAuthToken();
@@ -88,10 +90,11 @@ export function AuthProvider({ children }: PropsWithChildren) {
       logout() {
         setUser(null);
         unsetAuthToken();
+        queryClient.setQueryData(["stock-portfolio"], null);
         router.push("/login");
       },
     }),
-    [user, router]
+    [user, router, queryClient]
   );
 
   return <AuthContext.Provider value={auth}>{children}</AuthContext.Provider>;
