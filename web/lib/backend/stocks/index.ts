@@ -71,6 +71,7 @@ export function useStockHoldingAmountMut() {
       client.setQueryData<PortfolioData>(
         ["stock-portfolio"],
         (old) => {
+          // If there is no data, no need to do anything
           if (!old) return;
 
           let newHoldings;
@@ -78,7 +79,9 @@ export function useStockHoldingAmountMut() {
             holding.stock.id === variables.stockId
           )?.amount! + variables.amountOffset;
 
+          // If the amount after the offset is 0 or less, remove the holding
           if (ammountAfterOffset > 0 || variables.amountOffset > 0) {
+            // If the holding already exists, update it, otherwise add it
             if (
               old.holdings.some((holding) =>
                 holding.stock.id === variables.stockId
@@ -107,11 +110,13 @@ export function useStockHoldingAmountMut() {
               ];
             }
           } else {
+            // If the amount after the offset is 0 or less, remove the holding
             newHoldings = old.holdings.filter((holding) => {
               return holding.stock.id !== variables.stockId;
             });
           }
 
+          // Sort the holdings by stock id
           return {
             value: old.value + variables.amountOffset * variables.pricePerShare,
             holdings: newHoldings.sort((a, b) =>
