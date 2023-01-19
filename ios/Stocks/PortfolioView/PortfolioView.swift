@@ -83,7 +83,7 @@ struct PortfolioLoadedView: View {
             }.background(AppColors.PRIMARY)
               .cornerRadius(8)
               .padding()
-          }
+          }.padding()
         }
       }
     }
