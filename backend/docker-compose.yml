@@ -1,0 +1,59 @@
+# Use postgres/example user/password credentials
+version: '3.9'
+
+services:
+  backend-api:
+    build: .
+    container_name: backend-api
+    command: npm run start:dev
+    volumes:
+      - .:/usr/app/
+      - /usr/app/node_modules
+    ports:
+      - 8080:8080
+    restart: always
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: $DATABASE_URL
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    restart: unless-stopped
+    env_file:
+      - .env
+    environment:
+      POSTGRES_USERNAME: $POSTGRES_USERNAME
+      POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+  prisma_studio:
+    image: node:latest
+    depends_on:
+      - db
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - 5555:5555
+    command: npx prisma studio
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    depends_on:
+      - db
+    ports:
+      - '5557:80'
+    environment:
+      PGADMIN_DEFAULT_EMAIL: mobsysuser22@pgadmin.org
+      PGADMIN_DEFAULT_PASSWORD: GhtVjG4_0w_xQo+fHvo^47
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    restart: unless-stopped
+volumes:
+  postgres-data:
+  pgadmin-data:

@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  reverse-proxy:
+    image: caddy
+    ports:
+      - "80:80"
+      - "443:443"
+      - "443:443/udp"
+    volumes:
+      - ./Caddyfile.dev:/etc/caddy/Caddyfile
+      - ./caddy:/data
+
+  db:
+    image: postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: "123"
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+
+  backend:
+    image: mobsys-backend
+    build: ./backend
+    restart: unless-stopped
+    environment:
+      DATABASE_URL: postgresql://postgres:123@db:5432/postgres?schema=public
+    depends_on: [ db ]
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: pgadmin@api.mobilesys.de
+      PGADMIN_DEFAULT_PASSWORD: GhtVjG4_0w_xQo+fHvo^47
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+    depends_on: [ db ]
+
+  web:
+    image: mobsys-frontend
+    build: ./web
+    restart: unless-stopped
+    depends_on: [ backend ]
+
+volumes:
+  pgadmin-data:
