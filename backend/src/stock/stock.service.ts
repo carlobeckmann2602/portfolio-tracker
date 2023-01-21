@@ -114,10 +114,6 @@ export class StockService {
         },
       });
 
-      if (stocks.length === 0) {
-        throw new NotFoundException('Stock not found');
-      }
-
       return stocks;
     } catch (error) {
       if (error instanceof PrismaClientValidationError) {
